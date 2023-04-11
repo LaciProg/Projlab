@@ -101,21 +101,37 @@ public class Szkeleton {
         Pump oldPump = new Pump();
         Pump newPump = new Pump();
         Pipe oldPipe = new Pipe(71);
+        oldPipe.connect(oldPump);
         Mechanic mechanic = new Mechanic(oldPipe);
-        mechanic.placePump();
+        mechanic.setHoldingPump(newPump);
+        Pipe newPipe = mechanic.placePump();
     }
 
-    public static void TestPlacePumpOnCistern() {}
+    public static void TestPlacePumpOnCistern() {
+        Cistern cistern = new Cistern();
+        Mechanic mechanic = new Mechanic(cistern);
+        Pipe newPipe = mechanic.placePump();
+    }
 
-    public static void TestPickUpPumpFromCistern() {}
+    public static void TestPickUpPumpFromCistern() {
+        Cistern cistern = new Cistern();
+        Mechanic mechanic = new Mechanic(cistern);
+        Pump newPump = mechanic.getPump();
+    }
 
-    public static void TestPickUpPumpFromPipe() {}
+    public static void TestPickUpPumpFromPipe() {
+        Pipe pipe = new Pipe(65);
+        Mechanic mechanic = new Mechanic(pipe);
+        Pump newPump = mechanic.getPump();
+    }
 
     public static void TestWaterFlowsFromSpring() {}
 
     public static void TestWaterFlowsToCistern() {}
 
-    public static void TestDisconnectPipe() {}
+    public static void TestDisconnectPipe() {
+
+    }
 
     public static void TestConnectPipe() {}
 

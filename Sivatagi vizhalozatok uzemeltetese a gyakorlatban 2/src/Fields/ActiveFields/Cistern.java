@@ -1,5 +1,6 @@
 package Fields.ActiveFields;
 
+import Controll.Szkeleton;
 import Fields.Pipe;
 
 /**
@@ -19,6 +20,11 @@ public class Cistern extends ActiveFields{
      */
     @Override
     public void step() {
+        Szkeleton.printTabs();
+        System.out.println("ObjectName.step()");
+        Szkeleton.tabs++;
+        getPipes().get(0).getWater();
+        Szkeleton.tabs--;
         super.step();
     }
 
@@ -29,7 +35,10 @@ public class Cistern extends ActiveFields{
      * */
     @Override
     public Pump createNewPump(boolean b) {
-        return super.createNewPump(b);
+        Szkeleton.printTabs();
+        System.out.println("ObjectName.createNewPump()");
+        Pump newPump = new Pump();
+        return newPump;
     }
 
     /**

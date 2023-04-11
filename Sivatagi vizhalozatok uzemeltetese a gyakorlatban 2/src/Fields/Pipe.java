@@ -65,8 +65,42 @@ public class Pipe extends Field {
      * @return True if the pump was placed
      */
     @Override
-    public boolean placePump(Pump p) {
-        return super.placePump(p);
+    public Pipe placePump(Pump newPump) {
+        Szkeleton.printTabs();
+        System.out.println("ObjectName.placePump()");
+        Pump oldPump = (Pump) fields.remove(0);
+
+        Szkeleton.tabs++;
+        disconnect(oldPump);
+        Szkeleton.tabs--;
+
+        Szkeleton.tabs++;
+        connect(newPump);
+        Szkeleton.tabs--;
+
+        Szkeleton.tabs++;
+        boolean result = oldPump.removePipe(this);
+        Szkeleton.tabs--;
+
+        Pipe newPipe = new Pipe(21);
+        Szkeleton.tabs++;
+        result = newPipe.connect(newPump);
+        Szkeleton.tabs--;
+
+        Szkeleton.tabs++;
+        result = newPipe.connect(oldPump);
+        Szkeleton.tabs--;
+
+        Szkeleton.tabs++;
+        result = newPump.addPipe(this);
+        result = newPump.addPipe(newPipe);
+        Szkeleton.tabs--;
+
+        Szkeleton.tabs++;
+        result = oldPump.addPipe(newPipe);
+        Szkeleton.tabs--;
+
+        return newPipe;
     }
 
     /**
@@ -75,6 +109,8 @@ public class Pipe extends Field {
      */
     @Override
     public int getWater() {
+        Szkeleton.printTabs();
+        System.out.println("ObjectName.getWater()");
         return super.getWater();
     }
 
@@ -85,7 +121,11 @@ public class Pipe extends Field {
      */
     @Override
     public int fillInWater(int i) {
-        return super.fillInWater(i);
+        Szkeleton.printTabs();
+        System.out.println("ObjectName.fillInWater()");
+        if (i - capacity > 0) return i - capacity;
+        else if (i - capacity < 0) return capacity - i;
+        else return 0;
     }
 
 
@@ -106,6 +146,9 @@ public class Pipe extends Field {
      */
     @Override
     public boolean connect(ActiveFields a) {
+        Szkeleton.printTabs();
+        System.out.println("ObjectName.connect()");
+        fields.add(a);
         return super.connect(a);
     }
 
@@ -116,6 +159,9 @@ public class Pipe extends Field {
      */
     @Override
     public boolean disconnect(ActiveFields a) {
+        Szkeleton.printTabs();
+        System.out.println("ObjectName.disconnect()");
+        //TODO törlés megvalósítása
         return super.disconnect(a);
     }
 
