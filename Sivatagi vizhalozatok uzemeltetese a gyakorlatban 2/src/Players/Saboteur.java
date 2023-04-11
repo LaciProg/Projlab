@@ -1,6 +1,8 @@
 package Players;
 
+import Controll.Szkeleton;
 import Fields.Field;
+
 
 /**
  * Class for the saboteur player.
@@ -20,6 +22,10 @@ public class Saboteur extends Player {
 	 */
 	@Override
 	public boolean breakField() {
-		return super.breakField();
+		Szkeleton.printTabs();
+		System.out.println("ObjectName.breakField()");
+		Szkeleton.tabs++;
+		boolean result = getStandingField().breakField();
+		return true;
 	}
 }
