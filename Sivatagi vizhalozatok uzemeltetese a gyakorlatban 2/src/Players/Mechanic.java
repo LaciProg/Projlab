@@ -1,5 +1,6 @@
 package Players;
 
+import Controll.Szkeleton;
 import Fields.ActiveFields.Pump;
 import Fields.Field;
 import Fields.Pipe;
@@ -36,6 +37,16 @@ public class Mechanic extends Player {
      */
     @Override
     public boolean repair() {
+        Szkeleton.printTabs();
+        System.out.println("ObjectName.repair()");
+        Szkeleton.tabs++;
+        boolean result = getStandingField().repair();
+        Szkeleton.tabs--;
+        switch(Szkeleton.testcase) {
+            case(3) : return true;
+            case(4) : return true;
+            case(5) : return false;
+        }
         return super.repair();
     }
 
@@ -45,6 +56,7 @@ public class Mechanic extends Player {
      */
     @Override
     public Pipe placePump() {
+
         return super.placePump();
     }
 

@@ -1,5 +1,6 @@
 package Fields;
 
+import Controll.Szkeleton;
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
 import Players.Player;
@@ -90,6 +91,8 @@ public abstract class Field {
 	 * @return True if the field was broken. - always false.
 	 * */
 	public boolean breakField() {
+		Szkeleton.printTabs();
+		System.out.println("ObjectName.breakField()");
 		return false;
 	}
 
@@ -108,6 +111,8 @@ public abstract class Field {
 	 * @return True if the field was repaired. - always false.
 	 * */
 	public boolean repair() {
+		Szkeleton.printTabs();
+		System.out.println("ObjectName.repair()");
 		return false;
 	}
 	

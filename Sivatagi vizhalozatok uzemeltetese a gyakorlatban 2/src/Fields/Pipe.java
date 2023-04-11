@@ -54,7 +54,9 @@ public class Pipe extends Field {
      */
     @Override
     public boolean repair() {
-        return super.repair();
+        Szkeleton.printTabs();
+        System.out.println("ObjectName.repair()");
+        return true;
     }
 
     /**
