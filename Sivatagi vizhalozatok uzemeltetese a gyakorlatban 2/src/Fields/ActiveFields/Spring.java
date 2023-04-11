@@ -1,5 +1,7 @@
 package Fields.ActiveFields;
 
+import Controll.Szkeleton;
+
 /**
  * Class for Spring
  * */
@@ -28,6 +30,11 @@ public class Spring extends ActiveFields{
      */
     @Override
     public void step() {
+        Szkeleton.printTabs();
+        System.out.println("ObjectName.step()");
+        Szkeleton.tabs++;
+        getPipes().get(0).fillInWater(waterOut);
+        Szkeleton.tabs--;
         super.step();
     }
 }
