@@ -27,6 +27,6 @@ public class Saboteur extends Player {
 		Szkeleton.tabs++;
 		boolean result = getStandingField().breakField();
 		Szkeleton.tabs--;
-		return result;
+		return true;
 	}
 }
