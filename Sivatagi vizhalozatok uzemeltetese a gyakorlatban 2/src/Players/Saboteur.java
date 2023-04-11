@@ -26,7 +26,6 @@ public class Saboteur extends Player {
 		System.out.println("ObjectName.breakField()");
 		Szkeleton.tabs++;
 		boolean result = getStandingField().breakField();
-		Szkeleton.tabs--;
 		return true;
 	}
 }
