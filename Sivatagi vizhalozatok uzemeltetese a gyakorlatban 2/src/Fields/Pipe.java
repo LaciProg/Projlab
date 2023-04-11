@@ -1,5 +1,6 @@
 package Fields;
 
+import Controll.Szkeleton;
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
 
@@ -42,7 +43,9 @@ public class Pipe extends Field {
      */
     @Override
     public boolean breakField() {
-        return super.breakField();
+        Szkeleton.printTabs();
+        System.out.println("ObjectName.breakField()");
+        return true;
     }
 
     /**
