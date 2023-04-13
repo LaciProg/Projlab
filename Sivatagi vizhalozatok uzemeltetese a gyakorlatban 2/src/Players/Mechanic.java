@@ -1,5 +1,6 @@
 package Players;
 
+import Controll.Szkeleton;
 import Fields.ActiveFields.Pump;
 import Fields.Field;
 import Fields.Pipe;
@@ -30,13 +31,32 @@ public class Mechanic extends Player {
         this.holdingPump = null;
     }
 
+    public void setHoldingPump(Pump holdingPump) {
+        this.holdingPump = holdingPump;
+    }
+
+    public void setHoldingPipe(Pipe holdingPipe) {
+        this.holdingPipe = holdingPipe;
+    }
+
     /**
      *Method for repairing the field where the player is standing.
      * @return boolean - returns true if the field is repaired.
      */
     @Override
     public boolean repair() {
-        return super.repair();
+        Szkeleton.printTabs();
+        System.out.println("ObjectName.repair()");
+        Szkeleton.tabs++;
+        boolean result = getStandingField().repair();
+        Szkeleton.tabs--;
+        /*switch(Szkeleton.testcase) {
+            case(3) : return true;
+            case(4) : return true;
+            case(5) : return false;
+        }
+         */
+        return result;
     }
 
     /**
@@ -45,7 +65,12 @@ public class Mechanic extends Player {
      */
     @Override
     public Pipe placePump() {
-        return super.placePump();
+        Szkeleton.printTabs();
+        System.out.println("ObjectName.placePump()");
+        Szkeleton.tabs++;
+        Pipe newPipe = getStandingField().placePump(holdingPump);
+        Szkeleton.tabs--;
+        return newPipe;
     }
 
     /**
@@ -74,7 +99,12 @@ public class Mechanic extends Player {
      */
     @Override
     public Pump getPump() {
-        return super.getPump();
+        Szkeleton.printTabs();
+        System.out.println("ObjectName.getPump()");
+        Szkeleton.tabs++;
+        Pump newPump = getStandingField().createNewPump(true); // mechanic can get a new pump
+        Szkeleton.tabs--;
+        return newPump;
     }
 
     /**

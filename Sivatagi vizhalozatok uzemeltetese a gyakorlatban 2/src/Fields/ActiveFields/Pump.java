@@ -1,5 +1,6 @@
 package Fields.ActiveFields;
 
+import Controll.Szkeleton;
 import Fields.ActiveFields.ActiveFields;
 import Fields.Pipe;
 
@@ -57,5 +58,12 @@ public class Pump extends ActiveFields {
     @Override
     public boolean set(Pipe input, Pipe output) {
         return super.set(input, output);
+    }
+
+    @Override
+    public boolean repair() {
+        Szkeleton.printTabs();
+        System.out.println("ObjectName.repair()");
+        return true;
     }
 }

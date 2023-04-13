@@ -1,5 +1,6 @@
 package Fields;
 
+import Controll.Szkeleton;
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
 import Players.Player;
@@ -90,6 +91,8 @@ public abstract class Field {
 	 * @return True if the field was broken. - always false.
 	 * */
 	public boolean breakField() {
+		Szkeleton.printTabs();
+		System.out.println("ObjectName.breakField()");
 		return false;
 	}
 
@@ -108,6 +111,8 @@ public abstract class Field {
 	 * @return True if the field was repaired. - always false.
 	 * */
 	public boolean repair() {
+		Szkeleton.printTabs();
+		System.out.println("ObjectName.repair()");
 		return false;
 	}
 	
@@ -116,8 +121,10 @@ public abstract class Field {
 	 * @param p The pump to be placed.
 	 * @return True if the pump was placed. - always false.
 	 * */
-	public boolean placePump(Pump p) {
-		return false;
+	public Pipe placePump(Pump p) {
+		Szkeleton.printTabs();
+		System.out.println("ObjectName.placePump()");
+		return null;
 	}
 	
 	/**
@@ -126,6 +133,8 @@ public abstract class Field {
 	 * @return The new pump. - always null.
 	 * */
 	public Pump createNewPump(boolean b) {
+		Szkeleton.printTabs();
+		System.out.println("ObjectName.creteNewPump()");
 		return null;
 	}
 	
@@ -143,6 +152,8 @@ public abstract class Field {
 	 * @return True if the pipe was added. - always false.
 	 * */
 	public boolean addPipe(Pipe p) {
+		Szkeleton.printTabs();
+		System.out.println("ObjectName.addPipe()");
 		return false;
 	}
 	
@@ -152,6 +163,8 @@ public abstract class Field {
 	 * @return True if the pipe was removed. - always false.
 	 * */
 	public boolean removePipe(Pipe p) {
+		Szkeleton.printTabs();
+		System.out.println("ObjectName.removePipe()");
 		return false;
 	}
 	
