@@ -14,26 +14,29 @@ public class Pipe extends Field {
     /**
      * Capacity of the pipe
      */
-    private int capacity;
+    private final int capacity;
 
     /**
      * The ends of the pipe. Default is empty.
      */
-    private ArrayList<ActiveFields> fields = new ArrayList<ActiveFields>();
+    private ArrayList<ActiveFields> fields = new ArrayList<>();
 
     /**
      * Constructor for Pipe
      * @param capacity Capacity of the pipe
      */
     public Pipe(int capacity) {
+        Szkeleton.printTabs();
+        System.out.println("new Pipe()");
         this.capacity = capacity;
     }
 
     /**
      * Setter for capacity. Only for initialization.
-     * @return Capacity of the pipe
      */
     public void setFields(ArrayList<ActiveFields> fields) {
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".setFields()");
         this.fields = fields;
     }
 
@@ -79,25 +82,26 @@ public class Pipe extends Field {
         Szkeleton.tabs--;
 
         Szkeleton.tabs++;
-        boolean result = oldPump.removePipe(this); //Ha szükség van rá csak kkor tárolgassuk már el a visszatérési értéket
+        oldPump.removePipe(this);
         Szkeleton.tabs--;
 
         Pipe newPipe = new Pipe(21);
+        Szkeleton.objectNames.put(newPipe, "newPipe");
         Szkeleton.tabs++;
-        result = newPipe.connect(newPump);
+        newPipe.connect(newPump);
         Szkeleton.tabs--;
 
         Szkeleton.tabs++;
-        result = newPipe.connect(oldPump);
+        newPipe.connect(oldPump);
         Szkeleton.tabs--;
 
         Szkeleton.tabs++;
-        result = newPump.addPipe(this);
-        result = newPump.addPipe(newPipe);
+        newPump.addPipe(this);
+        newPump.addPipe(newPipe);
         Szkeleton.tabs--;
 
         Szkeleton.tabs++;
-        result = oldPump.addPipe(newPipe);
+        oldPump.addPipe(newPipe);
         Szkeleton.tabs--;
 
         return newPipe;
@@ -136,8 +140,10 @@ public class Pipe extends Field {
      */
     @Override
     public boolean setEnd(Pump p) {
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".setEnd()");
         return super.setEnd(p);
-    }
+    }//TODO jelenleg nem használjuk semmire a szekvenciadiagramban
 
     /**
      * Method for connecting the pipe to an ActiveField.
@@ -161,8 +167,8 @@ public class Pipe extends Field {
     public boolean disconnect(ActiveFields a) {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".disconnect()");
-        //TODO törlés megvalósítása
-        return super.disconnect(a);
+        fields.remove(a);
+        return true;
     }
 
 }

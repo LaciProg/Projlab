@@ -11,7 +11,16 @@ public class Cistern extends ActiveFields{
     /**
      * Water stored in the cistern. Default value is 0.
      */
-    private int waterStored = 0;
+    private int waterStored;
+
+    /**
+     * Constructor for the cistern.
+     */
+    public Cistern() {
+        Szkeleton.printTabs();
+        System.out.println("new Cistern()");
+        this.waterStored = 0;
+    }
 
     /**
      * Method for the game controlled events.
@@ -37,7 +46,8 @@ public class Cistern extends ActiveFields{
     public Pump createNewPump(boolean b) {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".createNewPump()");
-        Pump newPump = new Pump(); //Itt vajon kell ezt is kiíratni?
+        Pump newPump = new Pump();
+        Szkeleton.objectNames.put(newPump, "newPump");
         return newPump;
     }
 
@@ -47,7 +57,9 @@ public class Cistern extends ActiveFields{
      */
     @Override
     public int getWater() {
-        return super.getWater();
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".getWater()");
+        return super.getWater(); //TODO
     }
 
     /**
@@ -56,6 +68,8 @@ public class Cistern extends ActiveFields{
      */
     @Override
     public Pipe pickUpPipe() {
-        return super.pickUpPipe();
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".pickUpPipe()");
+        return super.pickUpPipe(); //TODO
     }
 }
