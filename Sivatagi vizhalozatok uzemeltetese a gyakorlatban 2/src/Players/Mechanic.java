@@ -46,16 +46,10 @@ public class Mechanic extends Player {
     @Override
     public boolean repair() {
         Szkeleton.printTabs();
-        System.out.println("ObjectName.repair()");
+        System.out.println(Szkeleton.objectNames.get(this)+ ".repair()");
         Szkeleton.tabs++;
         boolean result = getStandingField().repair();
         Szkeleton.tabs--;
-        /*switch(Szkeleton.testcase) {
-            case(3) : return true;
-            case(4) : return true;
-            case(5) : return false;
-        }
-         */
         return result;
     }
 
@@ -66,7 +60,7 @@ public class Mechanic extends Player {
     @Override
     public Pipe placePump() {
         Szkeleton.printTabs();
-        System.out.println("ObjectName.placePump()");
+        System.out.println(Szkeleton.objectNames.get(this)+ ".placePump()");
         Szkeleton.tabs++;
         Pipe newPipe = getStandingField().placePump(holdingPump);
         Szkeleton.tabs--;
@@ -100,7 +94,7 @@ public class Mechanic extends Player {
     @Override
     public Pump getPump() {
         Szkeleton.printTabs();
-        System.out.println("ObjectName.getPump()");
+        System.out.println(Szkeleton.objectNames.get(this)+ ".getPump()");
         Szkeleton.tabs++;
         Pump newPump = getStandingField().createNewPump(true); // mechanic can get a new pump
         Szkeleton.tabs--;

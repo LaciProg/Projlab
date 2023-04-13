@@ -92,7 +92,7 @@ public abstract class Field {
 	 * */
 	public boolean breakField() {
 		Szkeleton.printTabs();
-		System.out.println("ObjectName.breakField()");
+		System.out.println(Szkeleton.objectNames.get(this)+ ".breakField()");
 		return false;
 	}
 
@@ -112,7 +112,7 @@ public abstract class Field {
 	 * */
 	public boolean repair() {
 		Szkeleton.printTabs();
-		System.out.println("ObjectName.repair()");
+		System.out.println(Szkeleton.objectNames.get(this)+ ".repair()");
 		return false;
 	}
 	
@@ -123,7 +123,7 @@ public abstract class Field {
 	 * */
 	public Pipe placePump(Pump p) {
 		Szkeleton.printTabs();
-		System.out.println("ObjectName.placePump()");
+		System.out.println(Szkeleton.objectNames.get(this)+ ".placePump()");
 		return null;
 	}
 	
@@ -134,7 +134,7 @@ public abstract class Field {
 	 * */
 	public Pump createNewPump(boolean b) {
 		Szkeleton.printTabs();
-		System.out.println("ObjectName.creteNewPump()");
+		System.out.println(Szkeleton.objectNames.get(this)+ ".creteNewPump()");
 		return null;
 	}
 	
@@ -153,7 +153,7 @@ public abstract class Field {
 	 * */
 	public boolean addPipe(Pipe p) {
 		Szkeleton.printTabs();
-		System.out.println("ObjectName.addPipe()");
+		System.out.println(Szkeleton.objectNames.get(this)+ ".addPipe()");
 		return false;
 	}
 	
@@ -164,7 +164,7 @@ public abstract class Field {
 	 * */
 	public boolean removePipe(Pipe p) {
 		Szkeleton.printTabs();
-		System.out.println("ObjectName.removePipe()");
+		System.out.println(Szkeleton.objectNames.get(this)+ ".removePipe()");
 		return false;
 	}
 	
