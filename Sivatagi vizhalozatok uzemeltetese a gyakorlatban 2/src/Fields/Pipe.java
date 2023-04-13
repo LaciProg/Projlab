@@ -44,7 +44,7 @@ public class Pipe extends Field {
     @Override
     public boolean breakField() {
         Szkeleton.printTabs();
-        System.out.println("ObjectName.breakField()");
+        System.out.println(Szkeleton.objectNames.get(this)+ ".breakField()");
         return true;
     }
 
@@ -55,19 +55,19 @@ public class Pipe extends Field {
     @Override
     public boolean repair() {
         Szkeleton.printTabs();
-        System.out.println("ObjectName.repair()");
+        System.out.println(Szkeleton.objectNames.get(this)+ ".repair()");
         return true;
     }
 
     /**
      * Method for placing a pump on the pipe.
-     * @param p The pump to be placed
+     * @param newPump The pump to be placed
      * @return True if the pump was placed
      */
     @Override
     public Pipe placePump(Pump newPump) {
         Szkeleton.printTabs();
-        System.out.println("ObjectName.placePump()");
+        System.out.println(Szkeleton.objectNames.get(this)+ ".placePump()");
         Pump oldPump = (Pump) fields.remove(0);
 
         Szkeleton.tabs++;
@@ -79,7 +79,7 @@ public class Pipe extends Field {
         Szkeleton.tabs--;
 
         Szkeleton.tabs++;
-        boolean result = oldPump.removePipe(this);
+        boolean result = oldPump.removePipe(this); //Ha szükség van rá csak kkor tárolgassuk már el a visszatérési értéket
         Szkeleton.tabs--;
 
         Pipe newPipe = new Pipe(21);
@@ -110,7 +110,7 @@ public class Pipe extends Field {
     @Override
     public int getWater() {
         Szkeleton.printTabs();
-        System.out.println("ObjectName.getWater()");
+        System.out.println(Szkeleton.objectNames.get(this)+ ".getWater()");
         return super.getWater();
     }
 
@@ -122,7 +122,7 @@ public class Pipe extends Field {
     @Override
     public int fillInWater(int i) {
         Szkeleton.printTabs();
-        System.out.println("ObjectName.fillInWater()");
+        System.out.println(Szkeleton.objectNames.get(this)+ ".fillInWater()");
         if (i - capacity > 0) return i - capacity;
         else if (i - capacity < 0) return capacity - i;
         else return 0;
@@ -147,7 +147,7 @@ public class Pipe extends Field {
     @Override
     public boolean connect(ActiveFields a) {
         Szkeleton.printTabs();
-        System.out.println("ObjectName.connect()");
+        System.out.println(Szkeleton.objectNames.get(this)+ ".connect()");
         fields.add(a);
         return super.connect(a);
     }
@@ -160,7 +160,7 @@ public class Pipe extends Field {
     @Override
     public boolean disconnect(ActiveFields a) {
         Szkeleton.printTabs();
-        System.out.println("ObjectName.disconnect()");
+        System.out.println(Szkeleton.objectNames.get(this)+ ".disconnect()");
         //TODO törlés megvalósítása
         return super.disconnect(a);
     }

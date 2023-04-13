@@ -23,16 +23,10 @@ public class Saboteur extends Player {
 	@Override
 	public boolean breakField() {
 		Szkeleton.printTabs();
-		System.out.println("ObjectName.breakField()");
+		System.out.println(Szkeleton.objectNames.get(this)+ ".breakField()");
 		Szkeleton.tabs++;
 		boolean result = getStandingField().breakField();
 		Szkeleton.tabs--;
-		/*switch(Szkeleton.testcase) {
-			case(1) : return result;
-			case(2) : return result;
-		}
-		return super.breakField();
-		*/
 		return result;
 	}
 }

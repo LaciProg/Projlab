@@ -63,7 +63,7 @@ public class Pump extends ActiveFields {
     @Override
     public boolean repair() {
         Szkeleton.printTabs();
-        System.out.println("ObjectName.repair()");
+        System.out.println(Szkeleton.objectNames.get(this)+ ".repair()");
         return true;
     }
 }

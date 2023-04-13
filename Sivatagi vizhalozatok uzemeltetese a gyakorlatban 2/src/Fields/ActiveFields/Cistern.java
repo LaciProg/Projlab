@@ -21,7 +21,7 @@ public class Cistern extends ActiveFields{
     @Override
     public void step() {
         Szkeleton.printTabs();
-        System.out.println("ObjectName.step()");
+        System.out.println(Szkeleton.objectNames.get(this)+ ".step()");
         Szkeleton.tabs++;
         getPipes().get(0).getWater();
         Szkeleton.tabs--;
@@ -36,8 +36,8 @@ public class Cistern extends ActiveFields{
     @Override
     public Pump createNewPump(boolean b) {
         Szkeleton.printTabs();
-        System.out.println("ObjectName.createNewPump()");
-        Pump newPump = new Pump();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".createNewPump()");
+        Pump newPump = new Pump(); //Itt vajon kell ezt is kiíratni?
         return newPump;
     }
 
