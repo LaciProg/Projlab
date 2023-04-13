@@ -14,11 +14,11 @@ public class Mechanic extends Player {
     /**
      *The pump that the mechanic is holding. Default is null.
      */
-    private Pump holdingPump = null;
+    private Pump holdingPump;
     /**
      *The pipe that the mechanic is holding. Default is null.
      */
-    private Pipe holdingPipe = null;
+    private Pipe holdingPipe;
 
     /**
      *  holdingPipe = null;
@@ -27,15 +27,21 @@ public class Mechanic extends Player {
      */
     public Mechanic(Field standingField) {
         super(standingField);
+        Szkeleton.printTabs();
+        System.out.println("new Mechanic()");
         this.holdingPipe = null;
         this.holdingPump = null;
     }
 
     public void setHoldingPump(Pump holdingPump) {
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".setHoldingPump()");
         this.holdingPump = holdingPump;
     }
 
     public void setHoldingPipe(Pipe holdingPipe) {
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".setHoldingPipe()");
         this.holdingPipe = holdingPipe;
     }
 
@@ -75,7 +81,9 @@ public class Mechanic extends Player {
      */
     @Override
     public boolean disconnect(Pipe p) {
-        return super.disconnect(p);
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".disconnect()");
+        return super.disconnect(p); //TODO
     }
 
     /**
@@ -84,7 +92,9 @@ public class Mechanic extends Player {
      */
     @Override
     public boolean connect() {
-        return super.connect();
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".connect()");
+        return super.connect(); //TODO
     }
 
     /**
@@ -107,6 +117,8 @@ public class Mechanic extends Player {
      */
     @Override
     public boolean pickUpPipe() {
-        return super.pickUpPipe();
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".pickUpPipe()");
+        return super.pickUpPipe(); //TODO
     }
 }

@@ -14,6 +14,8 @@ public class Saboteur extends Player {
 	 */
 	public Saboteur(Field standingField) {
 		super(standingField);
+		Szkeleton.printTabs();
+		System.out.println("new Saboteur()");
 	}
 
 	/**
