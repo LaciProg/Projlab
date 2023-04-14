@@ -72,6 +72,7 @@ public class Szkeleton {
         System.out.println("8. PickUpPumpFromCistern");
         System.out.println("9. PickUpPumpFromPipe");
         System.out.println("10. WaterFlowsFromSpring");
+        //TODO Csak függvények
         System.out.println("11. WaterFlowsToCistern");
         System.out.println("12. DisconnectPipe");
         System.out.println("13. ConnectPipe");
@@ -82,9 +83,17 @@ public class Szkeleton {
         System.out.println("18. MechanicMoveFromPumpToPipe");
         System.out.println("19. MechanicMoveFromPumpToOccupiedPipe");
         System.out.println("20. SetPump");
-        System.out.println("17. SaboteurMoveFromPipeToPump");
-        System.out.println("18. SaboteurMoveFromPumpToPipe");
-        System.out.println("19. SaboteurMoveFromPumpToOccupiedPipe");
+        //TODO szekvenciák is
+        System.out.println("21. SaboteurMoveFromPipeToPump");
+        System.out.println("22. SaboteurMoveFromPumpToPipe");
+        System.out.println("23. SaboteurMoveFromPumpToOccupiedPipe");
+        System.out.println("24. WaterFlowsToFullPipe");
+        System.out.println("25. WaterFlowsToEmptyPipe");
+        System.out.println("26. WaterFlowsToBrokenPipe");
+        System.out.println("27. WaterFlowsToDisconnectedPipe");
+        System.out.println("28. PumpBreak100%Chance");
+        System.out.println("29. SaboteursGetsPoints");
+        System.out.println("30. MechanicGetsPoints");
     }
 
     public static void printTabs() {
