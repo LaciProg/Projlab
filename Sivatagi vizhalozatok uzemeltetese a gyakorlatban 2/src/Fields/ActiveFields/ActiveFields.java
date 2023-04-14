@@ -1,5 +1,6 @@
 package Fields.ActiveFields;
 
+import Controll.Szkeleton;
 import Fields.Field;
 import Fields.Pipe;
 import Interfaces.Steppable;
@@ -21,6 +22,8 @@ public abstract class ActiveFields extends Field implements Steppable {
      * @return The pipes connected to the active field
      */
     public ArrayList<Pipe> getPipes() {
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".getPipes() = " + pipes);
         return pipes;
     }
 
@@ -28,6 +31,8 @@ public abstract class ActiveFields extends Field implements Steppable {
      * Setter for pipes. Only for initialization.
      */
     public void setPipes(ArrayList<Pipe> pipes) {
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".setPipes(" + pipes + ")");
         this.pipes = pipes;
     }
 
@@ -38,7 +43,13 @@ public abstract class ActiveFields extends Field implements Steppable {
      */
     @Override
     public boolean addPipe(Pipe p) {
-        return super.addPipe(p);
+        Szkeleton.printTabs();
+        Szkeleton.tabs++;
+        System.out.println(Szkeleton.objectNames.get(this)+ ".addPipe()");
+        pipes.add(p);
+        Szkeleton.tabs--;
+
+        return true;
     }
 
     /**
@@ -48,7 +59,10 @@ public abstract class ActiveFields extends Field implements Steppable {
      */
     @Override
     public boolean removePipe(Pipe p) {
-        return super.removePipe(p);
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".removePipe()");
+        pipes.remove(p);
+        return true;
     }
 
     /**
@@ -56,6 +70,7 @@ public abstract class ActiveFields extends Field implements Steppable {
      */
     @Override
     public void step() {
-
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".step()");
     }
 }

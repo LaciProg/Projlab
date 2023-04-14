@@ -1,5 +1,6 @@
 package Players;
 
+import Controll.Szkeleton;
 import Fields.ActiveFields.Pump;
 import Fields.Field;
 import Fields.Pipe;
@@ -13,11 +14,11 @@ public class Mechanic extends Player {
     /**
      *The pump that the mechanic is holding. Default is null.
      */
-    private Pump holdingPump = null;
+    private Pump holdingPump;
     /**
      *The pipe that the mechanic is holding. Default is null.
      */
-    private Pipe holdingPipe = null;
+    private Pipe holdingPipe;
 
     /**
      *  holdingPipe = null;
@@ -26,8 +27,22 @@ public class Mechanic extends Player {
      */
     public Mechanic(Field standingField) {
         super(standingField);
+        Szkeleton.printTabs();
+        System.out.println("new Mechanic()");
         this.holdingPipe = null;
         this.holdingPump = null;
+    }
+
+    public void setHoldingPump(Pump holdingPump) {
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".setHoldingPump()");
+        this.holdingPump = holdingPump;
+    }
+
+    public void setHoldingPipe(Pipe holdingPipe) {
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".setHoldingPipe()");
+        this.holdingPipe = holdingPipe;
     }
 
     /**
@@ -36,7 +51,12 @@ public class Mechanic extends Player {
      */
     @Override
     public boolean repair() {
-        return super.repair();
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".repair()");
+        Szkeleton.tabs++;
+        boolean result = getStandingField().repair();
+        Szkeleton.tabs--;
+        return result;
     }
 
     /**
@@ -45,7 +65,12 @@ public class Mechanic extends Player {
      */
     @Override
     public Pipe placePump() {
-        return super.placePump();
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".placePump()");
+        Szkeleton.tabs++;
+        Pipe newPipe = getStandingField().placePump(holdingPump);
+        Szkeleton.tabs--;
+        return newPipe;
     }
 
     /**
@@ -56,7 +81,9 @@ public class Mechanic extends Player {
      */
     @Override
     public boolean disconnect(Pipe p) {
-        return super.disconnect(p);
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".disconnect()");
+        return super.disconnect(p); //TODO
     }
 
     /**
@@ -65,7 +92,9 @@ public class Mechanic extends Player {
      */
     @Override
     public boolean connect() {
-        return super.connect();
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".connect()");
+        return super.connect(); //TODO
     }
 
     /**
@@ -74,7 +103,12 @@ public class Mechanic extends Player {
      */
     @Override
     public Pump getPump() {
-        return super.getPump();
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".getPump()");
+        Szkeleton.tabs++;
+        Pump newPump = getStandingField().createNewPump(true); // mechanic can get a new pump
+        Szkeleton.tabs--;
+        return newPump;
     }
 
     /**
@@ -83,6 +117,8 @@ public class Mechanic extends Player {
      */
     @Override
     public boolean pickUpPipe() {
-        return super.pickUpPipe();
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".pickUpPipe()");
+        return super.pickUpPipe(); //TODO
     }
 }

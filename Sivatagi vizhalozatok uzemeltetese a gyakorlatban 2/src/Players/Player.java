@@ -1,5 +1,6 @@
 package Players;
 
+import Controll.Szkeleton;
 import Fields.ActiveFields.Pump;
 import Fields.Field;
 import Fields.Pipe;
@@ -10,9 +11,9 @@ import Fields.Pipe;
 public abstract class Player {
 
 	/**
-	 * The field where the player is standing. Default is null.
+	 * The field where the player is standing.
 	 * */
-	private Field standingField = null;
+	private Field standingField;
 
 	/**
 	 * Getter for the standingField. Only for child classes.
@@ -36,7 +37,9 @@ public abstract class Player {
 	 * @return boolean - always false.
 	 * */
 	public boolean move(Field f) {
-		return false;
+		Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".move()");
+		return false; //TODO
 	}
 	
 	/**
@@ -44,6 +47,8 @@ public abstract class Player {
 	 * @return boolean - always false.
 	 * */
 	public boolean breakField() {
+		Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".breakField()");
 		return false;
 	}
 	
@@ -52,6 +57,8 @@ public abstract class Player {
 	 * @return boolean - always false.
 	 * */
 	public boolean repair() {
+		Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".repair()");
 		return false;
 	}
 	
@@ -60,6 +67,8 @@ public abstract class Player {
 	 * @return Pipe - The other (new) half of the pipe. - always null.
 	 * */
 	public Pipe placePump() {
+		Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".placePump()");
 		return null;
 	}
 	
@@ -70,6 +79,8 @@ public abstract class Player {
 	 * @return boolean - always false.
 	 * */
 	public boolean set(Pipe input, Pipe output) {
+		Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".set()");
 		return false;
 	}
 	
@@ -79,6 +90,8 @@ public abstract class Player {
 	 * @return boolean - always false.
 	 * */
 	public boolean disconnect(Pipe p) {
+		Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".disconnect()");
 		return false;
 	}
 	
@@ -87,6 +100,8 @@ public abstract class Player {
 	 * @return boolean - always false.
 	 * */
 	public boolean connect() {
+		Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".connect()");
 		return false;
 	}
 	
@@ -95,6 +110,8 @@ public abstract class Player {
 	 * @return Pump - The new pump. - always null.
 	 * */
 	public Pump getPump() {
+		Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".getPump()");
 		return null;
 	}
 	
@@ -103,6 +120,8 @@ public abstract class Player {
 	 * @return boolean - always false.
 	 * */
 	public boolean pickUpPipe() {
+		Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".pickUpPipe()");
 		return false;
 	}
 }
