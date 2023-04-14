@@ -252,23 +252,111 @@ public class Szkeleton {
         objectNames.clear();
     }
 
-    public static void TestWaterFlowsToCistern() {}
+    public static void TestWaterFlowsToCistern() {
+        System.out.println("WaterFlowsToCistern\n");
 
-    public static void TestDisconnectPipe() {}
+        System.out.println("Initialization:");
 
-    public static void TestConnectPipe() {}
 
-    public static void TestPickUpPipeFromCistern() {}
+        System.out.println("\nTest:");
 
-    public static void TestWorkingPumpPumping() {}
+        objectNames.clear();
+    }
 
-    public static void TestBrokenPumpPumping() {}
+    public static void TestDisconnectPipe() {
+        System.out.println("DisconnectPipe\n");
 
-    public static void TestMechanicMoveFromPipeToPump() {}
+        System.out.println("Initialization:");
 
-    public static void TestMechanicMoveFromPumpToPipe() {}
 
-    public static void TestMechanicMoveFromPumpToOccupiedPipe() {}
+        System.out.println("\nTest:");
 
-    public static void TestSetPump() {}
+        objectNames.clear();
+    }
+
+    public static void TestConnectPipe() {
+        System.out.println("ConnectPipe\n");
+
+        System.out.println("Initialization:");
+
+
+        System.out.println("\nTest:");
+
+        objectNames.clear();
+    }
+
+    public static void TestPickUpPipeFromCistern() {
+        System.out.println("PickUpPipeFromCistern\n");
+
+        System.out.println("Initialization:");
+
+
+        System.out.println("\nTest:");
+
+        objectNames.clear();
+    }
+
+    public static void TestWorkingPumpPumping() {
+        System.out.println("WorkingPumpPumping\n");
+
+
+        System.out.println("Initialization:");
+
+
+        System.out.println("\nTest:");
+
+        objectNames.clear();
+    }
+
+    public static void TestBrokenPumpPumping() {
+        System.out.println("BrokenPumpPumping\n");
+
+
+        System.out.println("Initialization:");
+
+
+        System.out.println("\nTest:");
+
+        objectNames.clear();
+    }
+
+    public static void TestMechanicMoveFromPipeToPump() {
+        System.out.println("MechanicMoveFromPipeToPump\n");
+
+        System.out.println("Initialization:");
+
+        System.out.println("\nTest:");
+
+        objectNames.clear();
+    }
+
+    public static void TestMechanicMoveFromPumpToPipe() {
+        System.out.println("MechanicMoveFromPumpToPipe\n");
+
+        System.out.println("Initialization:");
+
+        System.out.println("\nTest:");
+
+        objectNames.clear();
+    }
+
+    public static void TestMechanicMoveFromPumpToOccupiedPipe() {
+        System.out.println("MechanicMoveFromPumpToOccupiedPipe\n");
+
+        System.out.println("Initialization:");
+
+        System.out.println("\nTest:");
+
+        objectNames.clear();
+    }
+
+    public static void TestSetPump() {
+        System.out.println("SetPump\n");
+
+        System.out.println("Initialization:");
+
+        System.out.println("\nTest:");
+
+        objectNames.clear();
+    }
 }
