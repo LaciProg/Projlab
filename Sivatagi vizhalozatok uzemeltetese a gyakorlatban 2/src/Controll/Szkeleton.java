@@ -82,6 +82,9 @@ public class Szkeleton {
         System.out.println("18. MechanicMoveFromPumpToPipe");
         System.out.println("19. MechanicMoveFromPumpToOccupiedPipe");
         System.out.println("20. SetPump");
+        System.out.println("17. SaboteurMoveFromPipeToPump");
+        System.out.println("18. SaboteurMoveFromPumpToPipe");
+        System.out.println("19. SaboteurMoveFromPumpToOccupiedPipe");
     }
 
     public static void printTabs() {
