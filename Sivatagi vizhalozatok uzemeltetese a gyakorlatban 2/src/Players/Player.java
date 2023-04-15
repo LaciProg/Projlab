@@ -16,18 +16,30 @@ public abstract class Player {
 	private Field standingField;
 
 	/**
+	 * Setter for the standingField. Only for initialization.
+	 * @param standingField
+	 */
+	public void setStandingField(Field standingField) {
+		Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".setStandingField()");
+		this.standingField = standingField;
+	}
+
+	/**
 	 * Getter for the standingField. Only for child classes.
 	 * @return standingField
 	 */
 	public Field getStandingField() {
+		Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".getStandingField()");
 		return standingField;
 	}
 
 	/**
-	 * @param standingField Field
+	 * Constructor for the player.
 	 */
-	public Player(Field standingField) {
-		this.standingField = standingField;
+	public Player() {
+		standingField = null;
 	}
 
 

@@ -16,12 +16,6 @@ public abstract class Field {
 	 * True if the field is cannot accept more player.
 	 * */
 	private boolean occupied;
-
-	///BTW ez kell? lehetne ez a pipeban, a többiben máshogy szerepel
-	/**
-	 * The amount of water in the field.
-	 * */
-	private int water;
 	
 	/**
 	 * True if the field is broken.
@@ -31,7 +25,37 @@ public abstract class Field {
 	/**
 	 * Players on the field.
 	 * */
-	private ArrayList<Player> players;
+	private ArrayList<Player> players = new ArrayList<>();
+
+	/**
+	 * Setter for Occupied. Only for initialization.
+	 * @param occupied
+	 */
+	public void setOccupied(boolean occupied) {
+		Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".setOccupied()");
+		this.occupied = occupied;
+	}
+
+
+	/**
+	 * Setter for water. Only for initialization.
+	 * @param water
+	 */
+	public void setWater(int water) {
+		Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".setWater()");
+	}
+
+	/**
+	 * Setter for broken. Only for initialization.
+	 * @param broken
+	 */
+	public void setBroken(boolean broken) {
+		Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".setBroken()");
+		this.broken = broken;
+	}
 
 	/**
 	 * Getter for the occupied variable. Only for child classes.
