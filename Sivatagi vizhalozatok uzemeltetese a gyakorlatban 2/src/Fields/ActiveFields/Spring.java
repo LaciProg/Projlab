@@ -9,7 +9,7 @@ import Players.Player;
 public class Spring extends ActiveFields{
 
     /**
-     * The amount of water that the spring gives out. Default value is 0.
+     * The amount of water that the spring gives out. Default value is maxOutWater.
      */
     int waterOut;
     /**
@@ -24,7 +24,7 @@ public class Spring extends ActiveFields{
     public Spring(int maxOutWater) {
         Szkeleton.printTabs();
         System.out.println("new Spring()");
-        this.waterOut = 0;
+        this.waterOut = maxOutWater;
         this.maxOutWater = maxOutWater;
     }
 
@@ -37,8 +37,12 @@ public class Spring extends ActiveFields{
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".step()");
         Szkeleton.tabs++;
-        getPipes().get(0).fillInWater(waterOut);
+        for(int i = 0; i!= getPipes().size(); i++){
+            waterOut = getPipes().get(i).fillInWater(waterOut);
+            if(waterOut == 0){
+                break;
+            }
+        }
         Szkeleton.tabs--;
-        super.step();
     }
 }

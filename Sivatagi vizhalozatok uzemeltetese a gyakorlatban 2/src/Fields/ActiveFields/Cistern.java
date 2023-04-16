@@ -35,7 +35,6 @@ public class Cistern extends ActiveFields{
         Szkeleton.tabs++;
         getPipes().get(0).getWater();
         Szkeleton.tabs--;
-        super.step();
     }
 
     /**
