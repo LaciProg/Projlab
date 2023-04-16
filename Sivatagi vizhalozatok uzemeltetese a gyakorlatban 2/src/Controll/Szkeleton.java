@@ -379,14 +379,4 @@ public class Szkeleton {
 
         objectNames.clear();
     }
-
-    public static void TestSetPump() {
-        System.out.println("SetPump\n");
-
-        System.out.println("Initialization:");
-
-        System.out.println("\nTest:");
-
-        objectNames.clear();
-    }
 }
