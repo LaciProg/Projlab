@@ -58,6 +58,13 @@ public abstract class Field {
 	}
 
 	/**
+	 * Setter for the broken variable.
+	 */
+	public void setBroken(boolean broken) {
+		this.broken = broken;
+	}
+
+	/**
 	 * Setter for the occupied variable. Only for child classes.
 	 * */
 	public void setOccupied(boolean occupied) {
