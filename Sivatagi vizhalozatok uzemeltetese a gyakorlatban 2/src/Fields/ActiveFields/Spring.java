@@ -1,6 +1,7 @@
 package Fields.ActiveFields;
 
 import Controll.Szkeleton;
+import Players.Player;
 
 /**
  * Class for Spring
@@ -8,13 +9,13 @@ import Controll.Szkeleton;
 public class Spring extends ActiveFields{
 
     /**
-     * The amount of water that the spring can give out. Max value is maxOutWater.
+     * The amount of water that the spring gives out. Default value is maxOutWater.
      */
     int waterOut;
     /**
      * The maximum amount of water that the spring can give out.
      */
-    final int maxOutWater;
+    int maxOutWater;
 
     /**
      * Constructor for Spring.
@@ -36,15 +37,12 @@ public class Spring extends ActiveFields{
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".step()");
         Szkeleton.tabs++;
-        waterOut = maxOutWater;
-
-        for(int i = 0; i != getPipes().size(); i++){
+        for(int i = 0; i!= getPipes().size(); i++){
             waterOut = getPipes().get(i).fillInWater(waterOut);
             if(waterOut == 0){
                 break;
             }
         }
-
         Szkeleton.tabs--;
     }
 }

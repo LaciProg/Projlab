@@ -2,6 +2,7 @@ package Fields.ActiveFields;
 
 import Controll.Szkeleton;
 import Fields.Pipe;
+import Players.Player;
 
 /**
  * Class for Pump
@@ -61,6 +62,17 @@ public class Pump extends ActiveFields {
     @Override
     public void step() {
         super.step();
+        Szkeleton.tabs++;
+        this.getPipes().get(waterTo).fillInWater(tank);
+        Szkeleton.tabs--;
+        
+        Szkeleton.tabs++;
+        int waterInPipe = this.getPipes().get(waterFrom).getWater();
+        Szkeleton.tabs--;
+        
+        Szkeleton.tabs++;
+        this.getPipes().get(waterFrom).fillInWater(waterInPipe+this.getPipes().get(waterTo).getWater()-tank);
+        Szkeleton.tabs--;
     }
 
     /**
@@ -83,5 +95,5 @@ public class Pump extends ActiveFields {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".repair()");
         return true;
-    }
+    }   
 }
