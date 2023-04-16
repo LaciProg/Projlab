@@ -7,7 +7,6 @@ import Fields.Pipe;
 import Players.Mechanic;
 import Players.Saboteur;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -33,8 +32,8 @@ public class Szkeleton {
         listTestNames();
         testcase = scanner.nextInt();
         while (testcase != 0) {
-            listTestNames();
             switch (testcase) {
+                case(-1): listTestNames(); break;
                 case (1): TestBreakPipe(); break;
                 case (2): TestBreakCistern(); break;
                 case (3): TestRepairPipe(); break;
@@ -57,11 +56,14 @@ public class Szkeleton {
                 case (20): TestSetPump(); break;
                 default: break;
             }
+            //listTestNames();
             testcase = scanner.nextInt();
         }
     }
 
     public static void listTestNames() {
+        System.out.println("-1. TestCases");
+        System.out.println("0. Exit");
         System.out.println("1. BreakPipe");
         System.out.println("2. BreakCistern");
         System.out.println("3. RepairPipe");
@@ -108,8 +110,10 @@ public class Szkeleton {
         System.out.println("Initialization:");
         Pipe goodPipe = new Pipe(34);
         objectNames.put(goodPipe, "goodPipe");
-        Saboteur sab = new Saboteur(goodPipe);
+        goodPipe.setBroken(false);
+        Saboteur sab = new Saboteur();
         objectNames.put(sab, "sab");
+        sab.setStandingField(goodPipe);
         boolean result;
         System.out.println("\nTest:");
 
@@ -124,8 +128,10 @@ public class Szkeleton {
 
         Cistern cistern = new Cistern();
         objectNames.put(cistern, "cistern");
-        Saboteur sab = new Saboteur(cistern);
+        cistern.setBroken(false);
+        Saboteur sab = new Saboteur();
         objectNames.put(sab, "sab");
+        sab.setStandingField(cistern);
         boolean result;
 
         System.out.println("\nTest:");
@@ -140,8 +146,10 @@ public class Szkeleton {
 
         Pipe brokenPipe = new Pipe(71);
         objectNames.put(brokenPipe, "brokenPipe");
-        Mechanic mechanic = new Mechanic(brokenPipe);
+        brokenPipe.setBroken(true);
+        Mechanic mechanic = new Mechanic();
         objectNames.put(mechanic, "mechanic");
+        mechanic.setStandingField(brokenPipe);
         boolean result;
 
         System.out.println("\nTest:");
@@ -156,8 +164,10 @@ public class Szkeleton {
 
         Pump brokenPump = new Pump();
         objectNames.put(brokenPump, "brokenPump");
-        Mechanic mechanic = new Mechanic(brokenPump);
+        brokenPump.setBroken(true);
+        Mechanic mechanic = new Mechanic();
         objectNames.put(mechanic, "mechanic");
+        mechanic.setStandingField(brokenPump);
         boolean result;
 
         System.out.println("\nTest:");
@@ -172,8 +182,9 @@ public class Szkeleton {
 
         Cistern cistern = new Cistern();
         objectNames.put(cistern, "cistern");
-        Mechanic mechanic = new Mechanic(cistern);
+        Mechanic mechanic = new Mechanic();
         objectNames.put(mechanic, "mechanic");
+        mechanic.setStandingField(cistern);
         boolean result;
 
         System.out.println("\nTest:");
@@ -193,11 +204,13 @@ public class Szkeleton {
         Pipe oldPipe = new Pipe(71);
         objectNames.put(oldPipe, "oldPipe");
         oldPipe.connect(oldPump);
-        Mechanic mechanic = new Mechanic(oldPipe);
+        oldPump.addPipe(oldPipe);
+        Mechanic mechanic = new Mechanic();
         objectNames.put(mechanic, "mechanic");
+        mechanic.setStandingField(oldPipe);
+        mechanic.setHoldingPump(newPump);
 
         System.out.println("\nTest:");
-        mechanic.setHoldingPump(newPump);
         Pipe newPipe = mechanic.placePump();
         System.out.println(newPipe);
         objectNames.clear();
@@ -209,8 +222,9 @@ public class Szkeleton {
 
         Cistern cistern = new Cistern();
         objectNames.put(cistern, "cistern");
-        Mechanic mechanic = new Mechanic(cistern);
+        Mechanic mechanic = new Mechanic();
         objectNames.put(mechanic, "mechanic");
+        mechanic.setStandingField(cistern);
 
         System.out.println("\nTest:");
         Pipe newPipe = mechanic.placePump();
@@ -224,8 +238,10 @@ public class Szkeleton {
 
         Cistern cistern = new Cistern();
         objectNames.put(cistern, "cistern");
-        Mechanic mechanic = new Mechanic(cistern);
+        Mechanic mechanic = new Mechanic();
         objectNames.put(mechanic, "mechanic");
+        mechanic.setStandingField(cistern);
+
 
         System.out.println("\nTest:");
         Pump newPump = mechanic.getPump();
@@ -239,8 +255,10 @@ public class Szkeleton {
 
         Pipe pipe = new Pipe(65);
         objectNames.put(pipe, "pipe");
-        Mechanic mechanic = new Mechanic(pipe);
+        Mechanic mechanic = new Mechanic();
         objectNames.put(mechanic, "mechanic");
+        mechanic.setStandingField(pipe);
+
 
         System.out.println("\nTest:");
         Pump newPump = mechanic.getPump();

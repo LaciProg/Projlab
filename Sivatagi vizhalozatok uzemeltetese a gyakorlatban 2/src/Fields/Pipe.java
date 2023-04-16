@@ -17,6 +17,11 @@ public class Pipe extends Field {
     private final int capacity;
 
     /**
+     * The amount of water in the pipe.
+     * */
+    private int water;
+
+    /**
      * The ends of the pipe. Default is empty.
      */
     private ArrayList<ActiveFields> fields = new ArrayList<>();
@@ -29,6 +34,7 @@ public class Pipe extends Field {
         Szkeleton.printTabs();
         System.out.println("new Pipe()");
         this.capacity = capacity;
+        this.water = 0;
     }
 
     /**
@@ -38,6 +44,16 @@ public class Pipe extends Field {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".setFields()");
         this.fields = fields;
+    }
+
+    /**
+     * Setter for water. Only for initialization.
+     * @param water
+     */
+    public void setWater(int water) {
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".setWater()");
+        this.water = water;
     }
 
     /**
@@ -155,7 +171,7 @@ public class Pipe extends Field {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".connect()");
         fields.add(a);
-        return super.connect(a);
+        return true;
     }
 
     /**
