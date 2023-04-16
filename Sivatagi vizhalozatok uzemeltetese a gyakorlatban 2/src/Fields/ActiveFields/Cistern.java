@@ -2,6 +2,7 @@ package Fields.ActiveFields;
 
 import Controll.Szkeleton;
 import Fields.Pipe;
+import Players.Player;
 
 /**
  * Class for Cistern
@@ -34,7 +35,6 @@ public class Cistern extends ActiveFields{
         Szkeleton.tabs++;
         getPipes().get(0).getWater();
         Szkeleton.tabs--;
-        super.step();
     }
 
     /**
