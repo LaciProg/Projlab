@@ -22,8 +22,6 @@ public abstract class ActiveFields extends Field implements Steppable {
      * @return The pipes connected to the active field
      */
     public ArrayList<Pipe> getPipes() {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".getPipes() = " + pipes);
         return pipes;
     }
 

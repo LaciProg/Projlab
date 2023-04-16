@@ -21,12 +21,12 @@ public class Mechanic extends Player {
     private Pipe holdingPipe;
 
     /**
+     *  Constructor for the mechanic.
      *  holdingPipe = null;
      *  holdingPump = null;
-     * @param standingField Field
      */
-    public Mechanic(Field standingField) {
-        super(standingField);
+    public Mechanic() {
+        super();
         Szkeleton.printTabs();
         System.out.println("new Mechanic()");
         this.holdingPipe = null;
