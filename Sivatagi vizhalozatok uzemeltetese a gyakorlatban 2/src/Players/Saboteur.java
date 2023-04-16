@@ -10,10 +10,9 @@ import Fields.Field;
 public class Saboteur extends Player {
 
 	/**
-	 * @param standingField Field
+	 * Constructor for the saboteur.
 	 */
-	public Saboteur(Field standingField) {
-		super(standingField);
+	public Saboteur() {
 		Szkeleton.printTabs();
 		System.out.println("new Saboteur()");
 	}

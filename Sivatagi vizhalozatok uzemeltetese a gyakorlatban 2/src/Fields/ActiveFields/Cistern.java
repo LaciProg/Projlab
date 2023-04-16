@@ -2,6 +2,7 @@ package Fields.ActiveFields;
 
 import Controll.Szkeleton;
 import Fields.Pipe;
+import Players.Player;
 
 /**
  * Class for Cistern
@@ -34,7 +35,6 @@ public class Cistern extends ActiveFields{
         Szkeleton.tabs++;
         getPipes().get(0).getWater();
         Szkeleton.tabs--;
-        super.step();
     }
 
     /**
@@ -46,7 +46,7 @@ public class Cistern extends ActiveFields{
     public Pump createNewPump(boolean b) {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".createNewPump()");
-        Pump newPump = new Pump();
+        Pump newPump = new Pump(100);
         Szkeleton.objectNames.put(newPump, "newPump");
         return newPump;
     }

@@ -58,6 +58,27 @@ public abstract class Field {
 	}
 
 	/**
+	 * Setter for the broken variable.
+	 */
+	public void setBroken(boolean broken) {
+		this.broken = broken;
+	}
+
+	/**
+	 * Setter for the occupied variable. Only for child classes.
+	 * */
+	public void setOccupied(boolean occupied) {
+		this.occupied = occupied;
+	}
+	
+	/**
+	 * Setter for the water variable. Only for child classes.
+	 * */
+	public void setWater(int water) {
+		this.water = water;
+	}
+	
+	/**
 	 * Methods for accepting players.
 	 * @param p The player to be accepted.
 	 * @return True if the player was accepted. - always false.
@@ -87,6 +108,7 @@ public abstract class Field {
 	public boolean removePlayer(Player p) {
 		Szkeleton.printTabs();
 		System.out.println(Szkeleton.objectNames.get(this)+ ".removePlayer()");
+		setOccupied(false);
 		return false;
 	}
 	
@@ -151,7 +173,14 @@ public abstract class Field {
 	public int getWater() {
 		return 0;
 	}
-	
+
+	/**
+	 * Method for getting the amount of water in field without removing it.
+	 * @return water in field.
+	 */
+	public int getWaterNoChange(){
+		return water;
+	}
 	/**
 	 * Method for adding a pipe to the field.
 	 * @param p The pipe to be added.

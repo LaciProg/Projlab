@@ -3,6 +3,7 @@ package Fields;
 import Controll.Szkeleton;
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
+import Players.Player;
 
 import java.util.ArrayList;
 
@@ -107,6 +108,7 @@ public class Pipe extends Field {
         return newPipe;
     }
 
+
     /**
      * Method for getting the water from the pipe.
      * @return The amount of water in the pipe
@@ -115,7 +117,9 @@ public class Pipe extends Field {
     public int getWater() {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".getWater()");
-        return super.getWater();
+        int w = super.getWater();
+        super.setWater(0);
+        return ((super.isBroken()) || (this.fields.size() < 2)) ? -w : w;
     }
 
     /**
@@ -127,8 +131,7 @@ public class Pipe extends Field {
     public int fillInWater(int i) {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".fillInWater()");
-        if (i - capacity > 0) return i - capacity;
-        else if (i - capacity < 0) return capacity - i;
+        if (i - (capacity- super.getWaterNoChange()) > 0) return i - (capacity- super.getWaterNoChange());
         else return 0;
     }
 
@@ -171,4 +174,20 @@ public class Pipe extends Field {
         return true;
     }
 
+    /**
+	 * Methods for accepting players.
+	 * @param p The player to be accepted.
+	 * @return True if the player was accepted.
+	 * */
+    @Override
+	public boolean accept(Player p) {
+    	Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".accept()");
+    	if(this.isOccupied())
+    		return false;
+    	else {
+    		setOccupied(true);
+    		return true;
+    	}
+	}
 }

@@ -21,12 +21,11 @@ public class Mechanic extends Player {
     private Pipe holdingPipe;
 
     /**
+     * Constructor for the mechanic.
      *  holdingPipe = null;
      *  holdingPump = null;
-     * @param standingField Field
      */
-    public Mechanic(Field standingField) {
-        super(standingField);
+    public Mechanic() {
         Szkeleton.printTabs();
         System.out.println("new Mechanic()");
         this.holdingPipe = null;
@@ -85,7 +84,7 @@ public class Mechanic extends Player {
         System.out.println(Szkeleton.objectNames.get(this)+ ".disconnect()");
         return super.disconnect(p); //TODO
     }
-
+    
     /**
      * Method for connecting the holdingPipe to a pump.
      * @return boolean - returns true if the pipe is connected.
