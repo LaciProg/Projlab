@@ -5,3 +5,4 @@
 *.bat
 *.name
 *.project
+.*classpath
