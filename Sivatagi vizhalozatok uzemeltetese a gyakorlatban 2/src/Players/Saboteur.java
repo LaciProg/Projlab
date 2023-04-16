@@ -13,7 +13,6 @@ public class Saboteur extends Player {
 	 * Constructor for the saboteur.
 	 */
 	public Saboteur() {
-		super();
 		Szkeleton.printTabs();
 		System.out.println("new Saboteur()");
 	}

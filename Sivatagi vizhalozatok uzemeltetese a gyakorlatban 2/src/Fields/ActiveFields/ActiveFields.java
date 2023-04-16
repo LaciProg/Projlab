@@ -4,6 +4,7 @@ import Controll.Szkeleton;
 import Fields.Field;
 import Fields.Pipe;
 import Interfaces.Steppable;
+import Players.Player;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,8 @@ public abstract class ActiveFields extends Field implements Steppable {
      * @return The pipes connected to the active field
      */
     public ArrayList<Pipe> getPipes() {
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".getPipes() = " + pipes);
         return pipes;
     }
 
@@ -71,4 +74,16 @@ public abstract class ActiveFields extends Field implements Steppable {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".step()");
     }
+    
+    /**
+   	 * Methods for accepting players.
+   	 * @param p The player to be accepted.
+   	 * @return True if the player was accepted. - always true
+   	 * */
+       @Override
+   	public boolean accept(Player p) {
+       	Szkeleton.printTabs();
+   		System.out.println(Szkeleton.objectNames.get(this)+ ".accept()");
+       	return true;
+   	}
 }

@@ -16,7 +16,23 @@ public abstract class Player {
 	private Field standingField;
 
 	/**
-	 * Setter for the standingField. Only for initialization.
+	 * Getter for the standingField. Only for child classes.
+	 * @return standingField
+	 */
+	public Field getStandingField() {
+		return standingField;
+	}
+
+	/**
+	 * Constructor for the player.
+	 */
+	public Player() {
+		Szkeleton.printTabs();
+		System.out.println("new Player()");
+	}
+
+	/**
+	 * Setter for the standingField. Only for child classes.
 	 * @param standingField
 	 */
 	public void setStandingField(Field standingField) {
@@ -26,24 +42,6 @@ public abstract class Player {
 	}
 
 	/**
-	 * Getter for the standingField. Only for child classes.
-	 * @return standingField
-	 */
-	public Field getStandingField() {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".getStandingField()");
-		return standingField;
-	}
-
-	/**
-	 * Constructor for the player.
-	 */
-	public Player() {
-		standingField = null;
-	}
-
-
-	/**
 	 * Method for moving the player to a new field.
 	 * @param f Field - The field where the player wants to move.
 	 * @return boolean - always false.
@@ -51,7 +49,19 @@ public abstract class Player {
 	public boolean move(Field f) {
 		Szkeleton.printTabs();
 		System.out.println(Szkeleton.objectNames.get(this)+ ".move()");
-		return false; //TODO
+		
+		Szkeleton.tabs++;
+        boolean result = f.accept(this);
+        Szkeleton.tabs--;
+        
+        if(result) {
+        	Szkeleton.tabs++;
+        	getStandingField().removePlayer(this);
+        	Szkeleton.tabs--;
+        	return true;
+        }
+        else
+        	return false;
 	}
 	
 	/**
