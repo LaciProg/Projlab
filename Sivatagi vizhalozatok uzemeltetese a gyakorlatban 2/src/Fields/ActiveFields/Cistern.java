@@ -2,6 +2,7 @@ package Fields.ActiveFields;
 
 import Controll.Szkeleton;
 import Fields.Pipe;
+import Players.Player;
 
 /**
  * Class for Cistern
