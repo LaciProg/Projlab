@@ -3,7 +3,9 @@ package Fields;
 import Controll.Szkeleton;
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
+import Players.Player;
 
+import java.security.spec.RSAOtherPrimeInfo;
 import java.util.ArrayList;
 
 /**
@@ -15,11 +17,6 @@ public class Pipe extends Field {
      * Capacity of the pipe
      */
     private final int capacity;
-
-    /**
-     * The amount of water in the pipe.
-     * */
-    private int water;
 
     /**
      * The ends of the pipe. Default is empty.
@@ -34,7 +31,6 @@ public class Pipe extends Field {
         Szkeleton.printTabs();
         System.out.println("new Pipe()");
         this.capacity = capacity;
-        this.water = 0;
     }
 
     /**
@@ -47,16 +43,6 @@ public class Pipe extends Field {
     }
 
     /**
-     * Setter for water. Only for initialization.
-     * @param water
-     */
-    public void setWater(int water) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".setWater()");
-        this.water = water;
-    }
-
-    /**
       * Method for breaking the pipe.
      * @return True if the pipe is broken
      */
@@ -64,6 +50,7 @@ public class Pipe extends Field {
     public boolean breakField() {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".breakField()");
+        this.setBroken(true);
         return true;
     }
 
@@ -101,8 +88,11 @@ public class Pipe extends Field {
         oldPump.removePipe(this);
         Szkeleton.tabs--;
 
+        Szkeleton.tabs++;
         Pipe newPipe = new Pipe(21);
         Szkeleton.objectNames.put(newPipe, "newPipe");
+        Szkeleton.tabs--;
+
         Szkeleton.tabs++;
         newPipe.connect(newPump);
         Szkeleton.tabs--;
@@ -123,19 +113,26 @@ public class Pipe extends Field {
         return newPipe;
     }
 
+
     /**
      * Method for getting the water from the pipe.
+     * Prints the amount of water taken.
      * @return The amount of water in the pipe
      */
     @Override
     public int getWater() {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".getWater()");
-        return super.getWater();
+        int w = super.getWaterNoChange();
+        w = ((super.isBroken()) || (this.fields.size() < 2)) ? -w : w;
+        Szkeleton.printTabs();
+        System.out.println(w);
+        return w;
     }
 
     /**
      * Method for filling the pipe with water.
+     * Prints the amount of water returned.
      * @param i The amount of water to be filled in
      * @return The amount of water that was not filled in
      */
@@ -143,9 +140,17 @@ public class Pipe extends Field {
     public int fillInWater(int i) {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".fillInWater()");
-        if (i - capacity > 0) return i - capacity;
-        else if (i - capacity < 0) return capacity - i;
-        else return 0;
+        int waterRightNow = super.getWaterNoChange();
+        if (i - (capacity- waterRightNow) > 0) {
+            Szkeleton.printTabs();
+            System.out.println(i - (capacity - waterRightNow));
+            return i - (capacity-waterRightNow);
+        }
+        else {
+            Szkeleton.printTabs();
+            System.out.println("0");
+            return 0;
+        }
     }
 
 
@@ -187,4 +192,20 @@ public class Pipe extends Field {
         return true;
     }
 
+    /**
+     * Methods for accepting players.
+     * @param p The player to be accepted.
+     * @return True if the player was accepted.
+     * */
+    @Override
+    public boolean accept(Player p) {
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".accept()");
+        if(this.isOccupied())
+            return false;
+        else {
+            setOccupied(true);
+            return true;
+        }
+    }
 }
