@@ -64,7 +64,7 @@ public class Szkeleton {
                 case (28): TestPumpBreak100Chance(); break;
                 case (29): TestSaboteursGetsPoints(); break;
                 case (30): TestMechanicGetsPoints(); break;
-                default: break;
+                default: System.out.println("Wrong input"); break;
             }
             testcase = scanner.nextInt();
         }
@@ -285,7 +285,6 @@ public class Szkeleton {
         objectNames.clear();
     }
 
-    //Csuti innentől
     public static void TestWaterFlowsToCistern() {
         System.out.println("WaterFlowsToCistern\n");
 
@@ -294,8 +293,12 @@ public class Szkeleton {
         objectNames.put(cistern, "cistern");
         Pipe pipe = new Pipe(65);
         objectNames.put(pipe, "pipe");
+        Pump pump = new Pump(120);
+        pump.addPipe(pipe);
         cistern.addPipe(pipe);
+        pipe.connect(pump);
         pipe.connect(cistern);
+        pipe.setWater(43);
 
 
         System.out.println("\nTest:");
@@ -475,9 +478,9 @@ public class Szkeleton {
         //cső-pumpa összekötése
         pipe.connect(pump);
         pump.addPipe(pipe);
-        saboteur.setStandingField(pipe);	//sabotőr rááll a csőre
+        saboteur.setStandingField(pipe);    //sabotőr rááll a csőre
         pipe.accept(saboteur);
-        mechanic.setStandingField(pump);	//mechanic pedig a pumpára
+        mechanic.setStandingField(pump);    //mechanic pedig a pumpára
         pump.accept(mechanic);
 
 
@@ -525,7 +528,6 @@ public class Szkeleton {
 
         objectNames.clear();
     }
-    //Csuti idáig
     
     public static void TestSaboteurMoveFromPipeToPump() {
         System.out.println("SaboteurMoveFromPipeToPump\n");
@@ -592,7 +594,7 @@ public class Szkeleton {
     }
     
     public static void TestWaterFlowsToFullPipe() {
-        System.out.println("WaterFlowsToFullPip\n");
+        System.out.println("WaterFlowsToFullPipe\n");
 
         System.out.println("Initialization:");
         Pipe pipe = new Pipe(50);
@@ -739,6 +741,7 @@ public class Szkeleton {
         objectNames.put(waterCounter, "waterCounter");
         waterCounter.addCistern(cistern);
         waterCounter.setEnd();
+        cistern.setWater(13);
 
         System.out.println("\nTest:");
         waterCounter.count();
