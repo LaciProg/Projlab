@@ -74,7 +74,7 @@ public class Szkeleton {
         System.out.println("8. PickUpPumpFromCistern");
         System.out.println("9. PickUpPumpFromPipe");
         System.out.println("10. WaterFlowsFromSpring");
-        //TODO Csak függvények
+        //TODO Csak függvények (Csuti)
         System.out.println("11. WaterFlowsToCistern");
         System.out.println("12. DisconnectPipe");
         System.out.println("13. ConnectPipe");
@@ -282,13 +282,21 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    //Csuti innentől
     public static void TestWaterFlowsToCistern() {
         System.out.println("WaterFlowsToCistern\n");
 
         System.out.println("Initialization:");
+        Cistern cistern = new Cistern();
+        objectNames.put(cistern, "cistern");
+        Pipe pipe = new Pipe(65);
+        objectNames.put(pipe, "pipe");
+        cistern.addPipe(pipe);
+        pipe.connect(cistern);
 
 
         System.out.println("\nTest:");
+        cistern.step();
 
         objectNames.clear();
     }
@@ -297,9 +305,20 @@ public class Szkeleton {
         System.out.println("DisconnectPipe\n");
 
         System.out.println("Initialization:");
+        Mechanic mechanic = new Mechanic();
+        objectNames.put(mechanic, "mechanic");
+        Pump standingField = new Pump();
+        objectNames.put(standingField, "standingField");
+        Pipe pipe = new Pipe(65);
+        objectNames.put(pipe, "pipe");
+        standingField.addPipe(pipe);
+        pipe.connect(standingField);
+        mechanic.move(standingField);
 
 
         System.out.println("\nTest:");
+        boolean returned = mechanic.disconnect(pipe);
+        System.out.println(returned);
 
         objectNames.clear();
     }
@@ -389,4 +408,6 @@ public class Szkeleton {
 
         objectNames.clear();
     }
+    //Csuti idáig
+
 }
