@@ -49,6 +49,7 @@ public class Pipe extends Field {
     public boolean breakField() {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".breakField()");
+        this.setBroken(true);
         return true;
     }
 
@@ -108,6 +109,7 @@ public class Pipe extends Field {
         return newPipe;
     }
 
+
     /**
      * Method for getting the water from the pipe.
      * @return The amount of water in the pipe
@@ -116,7 +118,11 @@ public class Pipe extends Field {
     public int getWater() {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".getWater()");
-        return super.getWater();
+        int w = super.getWaterNoChange();
+        super.setWater(0);
+        w = ((super.isBroken()) || (this.fields.size() < 2)) ? -w : w;
+        System.out.println(w+"\n");
+        return w;
     }
 
     /**
@@ -128,8 +134,7 @@ public class Pipe extends Field {
     public int fillInWater(int i) {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".fillInWater()");
-        if (i - capacity > 0) return i - capacity;
-        else if (i - capacity < 0) return capacity - i;
+        if (i - (capacity- super.getWaterNoChange()) > 0) return i - (capacity- super.getWaterNoChange());
         else return 0;
     }
 
