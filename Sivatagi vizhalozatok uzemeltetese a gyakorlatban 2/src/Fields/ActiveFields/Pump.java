@@ -79,6 +79,17 @@ public class Pump extends ActiveFields {
     }
 
     /**
+     * Method for breaking the pump.
+     * @return True if the pump is broken
+     */
+    @Override
+    public boolean breakField() {
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".breakField()");
+        return true;
+    }
+
+    /**
      * Method for setting the water flow in the pump.
      * @param input Pipe - The input pipe of the pump.
      * @param output Pipe - The output pipe of the pump.

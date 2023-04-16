@@ -53,13 +53,17 @@ public class Cistern extends ActiveFields{
 
     /**
      * Method for getting the water from the field.
+     * Prints the amount of water taken.
      * @return The amount of water in the field.
      */
     @Override
     public int getWater() {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".getWater()");
-        return super.getWater(); //TODO
+        int w = super.getWaterNoChange();
+        Szkeleton.printTabs();
+        System.out.println(w);
+        return w;
     }
 
     /**
