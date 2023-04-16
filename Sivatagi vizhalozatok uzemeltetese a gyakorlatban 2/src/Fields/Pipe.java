@@ -108,6 +108,7 @@ public class Pipe extends Field {
         return newPipe;
     }
 
+
     /**
      * Method for getting the water from the pipe.
      * @return The amount of water in the pipe
@@ -116,7 +117,9 @@ public class Pipe extends Field {
     public int getWater() {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".getWater()");
-        return super.getWater();
+        int w = super.getWater();
+        super.setWater(0);
+        return ((super.isBroken()) || (this.fields.size() < 2)) ? -w : w;
     }
 
     /**
@@ -128,8 +131,7 @@ public class Pipe extends Field {
     public int fillInWater(int i) {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".fillInWater()");
-        if (i - capacity > 0) return i - capacity;
-        else if (i - capacity < 0) return capacity - i;
+        if (i - (capacity- super.getWaterNoChange()) > 0) return i - (capacity- super.getWaterNoChange());
         else return 0;
     }
 

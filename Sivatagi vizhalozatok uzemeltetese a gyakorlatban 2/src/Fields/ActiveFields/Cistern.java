@@ -46,7 +46,7 @@ public class Cistern extends ActiveFields{
     public Pump createNewPump(boolean b) {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".createNewPump()");
-        Pump newPump = new Pump();
+        Pump newPump = new Pump(100);
         Szkeleton.objectNames.put(newPump, "newPump");
         return newPump;
     }

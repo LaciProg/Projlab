@@ -173,7 +173,14 @@ public abstract class Field {
 	public int getWater() {
 		return 0;
 	}
-	
+
+	/**
+	 * Method for getting the amount of water in field without removing it.
+	 * @return water in field.
+	 */
+	public int getWaterNoChange(){
+		return water;
+	}
 	/**
 	 * Method for adding a pipe to the field.
 	 * @param p The pipe to be added.

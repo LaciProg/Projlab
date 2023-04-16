@@ -163,7 +163,7 @@ public class Szkeleton {
         System.out.println("RepairPump\n");
         System.out.println("Initialization:");
 
-        Pump brokenPump = new Pump();
+        Pump brokenPump = new Pump(100);
         objectNames.put(brokenPump, "brokenPump");
         Mechanic mechanic = new Mechanic();
         mechanic.setStandingField(brokenPump);
@@ -197,9 +197,9 @@ public class Szkeleton {
         System.out.println("PlacePumpOnPipe\n");
         System.out.println("Initialization:");
 
-        Pump oldPump = new Pump();
+        Pump oldPump = new Pump(100);
         objectNames.put(oldPump, "oldPump");
-        Pump newPump = new Pump();
+        Pump newPump = new Pump(100);
         objectNames.put(newPump, "newPump");
         Pipe oldPipe = new Pipe(71);
         objectNames.put(oldPipe, "oldPipe");
@@ -304,7 +304,7 @@ public class Szkeleton {
         System.out.println("Initialization:");
         Mechanic mechanic = new Mechanic();
         objectNames.put(mechanic, "mechanic");
-        Pump standingField = new Pump();
+        Pump standingField = new Pump(100);
         objectNames.put(standingField, "standingField");
         Pipe pipe = new Pipe(65);
         objectNames.put(pipe, "pipe");
@@ -327,7 +327,7 @@ public class Szkeleton {
         System.out.println("Initialization:");
         Mechanic mechanic = new Mechanic();
         objectNames.put(mechanic, "mechanic");
-        Pump standingField = new Pump();
+        Pump standingField = new Pump(100);
         objectNames.put(standingField, "standingField");
         Pipe holdingPipe = new Pipe(65);
         objectNames.put(holdingPipe, "holdingPipe");
@@ -366,7 +366,7 @@ public class Szkeleton {
 
 
         System.out.println("Initialization:");
-        Pump pump = new Pump();
+        Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         Pipe from = new Pipe(65);
         objectNames.put(from, "from");
@@ -389,7 +389,7 @@ public class Szkeleton {
 
 
         System.out.println("Initialization:");
-        Pump pump = new Pump();
+        Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         Pipe from = new Pipe(65);
         objectNames.put(from, "from");
@@ -416,7 +416,7 @@ public class Szkeleton {
         objectNames.put(pipe, "pipe");
         Mechanic mechanic = new Mechanic();
         objectNames.put(mechanic, "mechanic");
-        Pump pump = new Pump();
+        Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         pipe.connect(pump);
         pump.addPipe(pipe);
@@ -439,7 +439,7 @@ public class Szkeleton {
         objectNames.put(pipe, "pipe");
         Mechanic mechanic = new Mechanic();
         objectNames.put(mechanic, "mechanic");
-        Pump pump = new Pump();
+        Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         pipe.connect(pump);
         pump.addPipe(pipe);
@@ -462,7 +462,7 @@ public class Szkeleton {
         objectNames.put(pipe, "pipe");
         Mechanic mechanic = new Mechanic();
         objectNames.put(mechanic, "mechanic");
-        Pump pump = new Pump();
+        Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         Saboteur saboteur = new Saboteur();
         objectNames.put(saboteur, "saboteur");
@@ -489,7 +489,7 @@ public class Szkeleton {
         //objektumok létrehozása
         Mechanic mechanic = new Mechanic();
         objectNames.put(mechanic , "mechanic");
-        Pump pump = new Pump();
+        Pump pump = new Pump(100);
         objectNames.put(pump , "pump");
         Pipe oldinput = new Pipe(65);
         objectNames.put(oldinput , "oldinput");
@@ -530,7 +530,7 @@ public class Szkeleton {
         Saboteur saboteur = new Saboteur();
         saboteur.setStandingField(pipe);
         objectNames.put(saboteur, "saboteur");
-        Pump pump = new Pump();
+        Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         pipe.connect(pump);
         pump.addPipe(pipe);
@@ -548,7 +548,7 @@ public class Szkeleton {
         System.out.println("Initialization:");
         Pipe pipe = new Pipe(48);
         objectNames.put(pipe, "pipe");
-        Pump pump = new Pump();
+        Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         Saboteur saboteur = new Saboteur();
         saboteur.setStandingField(pump);
@@ -569,7 +569,7 @@ public class Szkeleton {
         System.out.println("Initialization:");
         Pipe pipe = new Pipe(44);
         objectNames.put(pipe, "pipe");
-        Pump pump = new Pump();
+        Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         Saboteur saboteur = new Saboteur();
         saboteur.setStandingField(pump);
@@ -593,7 +593,7 @@ public class Szkeleton {
         objectNames.put(pipe, "pipe");
         Pipe fullPipe = new Pipe(40);
         objectNames.put(fullPipe, "fullPipe");
-        Pump pump = new Pump();
+        Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         pipe.connect(pump);
         fullPipe.connect(pump);
@@ -615,7 +615,7 @@ public class Szkeleton {
         objectNames.put(pipe, "pipe");
         Pipe emptyPipe = new Pipe(40);
         objectNames.put(emptyPipe, "emptyPipe");
-        Pump pump = new Pump();
+        Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         pipe.connect(pump);
         emptyPipe.connect(pump);
@@ -628,4 +628,70 @@ public class Szkeleton {
         pump.step();
         objectNames.clear();
     }
+
+    public static void TestWaterFlowsToBrokenPipe() {
+        System.out.println("WaterFlowsToBrokenPipe\n");
+
+        System.out.println("Initialization:");
+        Pipe pipe = new Pipe(50);
+        objectNames.put(pipe, "pipe");
+        Pipe emptyPipe = new Pipe(40);
+        objectNames.put(emptyPipe, "brokenPipe");
+        Pump pump = new Pump(100);
+        objectNames.put(pump, "pump");
+        pipe.connect(pump);
+        emptyPipe.connect(pump);
+        pump.addPipe(pipe);
+        pump.addPipe(emptyPipe);
+        pump.set(pipe, emptyPipe);
+        emptyPipe.setWater(0);
+
+        System.out.println("\nTest:");
+        pump.step();
+        objectNames.clear();
+    }
+
+    public static void TestWaterFlowsToDisconnectedPipe() {
+        System.out.println("WaterFlowsToDisconnectedPipe\n");
+
+        System.out.println("Initialization:");
+        Pipe pipe = new Pipe(50);
+        objectNames.put(pipe, "pipe");
+        Pipe emptyPipe = new Pipe(40);
+        objectNames.put(emptyPipe, "disconnectedPipe");
+        Pump pump = new Pump(100);
+        objectNames.put(pump, "pump");
+        pipe.connect(pump);
+        emptyPipe.connect(pump);
+        pump.addPipe(pipe);
+        pump.addPipe(emptyPipe);
+        pump.set(pipe, emptyPipe);
+        emptyPipe.setWater(0);
+
+        System.out.println("\nTest:");
+        pump.step();
+        objectNames.clear();
+    }
+
+    public static void TestPumpBreak100Chance() {
+        System.out.print("TestPumpBreak100%Chance");
+
+        System.out.println("Initialization:");
+        Pump pump = new Pump(100);
+        objectNames.put(pump, "pump");
+
+        System.out.println("\nTest:");
+        pump.breakField(); // Ez a step függvényben lesz később implementálva. Ez a teszteset azt mutatja, hogy el lehet törni egy pumpát.
+        objectNames.clear();
+    }
+
+    public static void TestSaboteursGetsPoints() {
+
+    }
+
+    public static void TestMechanicGetsPoints() {
+
+    }
+
+
 }
