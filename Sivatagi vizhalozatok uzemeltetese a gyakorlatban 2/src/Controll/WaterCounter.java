@@ -34,6 +34,7 @@ public class WaterCounter {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+".count()");
         Szkeleton.tabs++;
+
         Szkeleton.tabs--;
     }
 

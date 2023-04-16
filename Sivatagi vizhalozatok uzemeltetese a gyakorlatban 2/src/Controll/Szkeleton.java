@@ -32,7 +32,6 @@ public class Szkeleton {
         listTestNames();
         testcase = scanner.nextInt();
         while (testcase != 0) {
-            //listTestNames();
             switch (testcase) {
                 case(-1): listTestNames(); break;
                 case (1): TestBreakPipe(); break;
@@ -593,7 +592,7 @@ public class Szkeleton {
         Pipe pipe = new Pipe(50);
         objectNames.put(pipe, "pipe");
         Pipe fullPipe = new Pipe(40);
-        objectNames.put(fullPipe, "pipe");
+        objectNames.put(fullPipe, "fullPipe");
         Pump pump = new Pump();
         objectNames.put(pump, "pump");
         pipe.connect(pump);
@@ -615,7 +614,7 @@ public class Szkeleton {
         Pipe pipe = new Pipe(50);
         objectNames.put(pipe, "pipe");
         Pipe emptyPipe = new Pipe(40);
-        objectNames.put(emptyPipe, "pipe");
+        objectNames.put(emptyPipe, "emptyPipe");
         Pump pump = new Pump();
         objectNames.put(pump, "pump");
         pipe.connect(pump);
