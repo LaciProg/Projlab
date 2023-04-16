@@ -118,7 +118,7 @@ public class Pipe extends Field {
         System.out.println(Szkeleton.objectNames.get(this)+ ".getWater()");
         int w = super.getWater();
         super.setWater(0);
-        return super.isBroken() ? -w : w;
+        return ((super.isBroken()) || (this.fields.size() < 2)) ? -w : w;
     }
 
     /**
