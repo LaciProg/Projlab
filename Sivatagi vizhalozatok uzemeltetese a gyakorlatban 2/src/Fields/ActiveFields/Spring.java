@@ -1,7 +1,6 @@
 package Fields.ActiveFields;
 
 import Controll.Szkeleton;
-import Players.Player;
 
 /**
  * Class for Spring

@@ -33,7 +33,7 @@ public abstract class Player {
 
 	/**
 	 * Setter for the standingField. Only for child classes.
-	 * @param standingField
+	 * @param standingField The field where the player is standing.
 	 */
 	public void setStandingField(Field standingField) {
 		Szkeleton.printTabs();
@@ -103,7 +103,10 @@ public abstract class Player {
 	public boolean set(Pipe input, Pipe output) {
 		Szkeleton.printTabs();
 		System.out.println(Szkeleton.objectNames.get(this)+ ".set()");
-		return false;
+		Szkeleton.tabs++;
+		boolean ret = standingField.set(input, output);
+		Szkeleton.tabs--;
+		return ret;
 	}
 	
 	/**

@@ -53,7 +53,7 @@ public abstract class Field {
 	 * Getter for the players. Only for child classes.
 	 * @return players.
 	 */
-	public ArrayList<Player> getPlayers() {
+	public ArrayList<Player> getPlayers() { //Basic getter if it is needed
 		return players;
 	}
 
@@ -90,14 +90,13 @@ public abstract class Field {
 		return false;
 	}
 
-	///Ezt végül benthagyjuk?
 
 	/**
 	 * Method for checking if the field is neighbour of the given field.
 	 * @param f The field to be checked.
 	 * @return True if the field is neighbour. - always false.
 	 * */
-	public boolean checkNeighbour(Field f) {
+	public boolean checkNeighbour(Field f) { //Not used in the skeleton. Probably it will be removed from Proto.
 		Szkeleton.printTabs();
 		System.out.println(Szkeleton.objectNames.get(this)+ ".checkNeighbour()");
 		return false;

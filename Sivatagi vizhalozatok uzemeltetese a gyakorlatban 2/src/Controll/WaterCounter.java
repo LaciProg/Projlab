@@ -23,15 +23,15 @@ public class WaterCounter {
     /**
      * All cisterns in the game.
      */
-    private ArrayList<Cistern> cisterns = new ArrayList<>();
+    private final ArrayList<Cistern> cisterns = new ArrayList<>();
     /**
      * All pipes in the game.
      */
-    private ArrayList<Pipe> pipes = new ArrayList<>();
+    private final ArrayList<Pipe> pipes = new ArrayList<>();
     /**
      * Shows if the game ended. Default value false.
      */
-    private boolean gameended = false;
+    private boolean gameEnded = false;
 
     /**
      *WaterCounter constructor.
@@ -70,7 +70,7 @@ public class WaterCounter {
     public void setEnd(){
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this) + ".setEnd");
-        gameended = true;
+        gameEnded = true;
     }
     /**
      *Count method.
@@ -80,17 +80,16 @@ public class WaterCounter {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+".count()");
         Szkeleton.tabs++;
-        for(int i = 0; i < pipes.size(); i++){
-            int w = pipes.get(i).getWater();
-            if(w > 0){
-                pipes.get(i).fillInWater(w);
-            }
-            else
-                saboteur += -w;
+        for (Pipe pipe : pipes) {
+            int w = pipe.getWater();
+            if (w > 0) {
+                pipe.fillInWater(w);
+            } else
+                saboteur += w;
         }
-        if(gameended) {
-            for (int i = 0; i < cisterns.size(); i++) {
-                int w = cisterns.get(i).getWater();
+        if(gameEnded) {
+            for (Cistern cistern : cisterns) {
+                int w = cistern.getWater();
                 mechanic += w;
             }
         }
