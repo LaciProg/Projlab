@@ -98,10 +98,15 @@ public class Pump extends ActiveFields {
     @Override
     public boolean set(Pipe input, Pipe output) {
         Szkeleton.printTabs();
+        Szkeleton.tabs++;
         System.out.println(Szkeleton.objectNames.get(this)+ ".set()");
         waterFrom = super.getPipes().indexOf(input);
         waterTo = super.getPipes().indexOf(output);
-        return super.set(input, output);
+        if(waterFrom == -1 || waterTo == -1) return false;
+        this.setWaterFrom(waterFrom);
+        this.setWaterTo(waterTo);
+        Szkeleton.tabs--;
+        return true;
     }
 
     @Override
