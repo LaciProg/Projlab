@@ -875,7 +875,7 @@ public class Szkeleton {
 
         System.out.println("\nTest:");
         boolean result = pump.breakField(); // Ez a step függvényben lesz később implementálva. Ez a teszteset azt mutatja, hogy el lehet törni egy pumpát.
-        System.out.println(result); //TODO
+        System.out.println(result);
         objectNames.clear();
     }
 
