@@ -73,7 +73,10 @@ public class Cistern extends ActiveFields{
     @Override
     public Pipe pickUpPipe() {
         Szkeleton.printTabs();
+        Szkeleton.tabs++;
         System.out.println(Szkeleton.objectNames.get(this)+ ".pickUpPipe()");
-        return super.pickUpPipe(); //TODO
+        Pipe newPipe = new Pipe(65);
+        Szkeleton.tabs--;
+        return newPipe;
     }
 }
