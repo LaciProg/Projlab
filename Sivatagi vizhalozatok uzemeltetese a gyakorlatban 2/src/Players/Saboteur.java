@@ -1,7 +1,6 @@
 package Players;
 
 import Controll.Szkeleton;
-import Fields.Field;
 
 
 /**

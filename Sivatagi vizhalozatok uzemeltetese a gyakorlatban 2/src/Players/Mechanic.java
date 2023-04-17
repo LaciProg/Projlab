@@ -3,7 +3,6 @@ package Players;
 import Controll.Szkeleton;
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
-import Fields.Field;
 import Fields.Pipe;
 
 
@@ -39,7 +38,11 @@ public class Mechanic extends Player {
         this.holdingPump = holdingPump;
     }
 
-    public void setHoldingPipe(Pipe holdingPipe) {
+    /**
+     * Setter for the holdingPipe.
+     * @param holdingPipe The pipe that the mechanic is holding.
+     */
+    public void setHoldingPipe(Pipe holdingPipe) { //Basic setter for the holdingPipe.
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".setHoldingPipe()");
         this.holdingPipe = holdingPipe;

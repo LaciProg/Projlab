@@ -29,7 +29,7 @@ public abstract class ActiveFields extends Field implements Steppable {
     /**
      * Setter for pipes. Only for initialization.
      */
-    public void setPipes(ArrayList<Pipe> pipes) {
+    public void setPipes(ArrayList<Pipe> pipes) { //Basic setter if it is needed
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".setPipes()");
         this.pipes = pipes;
