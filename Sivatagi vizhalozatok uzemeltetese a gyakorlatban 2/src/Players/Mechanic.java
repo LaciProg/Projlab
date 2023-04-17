@@ -1,8 +1,8 @@
 package Players;
 
 import Controll.Szkeleton;
+import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
-import Fields.Field;
 import Fields.Pipe;
 
 
@@ -38,7 +38,11 @@ public class Mechanic extends Player {
         this.holdingPump = holdingPump;
     }
 
-    public void setHoldingPipe(Pipe holdingPipe) {
+    /**
+     * Setter for the holdingPipe.
+     * @param holdingPipe The pipe that the mechanic is holding.
+     */
+    public void setHoldingPipe(Pipe holdingPipe) { //Basic setter for the holdingPipe.
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".setHoldingPipe()");
         this.holdingPipe = holdingPipe;
@@ -81,8 +85,16 @@ public class Mechanic extends Player {
     @Override
     public boolean disconnect(Pipe p) {
         Szkeleton.printTabs();
+        Szkeleton.tabs++;
         System.out.println(Szkeleton.objectNames.get(this)+ ".disconnect()");
-        return super.disconnect(p); //TODO
+        boolean result = super.getStandingField().removePipe(p);
+        boolean result2 = false;
+		if(result) {
+			result2 = p.disconnect((ActiveFields) super.getStandingField());
+			if(result2) holdingPipe = p;
+		}
+		Szkeleton.tabs--;
+		return result && result2;
     }
     
     /**
@@ -92,8 +104,14 @@ public class Mechanic extends Player {
     @Override
     public boolean connect() {
         Szkeleton.printTabs();
+        Szkeleton.tabs++;
         System.out.println(Szkeleton.objectNames.get(this)+ ".connect()");
-        return super.connect(); //TODO
+        if(holdingPipe == null) return false;
+        boolean result = super.getStandingField().addPipe(holdingPipe);
+		if(!result) return false;
+		result = holdingPipe.connect((ActiveFields) super.getStandingField());
+		Szkeleton.tabs--;
+        return result;
     }
 
     /**
@@ -117,7 +135,11 @@ public class Mechanic extends Player {
     @Override
     public boolean pickUpPipe() {
         Szkeleton.printTabs();
+        Szkeleton.tabs++;
         System.out.println(Szkeleton.objectNames.get(this)+ ".pickUpPipe()");
-        return super.pickUpPipe(); //TODO
+        holdingPipe = super.getStandingField().pickUpPipe();
+        Szkeleton.tabs--;
+        return holdingPipe != null;
+        //return super.pickUpPipe(); //TODO
     }
 }
