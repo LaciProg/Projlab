@@ -2,8 +2,6 @@ package Fields.ActiveFields;
 
 import Controll.Szkeleton;
 import Fields.Pipe;
-import Players.Player;
-
 /**
  * Class for Pump
  * */
@@ -40,8 +38,6 @@ public class Pump extends ActiveFields {
      * @param waterFrom The index of the pipe from which the pump gets water. Only for initialization.
      */
     public void setWaterFrom(int waterFrom) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".setWaterFrom()");
         this.waterFrom = waterFrom;
     }
 
@@ -50,8 +46,6 @@ public class Pump extends ActiveFields {
      * @param waterTo The index of the pipe to which the pump gives water. Only for initialization.
      */
     public void setWaterTo(int waterTo) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".setWaterTo()");
         this.waterTo = waterTo;
     }
 
