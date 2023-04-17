@@ -322,7 +322,6 @@ public class Szkeleton {
         mechanic.setStandingField(standingField);
         standingField.accept(mechanic);
 
-
         System.out.println("\nTest:");
         boolean returned = mechanic.disconnect(pipe);
         System.out.println(returned);
