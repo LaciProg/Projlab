@@ -140,6 +140,5 @@ public class Mechanic extends Player {
         holdingPipe = super.getStandingField().pickUpPipe();
         Szkeleton.tabs--;
         return holdingPipe != null;
-        //return super.pickUpPipe(); //TODO
     }
 }

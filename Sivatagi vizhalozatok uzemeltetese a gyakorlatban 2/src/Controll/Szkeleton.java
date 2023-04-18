@@ -677,8 +677,8 @@ public class Szkeleton {
         Pipe pipe = new Pipe(20);
         objectNames.put(pipe, "pipe");
         Saboteur saboteur = new Saboteur();
-        saboteur.setStandingField(pipe);
         objectNames.put(saboteur, "saboteur");
+        saboteur.setStandingField(pipe);
         Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         pipe.connect(pump);
@@ -707,8 +707,8 @@ public class Szkeleton {
         Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         Saboteur saboteur = new Saboteur();
-        saboteur.setStandingField(pump);
         objectNames.put(saboteur, "saboteur");
+        saboteur.setStandingField(pump);
         pipe.connect(pump);
         pump.addPipe(pipe);
         boolean result;
@@ -735,8 +735,8 @@ public class Szkeleton {
         Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         Saboteur saboteur = new Saboteur();
-        saboteur.setStandingField(pump);
         objectNames.put(saboteur, "saboteur");
+        saboteur.setStandingField(pump);
         pipe.connect(pump);
         pump.addPipe(pipe);
         pipe.setOccupied(true);
@@ -875,7 +875,7 @@ public class Szkeleton {
 
         System.out.println("\nTest:");
         boolean result = pump.breakField(); // Ez a step függvényben lesz később implementálva. Ez a teszteset azt mutatja, hogy el lehet törni egy pumpát.
-        System.out.println(result); //TODO
+        System.out.println(result);
         objectNames.clear();
     }
 
