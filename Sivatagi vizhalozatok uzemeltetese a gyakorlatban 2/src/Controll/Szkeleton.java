@@ -296,7 +296,7 @@ public class Szkeleton {
 
     /**
      * Test case for the placePump method.
-     * The mechanic is standing on a pipe.
+     * The mechanic is standing on a cistern.
      * The mechanic is not holding a pump.
      * Result: success. The mechanic can pick up a pump from the cistern.
      */
@@ -468,10 +468,9 @@ public class Szkeleton {
     }
 
     /**
-     * Test case for picking up a pipe from a pump.
-     * The mechanic is standing on the pump.
-     * The mechanic is not holding a pipe.
-     * Result: fail. The mechanic cannot pick up a pipe from the pump.
+     * Test case for working pump pumping.
+     * The pump is not broken.
+     * Result: succes. The pump can pump.
      */
     public static void TestWorkingPumpPumping() {
         System.out.println("WorkingPumpPumping\n");
