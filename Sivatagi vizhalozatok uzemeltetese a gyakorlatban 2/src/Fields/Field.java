@@ -22,12 +22,12 @@ public abstract class Field {
 	 * The amount of water in the field.
 	 * */
 	private int water;
-	
+
 	/**
 	 * True if the field is broken.
 	 * */
 	private boolean broken;
-	
+
 	/**
 	 * Players on the field.
 	 * */
@@ -53,7 +53,7 @@ public abstract class Field {
 	 * Getter for the players. Only for child classes.
 	 * @return players.
 	 */
-	public ArrayList<Player> getPlayers() {
+	public ArrayList<Player> getPlayers() { //Basic getter if it is needed
 		return players;
 	}
 
@@ -70,14 +70,17 @@ public abstract class Field {
 	public void setOccupied(boolean occupied) {
 		this.occupied = occupied;
 	}
-	
+
 	/**
 	 * Setter for the water variable. Only for child classes.
 	 * */
 	public void setWater(int water) {
+		Szkeleton.printTabs();
+		System.out.println(Szkeleton.objectNames.get(this)+ ".setWater()");
+		System.out.println(water);
 		this.water = water;
 	}
-	
+
 	/**
 	 * Methods for accepting players.
 	 * @param p The player to be accepted.
@@ -87,18 +90,18 @@ public abstract class Field {
 		return false;
 	}
 
-	///Ezt végül benthagyjuk?
+
 	/**
 	 * Method for checking if the field is neighbour of the given field.
 	 * @param f The field to be checked.
 	 * @return True if the field is neighbour. - always false.
 	 * */
-	public boolean checkNeighbour(Field f) {
+	public boolean checkNeighbour(Field f) { //Not used in the skeleton. Probably it will be removed from Proto.
 		Szkeleton.printTabs();
 		System.out.println(Szkeleton.objectNames.get(this)+ ".checkNeighbour()");
 		return false;
 	}
-	
+
 	/**
 	 * Method for removing a player from the field.
 	 * @param p The player to be removed.
@@ -111,7 +114,7 @@ public abstract class Field {
 		setOccupied(false);
 		return false;
 	}
-	
+
 	/**
 	 * Method for breaking the field.
 	 * @return True if the field was broken. - always false.
@@ -133,7 +136,7 @@ public abstract class Field {
 		System.out.println(Szkeleton.objectNames.get(this)+ ".set()");
 		return false;
 	}
-	
+
 	/**
 	 * Method for repairing the field.
 	 * @return True if the field was repaired. - always false.
@@ -143,7 +146,7 @@ public abstract class Field {
 		System.out.println(Szkeleton.objectNames.get(this)+ ".repair()");
 		return false;
 	}
-	
+
 	/**
 	 * Method for placing a pump on the field.
 	 * @param p The pump to be placed.
@@ -154,7 +157,7 @@ public abstract class Field {
 		System.out.println(Szkeleton.objectNames.get(this)+ ".placePump()");
 		return null;
 	}
-	
+
 	/**
 	 * Method for creating a new pump.
 	 * @param b True if the player get a new pump.
@@ -165,9 +168,10 @@ public abstract class Field {
 		System.out.println(Szkeleton.objectNames.get(this)+ ".creteNewPump()");
 		return null;
 	}
-	
+
 	/**
 	 * Method for getting the water from the field.
+	 * Prints the amount of water taken.
 	 * @return The amount of water in the field. - always 0.
 	 * */
 	public int getWater() {
@@ -181,6 +185,7 @@ public abstract class Field {
 	public int getWaterNoChange(){
 		return water;
 	}
+
 	/**
 	 * Method for adding a pipe to the field.
 	 * @param p The pipe to be added.
@@ -191,7 +196,7 @@ public abstract class Field {
 		System.out.println(Szkeleton.objectNames.get(this)+ ".addPipe()");
 		return false;
 	}
-	
+
 	/**
 	 * Method for removing a pipe from the field.
 	 * @param p The pipe to be removed.
@@ -202,7 +207,7 @@ public abstract class Field {
 		System.out.println(Szkeleton.objectNames.get(this)+ ".removePipe()");
 		return false;
 	}
-	
+
 	/**
 	 * Method for getting a new pipe from the field.
 	 * @return The new pipe. - always null.
@@ -212,7 +217,7 @@ public abstract class Field {
 		System.out.println(Szkeleton.objectNames.get(this)+ ".pickUpPipe()");
 		return null;
 	}
-	
+
 	/**
 	 * Method for filling the field with water.
 	 * @param i The amount of water to be filled.
@@ -223,7 +228,7 @@ public abstract class Field {
 		System.out.println(Szkeleton.objectNames.get(this)+ ".fillInWater()");
 		return 0;
 	}
-	
+
 	/**
 	 * Method for setting the end of the pipe at a pump.
 	 * @param p The pump to be set on.
@@ -245,7 +250,7 @@ public abstract class Field {
 		System.out.println(Szkeleton.objectNames.get(this)+ ".connect()");
 		return false;
 	}
-	
+
 	/**
 	 * Method for disconnecting the field from the active fields.
 	 * @param a The active fields to be disconnected.

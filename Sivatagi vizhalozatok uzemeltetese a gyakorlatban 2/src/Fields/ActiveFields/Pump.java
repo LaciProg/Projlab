@@ -2,8 +2,6 @@ package Fields.ActiveFields;
 
 import Controll.Szkeleton;
 import Fields.Pipe;
-import Players.Player;
-
 /**
  * Class for Pump
  * */
@@ -40,8 +38,6 @@ public class Pump extends ActiveFields {
      * @param waterFrom The index of the pipe from which the pump gets water. Only for initialization.
      */
     public void setWaterFrom(int waterFrom) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".setWaterFrom()");
         this.waterFrom = waterFrom;
     }
 
@@ -50,8 +46,6 @@ public class Pump extends ActiveFields {
      * @param waterTo The index of the pipe to which the pump gives water. Only for initialization.
      */
     public void setWaterTo(int waterTo) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".setWaterTo()");
         this.waterTo = waterTo;
     }
 
@@ -79,6 +73,17 @@ public class Pump extends ActiveFields {
     }
 
     /**
+     * Method for breaking the pump.
+     * @return True if the pump is broken
+     */
+    @Override
+    public boolean breakField() {
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".breakField()");
+        return true;
+    }
+
+    /**
      * Method for setting the water flow in the pump.
      * @param input Pipe - The input pipe of the pump.
      * @param output Pipe - The output pipe of the pump.
@@ -87,10 +92,15 @@ public class Pump extends ActiveFields {
     @Override
     public boolean set(Pipe input, Pipe output) {
         Szkeleton.printTabs();
+        Szkeleton.tabs++;
         System.out.println(Szkeleton.objectNames.get(this)+ ".set()");
         waterFrom = super.getPipes().indexOf(input);
         waterTo = super.getPipes().indexOf(output);
-        return super.set(input, output);
+        if(waterFrom == -1 || waterTo == -1) return false;
+        this.setWaterFrom(waterFrom);
+        this.setWaterTo(waterTo);
+        Szkeleton.tabs--;
+        return true;
     }
 
     @Override

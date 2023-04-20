@@ -49,6 +49,7 @@ public class Pipe extends Field {
     public boolean breakField() {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".breakField()");
+        this.setBroken(true);
         return true;
     }
 
@@ -86,8 +87,11 @@ public class Pipe extends Field {
         oldPump.removePipe(this);
         Szkeleton.tabs--;
 
+        Szkeleton.tabs++;
         Pipe newPipe = new Pipe(21);
         Szkeleton.objectNames.put(newPipe, "newPipe");
+        Szkeleton.tabs--;
+
         Szkeleton.tabs++;
         newPipe.connect(newPump);
         Szkeleton.tabs--;
@@ -111,19 +115,23 @@ public class Pipe extends Field {
 
     /**
      * Method for getting the water from the pipe.
+     * Prints the amount of water taken.
      * @return The amount of water in the pipe
      */
     @Override
     public int getWater() {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".getWater()");
-        int w = super.getWater();
-        super.setWater(0);
-        return ((super.isBroken()) || (this.fields.size() < 2)) ? -w : w;
+        int w = super.getWaterNoChange();
+        w = ((super.isBroken()) || (this.fields.size() < 2)) ? -w : w;
+        Szkeleton.printTabs();
+        System.out.println(w);
+        return w;
     }
 
     /**
      * Method for filling the pipe with water.
+     * Prints the amount of water returned.
      * @param i The amount of water to be filled in
      * @return The amount of water that was not filled in
      */
@@ -131,8 +139,17 @@ public class Pipe extends Field {
     public int fillInWater(int i) {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".fillInWater()");
-        if (i - (capacity- super.getWaterNoChange()) > 0) return i - (capacity- super.getWaterNoChange());
-        else return 0;
+        int waterRightNow = super.getWaterNoChange();
+        if (i - (capacity- waterRightNow) > 0) {
+            Szkeleton.printTabs();
+            System.out.println(i - (capacity - waterRightNow));
+            return i - (capacity-waterRightNow);
+        }
+        else {
+            Szkeleton.printTabs();
+            System.out.println("0");
+            return 0;
+        }
     }
 
 
@@ -158,7 +175,7 @@ public class Pipe extends Field {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".connect()");
         fields.add(a);
-        return super.connect(a);
+        return true;
     }
 
     /**
@@ -175,19 +192,19 @@ public class Pipe extends Field {
     }
 
     /**
-	 * Methods for accepting players.
-	 * @param p The player to be accepted.
-	 * @return True if the player was accepted.
-	 * */
+     * Methods for accepting players.
+     * @param p The player to be accepted.
+     * @return True if the player was accepted.
+     * */
     @Override
-	public boolean accept(Player p) {
-    	Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".accept()");
-    	if(this.isOccupied())
-    		return false;
-    	else {
-    		setOccupied(true);
-    		return true;
-    	}
-	}
+    public boolean accept(Player p) {
+        Szkeleton.printTabs();
+        System.out.println(Szkeleton.objectNames.get(this)+ ".accept()");
+        if(this.isOccupied())
+            return false;
+        else {
+            setOccupied(true);
+            return true;
+        }
+    }
 }

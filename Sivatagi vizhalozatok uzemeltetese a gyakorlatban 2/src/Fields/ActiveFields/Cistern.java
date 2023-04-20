@@ -2,7 +2,6 @@ package Fields.ActiveFields;
 
 import Controll.Szkeleton;
 import Fields.Pipe;
-import Players.Player;
 
 /**
  * Class for Cistern
@@ -33,7 +32,9 @@ public class Cistern extends ActiveFields{
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".step()");
         Szkeleton.tabs++;
-        getPipes().get(0).getWater();
+        for(Pipe pipe : getPipes()){
+            waterStored += pipe.getWater();
+        }
         Szkeleton.tabs--;
     }
 
@@ -53,13 +54,17 @@ public class Cistern extends ActiveFields{
 
     /**
      * Method for getting the water from the field.
+     * Prints the amount of water taken.
      * @return The amount of water in the field.
      */
     @Override
     public int getWater() {
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this)+ ".getWater()");
-        return super.getWater(); //TODO
+        int w = super.getWaterNoChange();
+        Szkeleton.printTabs();
+        System.out.println(w);
+        return w;
     }
 
     /**
@@ -69,7 +74,10 @@ public class Cistern extends ActiveFields{
     @Override
     public Pipe pickUpPipe() {
         Szkeleton.printTabs();
+        Szkeleton.tabs++;
         System.out.println(Szkeleton.objectNames.get(this)+ ".pickUpPipe()");
-        return super.pickUpPipe(); //TODO
+        Pipe newPipe = new Pipe(65);
+        Szkeleton.tabs--;
+        return newPipe;
     }
 }
