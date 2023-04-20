@@ -296,7 +296,7 @@ public class Szkeleton {
 
     /**
      * Test case for the placePump method.
-     * The mechanic is standing on a pipe.
+     * The mechanic is standing on a cistern.
      * The mechanic is not holding a pump.
      * Result: success. The mechanic can pick up a pump from the cistern.
      */
@@ -468,10 +468,9 @@ public class Szkeleton {
     }
 
     /**
-     * Test case for picking up a pipe from a pump.
-     * The mechanic is standing on the pump.
-     * The mechanic is not holding a pipe.
-     * Result: fail. The mechanic cannot pick up a pipe from the pump.
+     * Test case for working pump pumping.
+     * The pump is not broken.
+     * Result: succes. The pump can pump.
      */
     public static void TestWorkingPumpPumping() {
         System.out.println("WorkingPumpPumping\n");
@@ -677,8 +676,8 @@ public class Szkeleton {
         Pipe pipe = new Pipe(20);
         objectNames.put(pipe, "pipe");
         Saboteur saboteur = new Saboteur();
-        saboteur.setStandingField(pipe);
         objectNames.put(saboteur, "saboteur");
+        saboteur.setStandingField(pipe);
         Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         pipe.connect(pump);
@@ -707,8 +706,8 @@ public class Szkeleton {
         Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         Saboteur saboteur = new Saboteur();
-        saboteur.setStandingField(pump);
         objectNames.put(saboteur, "saboteur");
+        saboteur.setStandingField(pump);
         pipe.connect(pump);
         pump.addPipe(pipe);
         boolean result;
@@ -735,8 +734,8 @@ public class Szkeleton {
         Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         Saboteur saboteur = new Saboteur();
-        saboteur.setStandingField(pump);
         objectNames.put(saboteur, "saboteur");
+        saboteur.setStandingField(pump);
         pipe.connect(pump);
         pump.addPipe(pipe);
         pipe.setOccupied(true);
@@ -875,7 +874,7 @@ public class Szkeleton {
 
         System.out.println("\nTest:");
         boolean result = pump.breakField(); // Ez a step függvényben lesz később implementálva. Ez a teszteset azt mutatja, hogy el lehet törni egy pumpát.
-        System.out.println(result); //TODO
+        System.out.println(result);
         objectNames.clear();
     }
 
