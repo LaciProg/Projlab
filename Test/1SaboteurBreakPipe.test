@@ -12,5 +12,5 @@ fields: null
 capacity: 34
 breakable: 0
 rfluidtime: 0
-leave: false
+leave: true
 fluid: dry
