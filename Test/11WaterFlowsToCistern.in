@@ -1,0 +1,6 @@
+cistern c
+pipe p 100 water:100
+connectpipe c p
+create
+showobject c
+showobject p
