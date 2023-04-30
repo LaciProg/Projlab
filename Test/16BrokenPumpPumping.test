@@ -17,7 +17,7 @@ fields: pump
 capacity: 65
 breakable: 0
 rfluidtime: 0
-leave: false
+leave: true
 fluid: dry
 
 name: Pout
@@ -29,7 +29,7 @@ fields: pump
 capacity: 65
 breakable: 0
 rfluidtime: 0
-leave: false
+leave: true
 fluid: dry
 
 name: pump
