@@ -1,0 +1,9 @@
+cistern c
+pipe newPipe1 100
+connectpipe newPipe1 c
+mechanic m c
+addplayer c m
+create
+pickuppipe m
+showobject c
+showobject m
