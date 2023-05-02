@@ -2,5 +2,5 @@ cistern cistern
 saboteur sab cistern
 addplayer cistern sab
 create
-breakfield sab
+repair sab
 showobject cistern
