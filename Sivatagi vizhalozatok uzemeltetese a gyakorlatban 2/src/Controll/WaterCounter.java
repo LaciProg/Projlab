@@ -38,8 +38,6 @@ public class WaterCounter {
      * Responsible for initializing the water counter.
      */
     public WaterCounter() {
-        Szkeleton.printTabs();
-        System.out.println("new WaterCounter()");
         this.saboteur = 0;
         this.mechanic = 0;
     }
@@ -49,8 +47,6 @@ public class WaterCounter {
      * @param c Cistern that is to be added to cisterns.
      */
     public void addCistern(Cistern c){
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this) + ".addCistern()");
         cisterns.add(c);
     }
 
@@ -59,8 +55,6 @@ public class WaterCounter {
      * @param p Pipe that is to be added to pipes.
      */
     public void addPipe(Pipe p){
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this) + ".addPipe()");
         pipes.add(p);
     }
 
@@ -77,9 +71,6 @@ public class WaterCounter {
      * Responsible for counting the water for both team.
      */
     public void count(){
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+".count()");
-        Szkeleton.tabs++;
         for (Pipe pipe : pipes) {
             int w = pipe.getWater();
             if (w > 0) {
@@ -93,7 +84,6 @@ public class WaterCounter {
                 mechanic += w;
             }
         }
-        Szkeleton.tabs--;
     }
 
 }

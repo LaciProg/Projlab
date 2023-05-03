@@ -27,8 +27,6 @@ public class Pipe extends Field {
      * @param capacity Capacity of the pipe
      */
     public Pipe(int capacity) {
-        Szkeleton.printTabs();
-        System.out.println("new Pipe()");
         this.capacity = capacity;
     }
 
@@ -36,8 +34,6 @@ public class Pipe extends Field {
      * Setter for capacity. Only for initialization.
      */
     public void setFields(ArrayList<ActiveFields> fields) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".setFields()");
         this.fields = fields;
     }
 
@@ -47,8 +43,6 @@ public class Pipe extends Field {
      */
     @Override
     public boolean breakField() {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".breakField()");
         this.setBroken(true);
         return true;
     }
@@ -59,8 +53,6 @@ public class Pipe extends Field {
      */
     @Override
     public boolean repair() {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".repair()");
         return true;
     }
 
@@ -71,43 +63,24 @@ public class Pipe extends Field {
      */
     @Override
     public Pipe placePump(Pump newPump) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".placePump()");
         Pump oldPump = (Pump) fields.remove(0);
 
-        Szkeleton.tabs++;
         disconnect(oldPump);
-        Szkeleton.tabs--;
 
-        Szkeleton.tabs++;
         connect(newPump);
-        Szkeleton.tabs--;
 
-        Szkeleton.tabs++;
         oldPump.removePipe(this);
-        Szkeleton.tabs--;
 
-        Szkeleton.tabs++;
         Pipe newPipe = new Pipe(21);
-        Szkeleton.objectNames.put(newPipe, "newPipe");
-        Szkeleton.tabs--;
 
-        Szkeleton.tabs++;
         newPipe.connect(newPump);
-        Szkeleton.tabs--;
 
-        Szkeleton.tabs++;
         newPipe.connect(oldPump);
-        Szkeleton.tabs--;
 
-        Szkeleton.tabs++;
         newPump.addPipe(this);
         newPump.addPipe(newPipe);
-        Szkeleton.tabs--;
 
-        Szkeleton.tabs++;
         oldPump.addPipe(newPipe);
-        Szkeleton.tabs--;
 
         return newPipe;
     }
@@ -120,13 +93,8 @@ public class Pipe extends Field {
      */
     @Override
     public int getWater() {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".getWater()");
         int w = super.getWaterNoChange();
-        w = ((super.isBroken()) || (this.fields.size() < 2)) ? -w : w;
-        Szkeleton.printTabs();
-        System.out.println(w);
-        return w;
+        return ((super.isBroken()) || (this.fields.size() < 2)) ? -w : w;
     }
 
     /**
@@ -137,33 +105,15 @@ public class Pipe extends Field {
      */
     @Override
     public int fillInWater(int i) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".fillInWater()");
         int waterRightNow = super.getWaterNoChange();
         if (i - (capacity- waterRightNow) > 0) {
-            Szkeleton.printTabs();
-            System.out.println(i - (capacity - waterRightNow));
             return i - (capacity-waterRightNow);
         }
         else {
-            Szkeleton.printTabs();
-            System.out.println("0");
             return 0;
         }
     }
 
-
-    /**
-     * Method for setting the end of the pipe at a pump.
-     * @param p The pump to be set as the end of the pipe
-     * @return True if the pump was set as the end of the pipe
-     */
-    @Override
-    public boolean setEnd(Pump p) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".setEnd()");
-        return super.setEnd(p);
-    }//TODO jelenleg nem használjuk semmire a szekvenciadiagramban
 
     /**
      * Method for connecting the pipe to an ActiveField.
@@ -172,8 +122,6 @@ public class Pipe extends Field {
      */
     @Override
     public boolean connect(ActiveFields a) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".connect()");
         fields.add(a);
         return true;
     }
@@ -185,8 +133,6 @@ public class Pipe extends Field {
      */
     @Override
     public boolean disconnect(ActiveFields a) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".disconnect()");
         fields.remove(a);
         return true;
     }
@@ -198,8 +144,6 @@ public class Pipe extends Field {
      * */
     @Override
     public boolean accept(Player p) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".accept()");
         if(this.isOccupied())
             return false;
         else {

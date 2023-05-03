@@ -26,8 +26,6 @@ public class Pump extends ActiveFields {
      * Constructor for the pump.
      */
     public Pump(int tank) {
-        Szkeleton.printTabs();
-        System.out.println("new Pump()");
         this.tank = tank;
         this.waterFrom = 0;
         this.waterTo = 0;
@@ -57,18 +55,12 @@ public class Pump extends ActiveFields {
     public void step() {
         super.step();
         if(!(super.isBroken())) {
-            Szkeleton.tabs++;
             int plusWater;
             plusWater = this.getPipes().get(waterTo).fillInWater(tank);
-            Szkeleton.tabs--;
 
-            Szkeleton.tabs++;
             int waterInPipe = this.getPipes().get(waterFrom).getWater();
-            Szkeleton.tabs--;
 
-            Szkeleton.tabs++;
             this.getPipes().get(waterFrom).fillInWater(waterInPipe + plusWater - tank);
-            Szkeleton.tabs--;
         }
     }
 
@@ -78,8 +70,6 @@ public class Pump extends ActiveFields {
      */
     @Override
     public boolean breakField() {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".breakField()");
         return true;
     }
 
@@ -91,22 +81,16 @@ public class Pump extends ActiveFields {
      * */
     @Override
     public boolean set(Pipe input, Pipe output) {
-        Szkeleton.printTabs();
-        Szkeleton.tabs++;
-        System.out.println(Szkeleton.objectNames.get(this)+ ".set()");
         waterFrom = super.getPipes().indexOf(input);
         waterTo = super.getPipes().indexOf(output);
         if(waterFrom == -1 || waterTo == -1) return false;
         this.setWaterFrom(waterFrom);
         this.setWaterTo(waterTo);
-        Szkeleton.tabs--;
         return true;
     }
 
     @Override
     public boolean repair() {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".repair()");
         return true;
     }   
 }

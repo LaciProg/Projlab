@@ -30,8 +30,6 @@ public abstract class ActiveFields extends Field implements Steppable {
      * Setter for pipes. Only for initialization.
      */
     public void setPipes(ArrayList<Pipe> pipes) { //Basic setter if it is needed
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".setPipes()");
         this.pipes = pipes;
     }
 
@@ -42,12 +40,7 @@ public abstract class ActiveFields extends Field implements Steppable {
      */
     @Override
     public boolean addPipe(Pipe p) {
-        Szkeleton.printTabs();
-        Szkeleton.tabs++;
-        System.out.println(Szkeleton.objectNames.get(this)+ ".addPipe()");
         pipes.add(p);
-        Szkeleton.tabs--;
-
         return true;
     }
 
@@ -58,8 +51,6 @@ public abstract class ActiveFields extends Field implements Steppable {
      */
     @Override
     public boolean removePipe(Pipe p) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".removePipe()");
         pipes.remove(p);
         return true;
     }
@@ -69,8 +60,6 @@ public abstract class ActiveFields extends Field implements Steppable {
      */
     @Override
     public void step() {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".step()");
     }
     
     /**
@@ -80,8 +69,6 @@ public abstract class ActiveFields extends Field implements Steppable {
    	 * */
        @Override
    	public boolean accept(Player p) {
-       	Szkeleton.printTabs();
-   		System.out.println(Szkeleton.objectNames.get(this)+ ".accept()");
        	return true;
    	}
 }

@@ -1,6 +1,7 @@
 package Fields.ActiveFields;
 
 import Controll.Szkeleton;
+import Controll.Controller;
 import Fields.Pipe;
 
 /**
@@ -8,18 +9,12 @@ import Fields.Pipe;
  * */
 public class Cistern extends ActiveFields{
 
-    /**
-     * Water stored in the cistern. Default value is 0.
-     */
-    private int waterStored;
 
     /**
      * Constructor for the cistern.
      */
     public Cistern() {
-        Szkeleton.printTabs();
-        System.out.println("new Cistern()");
-        this.waterStored = 0;
+        super.setWater(0);
     }
 
     /**
@@ -29,13 +24,9 @@ public class Cistern extends ActiveFields{
      */
     @Override
     public void step() {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".step()");
-        Szkeleton.tabs++;
         for(Pipe pipe : getPipes()){
-            waterStored += pipe.getWater();
+            super.setWater(super.getWater()+pipe.getWater());
         }
-        Szkeleton.tabs--;
     }
 
     /**
@@ -45,11 +36,7 @@ public class Cistern extends ActiveFields{
      * */
     @Override
     public Pump createNewPump(boolean b) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".createNewPump()");
-        Pump newPump = new Pump(100);
-        Szkeleton.objectNames.put(newPump, "newPump");
-        return newPump;
+        return new Pump(100);
     }
 
     /**
@@ -59,12 +46,7 @@ public class Cistern extends ActiveFields{
      */
     @Override
     public int getWater() {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".getWater()");
-        int w = super.getWaterNoChange();
-        Szkeleton.printTabs();
-        System.out.println(w);
-        return w;
+        return super.getWaterNoChange();
     }
 
     /**
@@ -73,11 +55,17 @@ public class Cistern extends ActiveFields{
      */
     @Override
     public Pipe pickUpPipe() {
-        Szkeleton.printTabs();
-        Szkeleton.tabs++;
-        System.out.println(Szkeleton.objectNames.get(this)+ ".pickUpPipe()");
-        Pipe newPipe = new Pipe(65);
-        Szkeleton.tabs--;
-        return newPipe;
+        return new Pipe(65);
+    }
+
+
+    @Override
+    public String toString() {
+          return "name: "+ Controller.objectReverseNames.get(this)
+                  + "\noccupied: " + this.isOccupied()
+                  + "\nwater: " + getWaterNoChange()
+                  + "\nbroken: " + this.isBroken()
+                  + "\nplayers: " + super.getPlayers()
+                  + "\npipes: " + super.getPipes();
     }
 }

@@ -75,9 +75,6 @@ public abstract class Field {
 	 * Setter for the water variable. Only for child classes.
 	 * */
 	public void setWater(int water) {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".setWater()");
-		System.out.println(water);
 		this.water = water;
 	}
 
@@ -97,8 +94,6 @@ public abstract class Field {
 	 * @return True if the field is neighbour. - always false.
 	 * */
 	public boolean checkNeighbour(Field f) { //Not used in the skeleton. Probably it will be removed from Proto.
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".checkNeighbour()");
 		return false;
 	}
 
@@ -109,8 +104,6 @@ public abstract class Field {
 	 * @return True if the player was removed. - always false.
 	 * */
 	public boolean removePlayer(Player p) {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".removePlayer()");
 		setOccupied(false);
 		return false;
 	}
@@ -120,8 +113,6 @@ public abstract class Field {
 	 * @return True if the field was broken. - always false.
 	 * */
 	public boolean breakField() {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".breakField()");
 		return false;
 	}
 
@@ -132,8 +123,6 @@ public abstract class Field {
 	 * @return True if the water flow was set. - always false.
 	 * */
 	public boolean set(Pipe input, Pipe output) {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".set()");
 		return false;
 	}
 
@@ -142,8 +131,6 @@ public abstract class Field {
 	 * @return True if the field was repaired. - always false.
 	 * */
 	public boolean repair() {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".repair()");
 		return false;
 	}
 
@@ -153,8 +140,6 @@ public abstract class Field {
 	 * @return True if the pump was placed. - always false.
 	 * */
 	public Pipe placePump(Pump p) {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".placePump()");
 		return null;
 	}
 
@@ -164,8 +149,6 @@ public abstract class Field {
 	 * @return The new pump. - always null.
 	 * */
 	public Pump createNewPump(boolean b) {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".creteNewPump()");
 		return null;
 	}
 
@@ -192,8 +175,6 @@ public abstract class Field {
 	 * @return True if the pipe was added. - always false.
 	 * */
 	public boolean addPipe(Pipe p) {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".addPipe()");
 		return false;
 	}
 
@@ -203,8 +184,6 @@ public abstract class Field {
 	 * @return True if the pipe was removed. - always false.
 	 * */
 	public boolean removePipe(Pipe p) {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".removePipe()");
 		return false;
 	}
 
@@ -213,8 +192,6 @@ public abstract class Field {
 	 * @return The new pipe. - always null.
 	 * */
 	public Pipe pickUpPipe() {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".pickUpPipe()");
 		return null;
 	}
 
@@ -224,8 +201,6 @@ public abstract class Field {
 	 * @return The amount of water that was not filled. - always 0.
 	 * */
 	public int fillInWater(int i) {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".fillInWater()");
 		return 0;
 	}
 
@@ -235,8 +210,6 @@ public abstract class Field {
 	 * @return True if the end was set. - always false.
 	 * */
 	public boolean setEnd(Pump p) {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".setEnd()");
 		return false;
 	}
 
@@ -246,8 +219,6 @@ public abstract class Field {
 	 * @return True if the field was connected. - always false.
 	 * */
 	public boolean connect(ActiveFields a) {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".connect()");
 		return false;
 	}
 
@@ -257,8 +228,6 @@ public abstract class Field {
 	 * @return True if the field was disconnected. - always false.
 	 * */
 	public boolean disconnect(ActiveFields a) {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".disconnect()");
 		return false;
 	}
 }

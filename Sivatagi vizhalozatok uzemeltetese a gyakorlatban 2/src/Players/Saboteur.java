@@ -12,8 +12,6 @@ public class Saboteur extends Player {
 	 * Constructor for the saboteur.
 	 */
 	public Saboteur() {
-		Szkeleton.printTabs();
-		System.out.println("new Saboteur()");
 	}
 
 	/**
@@ -22,11 +20,6 @@ public class Saboteur extends Player {
 	 */
 	@Override
 	public boolean breakField() {
-		Szkeleton.printTabs();
-		System.out.println(Szkeleton.objectNames.get(this)+ ".breakField()");
-		Szkeleton.tabs++;
-		boolean result = getStandingField().breakField();
-		Szkeleton.tabs--;
-		return result;
+		return getStandingField().breakField();
 	}
 }
