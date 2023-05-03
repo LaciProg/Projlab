@@ -1,6 +1,7 @@
 package Controll;
 
 import Fields.ActiveFields.Cistern;
+import Fields.ActiveFields.Pump;
 import Fields.Pipe;
 
 import java.util.ArrayList;
@@ -37,11 +38,15 @@ public class WaterCounter {
      *WaterCounter constructor.
      * Responsible for initializing the water counter.
      */
+
     public WaterCounter() {
         this.saboteur = 0;
         this.mechanic = 0;
     }
 
+    public int getSaboteur() { return saboteur; }
+
+    public int getMechanic() { return mechanic; }
     /**
      *Adds new Cistern to cisterns.
      * @param c Cistern that is to be added to cisterns.
@@ -86,4 +91,9 @@ public class WaterCounter {
         }
     }
 
+    @Override
+    public String toString() {
+        return "saboteur: : "+ this.getSaboteur()
+                + "\nmechanic: " + this.getMechanic();
+    }
 }

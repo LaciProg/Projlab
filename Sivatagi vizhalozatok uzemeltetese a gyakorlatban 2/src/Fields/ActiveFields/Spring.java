@@ -1,5 +1,6 @@
 package Fields.ActiveFields;
 
+import Controll.Controller;
 import Controll.Szkeleton;
 
 /**
@@ -25,6 +26,10 @@ public class Spring extends ActiveFields{
         this.maxOutWater = maxOutWater;
     }
 
+    public int getWaterOut() { return waterOut; }
+
+    public int getMaxOutWater() { return maxOutWater; }
+
     /**
      * Method for the game controlled events.
      * Give the water to the pipes.
@@ -37,5 +42,17 @@ public class Spring extends ActiveFields{
                 break;
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "name: "+ Controller.objectReverseNames.get(this)
+                + "\noccupied: " + this.isOccupied()
+                + "\nwater: " + getWaterNoChange()
+                + "\nbroken: " + this.isBroken()
+                + "\nplayers: " + super.getPlayers()
+                + "\npipes: " + super.getPipes()
+                + "\nwaterOut: " + this.getWaterOut()
+                + "\nmaxWaterOut: " + this.getMaxOutWater();
     }
 }

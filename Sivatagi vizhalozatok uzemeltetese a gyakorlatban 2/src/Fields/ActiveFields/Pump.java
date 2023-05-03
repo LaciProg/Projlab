@@ -1,5 +1,6 @@
 package Fields.ActiveFields;
 
+import Controll.Controller;
 import Controll.Szkeleton;
 import Fields.Pipe;
 /**
@@ -39,6 +40,7 @@ public class Pump extends ActiveFields {
         this.waterFrom = waterFrom;
     }
 
+    public int getWaterFrom() { return waterFrom; }
     /**
      * Setter for the waterTo.
      * @param waterTo The index of the pipe to which the pump gives water. Only for initialization.
@@ -47,6 +49,7 @@ public class Pump extends ActiveFields {
         this.waterTo = waterTo;
     }
 
+    public int getWaterTo() { return waterTo; }
     /**
      * Method for the game controlled events.
      * Gets the water pumps the water from the tank to the pipe and gets the water from the input and store it.
@@ -92,5 +95,17 @@ public class Pump extends ActiveFields {
     @Override
     public boolean repair() {
         return true;
-    }   
+    }
+
+    @Override
+    public String toString() {
+        return "name: "+ Controller.objectReverseNames.get(this)
+                + "\noccupied: " + this.isOccupied()
+                + "\nwater: " + getWaterNoChange()
+                + "\nbroken: " + this.isBroken()
+                + "\nplayers: " + super.getPlayers()
+                + "\npipes: " + super.getPipes()
+                + "\nwaterTo: " + this.getWaterTo()
+                + "\nmaxFrom: " + this.getWaterFrom();
+    }
 }

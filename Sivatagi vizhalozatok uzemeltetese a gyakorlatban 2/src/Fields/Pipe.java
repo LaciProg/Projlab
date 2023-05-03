@@ -1,6 +1,7 @@
 package Fields;
 
-import Controll.Szkeleton;
+import Controll.Controller;
+import Enums.Fluid;
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
 import Players.Player;
@@ -16,6 +17,10 @@ public class Pipe extends Field {
      * Capacity of the pipe
      */
     private final int capacity;
+    private int breakable = 0;
+    private int remainingFluidTime = 0;
+    private boolean leave = true;
+    private Fluid fluid = Fluid.DRY;
 
     /**
      * The ends of the pipe. Default is empty.
@@ -36,6 +41,18 @@ public class Pipe extends Field {
     public void setFields(ArrayList<ActiveFields> fields) {
         this.fields = fields;
     }
+
+    public ArrayList<ActiveFields> getFields() { return fields; }
+
+    public int getCapacity() { return capacity; }
+
+    public int getBreakable() { return breakable; }
+
+    public int getRemainingFluidTime() { return remainingFluidTime; }
+
+    public boolean getLeave() { return leave; }
+
+    public Fluid getFluid() { return fluid; }
 
     /**
       * Method for breaking the pipe.
@@ -150,5 +167,20 @@ public class Pipe extends Field {
             setOccupied(true);
             return true;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "name: "+ Controller.objectReverseNames.get(this)
+                + "\noccupied: " + this.isOccupied()
+                + "\nwater: " + getWaterNoChange()
+                + "\nbroken: " + this.isBroken()
+                + "\nplayers: " + super.getPlayers()
+                + "\nfields: " + this.getFields()
+                + "\ncapacity: " + this.getCapacity()
+                + "\nbreakable: " + this.getBreakable()
+                + "\nrfluidtime: " + this.getRemainingFluidTime()
+                + "\nleave: " + this.getLeave()
+                + "\nfluidity: " + this.getFluid();
     }
 }

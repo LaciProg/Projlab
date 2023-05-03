@@ -23,6 +23,7 @@ public abstract class ActiveFields extends Field implements Steppable {
      * @return The pipes connected to the active field
      */
     public ArrayList<Pipe> getPipes() {
+        if (pipes.size() == 0) return null;
         return pipes;
     }
 

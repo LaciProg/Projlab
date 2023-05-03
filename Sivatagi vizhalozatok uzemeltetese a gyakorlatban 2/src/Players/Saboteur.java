@@ -1,5 +1,6 @@
 package Players;
 
+import Controll.Controller;
 import Controll.Szkeleton;
 
 
@@ -21,5 +22,11 @@ public class Saboteur extends Player {
 	@Override
 	public boolean breakField() {
 		return getStandingField().breakField();
+	}
+
+	@Override
+	public String toString() {
+		return "name: "+ Controller.objectReverseNames.get(this)
+				+ "\nstandingField: " + this.getStandingField();
 	}
 }
