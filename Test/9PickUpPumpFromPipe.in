@@ -2,5 +2,5 @@ pipe p 100
 mechanic m p
 addplayer p m
 create
-getpump
+getpump m
 showobject m

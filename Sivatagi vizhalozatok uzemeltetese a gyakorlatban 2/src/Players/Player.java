@@ -27,8 +27,6 @@ public abstract class Player {
 	 * Constructor for the player.
 	 */
 	public Player() {
-		Szkeleton.printTabs();
-		System.out.println("new Player()");
 	}
 
 	/**
@@ -119,6 +117,14 @@ public abstract class Player {
 	 * @return boolean - always false.
 	 * */
 	public boolean pickUpPipe() {
+		return false;
+	}
+
+	public boolean makeSticky(){
+		return false;
+	}
+
+	public boolean makeSlippery(){
 		return false;
 	}
 }

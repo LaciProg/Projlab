@@ -1,60 +1,97 @@
 package Controll;
 
+import Enums.Fluid;
+import Fields.Field;
 import Fields.Pipe;
 import Fields.ActiveFields.*;
+import Interfaces.Steppable;
+import Players.Mechanic;
+import Players.Player;
+import Players.Saboteur;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
+@SuppressWarnings("DuplicatedCode")
 public class Controller {
-
-    public static HashMap<String, Object> objectNames = new HashMap<>();
+    private static boolean random = true;
+    public static boolean isRandom() {return random; }
+    private static HashMap<String, Object> objectNames = new HashMap<>();
     public static HashMap<Object, String> objectReverseNames = new HashMap<>();
+    private static WaterCounter waterCounter = new WaterCounter();
+    private static boolean test = false;
+
+    public static boolean isTest() {return test;}
+    private static String fileName="";
+
+    ArrayList<String> commandList = new ArrayList<>();
+
+    private int pipes=0;
+    private int pumps=0;
 
     public void Run(){
         while(true) {
             Scanner stdInScanner = new Scanner(System.in);
-            //Scanner fileScanner = new Scanner();
-
-            String line = stdInScanner.nextLine();
-            String cmd[] = line.split(" ");
-
+            if (commandList.size() == 0){
+                commandList.add(stdInScanner.nextLine());
+            }
+            String command = commandList.get(0);
+            commandList.remove(0);
+            String[] cmd = command.split(" ");
             switch(cmd[0]) {
-                case("load"): break;
-                case("pipe"): break;
+                case("load"): load(cmd); break;
+                case("pipe"): pipe(cmd); break;
                 case("pump"): pump(cmd); break;
                 case("cistern"): cistern(cmd); break;
-                case("spring"): break;
-                case("mechanic"): break;
-                case("saboteur"): break;
-                case("connectpipe"): break;
-                case("random"): break;
+                case("spring"): spring(cmd); break;
+                case("mechanic"): mechanic(cmd); break;
+                case("saboteur"): saboteur(cmd); break;
+                case("connectpipe"): connectpipe(cmd); break;
+                case("random"): random(cmd); break;
                 case("create"): create(cmd); break;
-                case("show"): break;
+                case("show"): show(cmd); break;
                 case("showobject"): showobject(cmd); break;
-                case("move"): break;
-                case("breakfield"): break;
-                case("repair"): break;
-                case("placepump"): break;
-                case("set"): break;
-                case("disconnect"): break;
-                case("connect"): break;
-                case("getpump"): break;
-                case("pickuppipe"): break;
-                case("makesticky"): break;
-                case("makeslippery"): break;
+                case("move"): move(cmd); break;
+                case("breakfield"): breakfield(cmd); break;
+                case("repair"): repair(cmd); break;
+                case("placepump"): placepump(cmd); break;
+                case("set"): set(cmd); break;
+                case("disconnect"): disconnect(cmd); break;
+                case("connect"): connect(cmd); break;
+                case("getpump"): getpump(cmd); break;
+                case("pickuppipe"): pickuppipe(cmd); break;
+                case("makesticky"): makesticky(cmd); break;
+                case("makeslippery"): makeslippery(cmd); break;
                 case("save"): break;
-                case("list"): break;
-                case("addplayer"): break;
-                case("step"): break;
-                case("endturn"): break;
-                case("count"): break;
-                case("test"): break;
-                case("setend"): break;
-                case("setpump"): break;
-                case("restart"): break;
+                case("list"): list(cmd); break;
+                case("addplayer"): addplayer(cmd); break;
+                case("step"): step(cmd); break;
+                case("endturn"): endturn(cmd); break;
+                case("count"): count(cmd); break;
+                case("test"): test(cmd); break;
+                case("setend"): setend(cmd); break;
+                case("setpump"): setpump(cmd); break;
+                case("restart"): restart(cmd); break;
                 case("exit"): return; //System.exit(0); break;
             }
+        }
+    }
+
+    private void load(String[] cmd){
+        try {
+            Scanner scanner = new Scanner(new File(cmd[1]));
+            String separator = "\\";
+            String[] tmp=cmd[1].replaceAll(Pattern.quote(separator), "\\\\").split("\\\\");
+            fileName = tmp[tmp.length-1];
+            while (scanner.hasNextLine()){
+                commandList.add(scanner.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Bánat");
         }
     }
 
@@ -83,12 +120,18 @@ public class Controller {
             commands[i-3] = cmd[i].split(":");
         }
         for(int i=0; i<commands.length; i++){
-            switch (commands[0][0]){
-                //case "fluid": tmp.setFluid(Integer.parseInt(commands[i][1])); break;
-                //case "rfluidtime": tmp.setFluidTime(Integer.parseInt(commands[i][2])); break;
-                case "breakable": tmp.setWater(Integer.parseInt(commands[0][1])); break;
-                //case "broken": tmp.setWater(Integer.parseInt(commands[0][1])); break;
-                //case "water": tmp.setWater(Integer.parseInt(commands[0][1])); break;
+            switch (commands[i][0]){
+                case "fluid":
+                    switch (commands[i][1]){
+                        case "dry": tmp.setFluid(Fluid.DRY); break;
+                        case "sticky": tmp.setFluid(Fluid.STICKY); break;
+                        case "slippery": tmp.setFluid(Fluid.SLIPPERY); break;
+                    }
+                    break;
+                case "rfluidtime": tmp.setFluidTime(Integer.parseInt(commands[i][2])); break;
+                case "breakable": tmp.setBreakable(Integer.parseInt(commands[i][1])); break;
+                case "broken": tmp.setBroken(Boolean.parseBoolean(commands[i][1])); break;
+                case "water": tmp.setWater(Integer.parseInt(commands[i][1])); break;
             }
         }
         objectNames.put(cmd[1], tmp);
@@ -103,7 +146,7 @@ public class Controller {
             commands[i-2] = cmd[i].split(":");
         }
         for(int i=0; i<commands.length; i++) {
-            switch (commands[0][0]) {
+            switch (commands[i][0]) {
                 case "water":
                     tmp.setWater(Integer.parseInt(commands[0][1])); break;
             }
@@ -113,12 +156,234 @@ public class Controller {
         System.out.println("Sikeres művelet");
     }
 
+    private void spring(String[] cmd){
+        Spring tmp = new Spring(Integer.parseInt(cmd[2]));
+        objectNames.put(cmd[1], tmp);
+        objectReverseNames.put(tmp, cmd[1]);
+        System.out.println("Sikeres művelet");
+    }
+
+    private void saboteur(String[] cmd){
+        Saboteur tmp = new Saboteur();
+        Field f = (Field)objectNames.get(cmd[2]);
+        tmp.setStandingField(f);
+        objectNames.put(cmd[1], tmp);
+        objectReverseNames.put(tmp, cmd[1]);
+        System.out.println("Sikeres művelet");
+    }
+
+    private void mechanic(String[] cmd){
+        Mechanic tmp = new Mechanic();
+        Field f = (Field)objectNames.get(cmd[2]);
+        System.out.println(f);
+        tmp.setStandingField(f);
+        String[][] commands = new String[cmd.length-3][2];
+        for(int i=3; i<cmd.length; i++){
+            System.out.println(cmd.length);
+            commands[i-3] = cmd[i].split(":");
+        }
+        for(int i=0; i<commands.length; i++) {
+            switch (commands[i][0]) {
+                case "pump":
+                    tmp.setHoldingPump((Pump)objectNames.get(commands[i][1]));
+                    break;
+                case "pipe":
+                    tmp.setHoldingPipe((Pipe)objectNames.get(commands[i][1]));
+                    break;
+            }
+        }
+        objectNames.put(cmd[1], tmp);
+        objectReverseNames.put(tmp, cmd[1]);
+        System.out.println("Sikeres művelet");
+    }
+
+    private void connectpipe(String[] cmd){
+        Pipe pipe = (Pipe)objectNames.get(cmd[1]);
+        ActiveFields activeField = (ActiveFields)objectNames.get(cmd[2]);
+        pipe.setFields(activeField);
+        activeField.addPipe(pipe);
+        System.out.println("Sikeres művelet");
+    }
+
+    private void random(String[] cmd){
+        if(cmd.length == 2){
+            switch (cmd[1]){
+                case "false": random = false;
+                    System.out.println("A véletlen események ki lettek kapcsolva."); break;
+                case "true": random = true;
+                    System.out.println("A véletlen események be lettek kapcsolva."); break;
+            }
+        }else {
+            random=true;
+            System.out.println("A véletlen események be lettek kapcsolva.");
+        }
+
+    }
     private void create(String[] cmd) {
         System.out.println("A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!");
+    }
+
+    private void show(String[] cmd){
+        Player p = (Player)objectNames.get(cmd[1]);
+        String[] commands = cmd[2].split(":");
+        switch (commands[1]){
+            case "player":
+                System.out.println(p);
+                break;
+            case "field":
+                System.out.println(objectReverseNames.get(p.getStandingField()));
+                break;
+        }
     }
 
     private void showobject(String[] cmd){
         Object object = objectNames.get(cmd[1]);
         System.out.println(object);
+    }
+
+    private void move(String[] cmd){
+        Player p = (Player)objectNames.get(cmd[1]);
+        Field f = (Field)objectNames.get(cmd[2]);
+        if(p.move(f)){
+            System.out.println("Sikeres művelet");
+        }else  System.out.println("Sikertelen művelet");
+    }
+
+    private void breakfield(String[] cmd){
+        Player p = (Player)objectNames.get(cmd[1]);
+        if(p.breakField()){
+            System.out.println("Sikeres művelet");
+        }else  System.out.println("Sikertelen művelet");
+    }
+
+    private void repair(String[] cmd){
+        Player p = (Player)objectNames.get(cmd[1]);
+        if(p.repair()){
+            System.out.println("Sikeres művelet");
+        }else  System.out.println("Sikertelen művelet");
+    }
+
+    private void placepump(String[] cmd){
+        Player p = (Player)objectNames.get(cmd[1]);
+        Pipe pipe = p.placePump();
+        if(pipe != null ){
+            pipes++;
+            String s = "NewPipe"+pipes;
+            objectNames.put(s, pipe);
+            objectReverseNames.put(pipe, s);
+            System.out.println("Sikeres művelet");
+        }else  System.out.println("Sikertelen művelet");
+    }
+
+    private void set(String[] cmd){
+         Player player = (Player)objectNames.get(cmd[1]);
+         if(player.getStandingField().set((Pipe)objectNames.get(cmd[2]), (Pipe)objectNames.get(cmd[3]))){
+             System.out.println("Sikeres művelet");
+         }else System.out.println("Sikertelen művelet");
+    }
+
+    private void disconnect(String[] cmd){
+        Player player = (Player)objectNames.get(cmd[1]);
+        if(player.disconnect((Pipe)objectNames.get(cmd[2]))){
+            System.out.println("Sikeres művelet");
+        }else System.out.println("Sikertelen művelet");
+    }
+
+    private void connect(String[] cmd){
+        Player player = (Player)objectNames.get(cmd[1]);
+        if(player.connect()){
+            System.out.println("Sikeres művelet");
+        }else System.out.println("Sikertelen művelet");
+    }
+
+    private void getpump(String[] cmd){
+        Player p = (Player)objectNames.get(cmd[1]);
+        Pump pump = p.getPump();
+        if(pump != null ){
+            pumps++;
+            String s = "NewPump"+pumps;
+            objectNames.put(s, pump);
+            objectReverseNames.put(pump, s);
+            System.out.println("Sikeres művelet");
+        }else  System.out.println("Sikertelen művelet");
+    }
+
+    private void pickuppipe(String[] cmd){
+        Player player = (Player)objectNames.get(cmd[1]);
+        if(player.pickUpPipe()){
+            System.out.println("Sikeres művelet");
+        }else System.out.println("Sikertelen művelet");
+    }
+
+    private void makesticky(String[] cmd){
+        Player player = (Player)objectNames.get(cmd[1]);
+        if(player.makeSticky()){
+            System.out.println("Sikeres művelet");
+        }else System.out.println("Sikertelen művelet");
+    }
+
+    private void makeslippery(String[] cmd){
+        Player player = (Player)objectNames.get(cmd[1]);
+        if(player.makeSlippery()){
+            System.out.println("Sikeres művelet");
+        }else System.out.println("Sikertelen művelet");
+    }
+
+    private void list(String[] cmd){
+        ArrayList<String> values = (ArrayList<String>)objectReverseNames.values();
+        for(String s : values){
+            System.out.print(s+" ");
+        }
+    }
+
+    private void addplayer(String[] cmd){
+        Field f = (Field)objectNames.get(cmd[1]);
+        Player p = (Player)objectNames.get(cmd[2]);
+        if(f.accept(p)){
+            System.out.println("Sikeres művelet");
+        }else System.out.println("Sikertelen művelet");
+    }
+
+    private void step(String[] cmd){
+        Steppable s = (Steppable)objectNames.get(cmd[1]);
+        s.step();
+        System.out.println("Sikeres művelet");
+    }
+
+    private void endturn(String[] cmd){
+        //TODO
+        System.out.println("Sikeres művelet");
+    }
+
+    private void count(String[] cmd){
+        waterCounter.count();
+        System.out.println("Sikeres művelet");
+    }
+
+    private void restart(String[] cmd){
+        pumps=pipes=0;
+        objectNames.clear();
+        objectReverseNames.clear();
+        random = true;
+        //TODO
+        System.out.println("Sikeres művelet");
+    }
+
+    private void test(String[] cmd){
+        if(cmd[1].equals("true")) test=true;
+        else if(cmd[1].equals("false")) test=false;
+        System.out.println("Sikeres művelet");
+    }
+
+    private void setend(String[] cmd){
+        waterCounter.setEnd();
+        System.out.println("Sikeres művelet");
+    }
+
+    private void setpump(String[] cmd){
+        Pump pump = (Pump)objectNames.get(cmd[1]);
+        if(pump.set((Pipe)objectNames.get(cmd[2]), (Pipe)objectNames.get(cmd[3]))){
+            System.out.println("Sikeres művelet");
+        }else System.out.println("Sikertelen művelet");
     }
 }

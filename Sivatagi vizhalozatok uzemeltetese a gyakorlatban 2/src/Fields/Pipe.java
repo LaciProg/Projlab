@@ -41,6 +41,23 @@ public class Pipe extends Field {
     public void setFields(ArrayList<ActiveFields> fields) {
         this.fields = fields;
     }
+    public void setFields(ActiveFields a){fields.add(a);}
+
+    public void setBreakable(int breakable) {
+        this.breakable = breakable;
+    }
+
+    public void setFluidTime(int remainingFluidTime) {
+        this.remainingFluidTime = remainingFluidTime;
+    }
+
+    public void setLeave(boolean leave) {
+        this.leave = leave;
+    }
+
+    public void setFluid(Fluid fluid) {
+        this.fluid = fluid;
+    }
 
     public ArrayList<ActiveFields> getFields() { return fields; }
 
@@ -176,11 +193,11 @@ public class Pipe extends Field {
                 + "\nwater: " + getWaterNoChange()
                 + "\nbroken: " + this.isBroken()
                 + "\nplayers: " + super.getPlayers()
-                + "\nfields: " + this.getFields()
+                //+ "\nfields: " + this.getFields()
                 + "\ncapacity: " + this.getCapacity()
                 + "\nbreakable: " + this.getBreakable()
                 + "\nrfluidtime: " + this.getRemainingFluidTime()
                 + "\nleave: " + this.getLeave()
-                + "\nfluidity: " + this.getFluid();
+                + "\nfluidity: " + this.getFluid()+"\n";
     }
 }
