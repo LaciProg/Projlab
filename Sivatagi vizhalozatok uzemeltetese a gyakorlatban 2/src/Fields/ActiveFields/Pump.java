@@ -104,8 +104,8 @@ public class Pump extends ActiveFields {
                 + "\nwater: " + getWaterNoChange()
                 + "\nbroken: " + this.isBroken()
                 + "\nplayers: " + super.getPlayers()
-                + "\npipes: " + super.getPipes()
+                //+ "\npipes: " + super.getPipes()
                 + "\nwaterTo: " + this.getWaterTo()
-                + "\nmaxFrom: " + this.getWaterFrom();
+                + "\nmaxFrom: " + this.getWaterFrom()+"\n";
     }
 }

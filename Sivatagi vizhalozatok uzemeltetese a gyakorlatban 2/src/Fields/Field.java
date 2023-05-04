@@ -1,6 +1,7 @@
 package Fields;
 
 import Controll.Szkeleton;
+import Enums.Fluid;
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
 import Players.Player;
@@ -17,7 +18,6 @@ public abstract class Field {
 	 * */
 	private boolean occupied;
 
-	///BTW ez kell? lehetne ez a pipeban, a többiben máshogy szerepel
 	/**
 	 * The amount of water in the field.
 	 * */
@@ -31,7 +31,7 @@ public abstract class Field {
 	/**
 	 * Players on the field.
 	 * */
-	private ArrayList<Player> players;
+	private ArrayList<Player> players = new ArrayList<>();
 
 	/**
 	 * Getter for the occupied variable. Only for child classes.

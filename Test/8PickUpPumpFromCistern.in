@@ -2,5 +2,5 @@ cistern c
 mechanic m c
 addplayer c m
 create
-getpump
+getpump m
 showobject m

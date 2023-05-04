@@ -115,8 +115,8 @@ public class Mechanic extends Player {
     @Override
     public String toString() {
         return "name: "+ Controller.objectReverseNames.get(this)
-                + "\nstandingField: " + this.getStandingField()
+                + "\nstandingField: " + Controller.objectReverseNames.get(this.getStandingField())
                 + "\nholdingPipe: " + this.getHoldingPipe()
-                + "\nholdingPump: " + this.getHoldingPump();
+                + "\nholdingPump: " + this.getHoldingPump()+"\n";
     }
 }
