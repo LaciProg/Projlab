@@ -39,6 +39,9 @@ public class Szkeleton {
      * @param args String[]
      */
     public static void main(String[] args) {
+        new Controller().Run();
+        System.out.println("End of program");
+        /*
         Scanner scanner = new Scanner(System.in);
         listTestNames();
         testcase = scanner.nextInt();
@@ -79,6 +82,8 @@ public class Szkeleton {
             }
             testcase = scanner.nextInt();
         }
+        */
+
     }
 
     /**
