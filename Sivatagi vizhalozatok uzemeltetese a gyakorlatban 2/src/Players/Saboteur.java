@@ -27,6 +27,6 @@ public class Saboteur extends Player {
 	@Override
 	public String toString() {
 		return "name: "+ Controller.objectReverseNames.get(this)
-				+ "\nstandingField: " + Controller.objectReverseNames.get(this.getStandingField());
+				+ "\nstandingField: " + Controller.objectReverseNames.get(this.getStandingField()) + "\n";
 	}
 }

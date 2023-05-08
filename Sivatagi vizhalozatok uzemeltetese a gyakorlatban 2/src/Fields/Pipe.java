@@ -189,16 +189,25 @@ public class Pipe extends Field {
 
     @Override
     public String toString() {
-        ArrayList<Player> players = super.getPlayers();
-        ArrayList<String> playersNames = new ArrayList<>();
+        ArrayList<Player> players = this.getPlayers();
+        System.out.println(players);
+        String playersNames = "";
+        if (players.size() == 0) playersNames = null;
         for (int i = 0; i < players.size(); i++) {
-            playersNames.add(Controller.objectReverseNames.get(players.get(i)));
+            playersNames += Controller.objectReverseNames.get(players.get(i));
+            if (i != players.size() - 1) {
+                playersNames += ", ";
+            }
         }
 
         ArrayList<ActiveFields> fields = this.getFields();
-        ArrayList<String> fieldsNames = new ArrayList<>();
+        String fieldsNames = "";
+        if (fields.size() == 0) fieldsNames = null;
         for (int i = 0; i < fields.size(); i++) {
-            playersNames.add(Controller.objectReverseNames.get(fields.get(i)));
+            fieldsNames += Controller.objectReverseNames.get(fields.get(i));
+            if (i != fields.size() - 1) {
+                fieldsNames += ", ";
+            }
         }
 
         return "name: " + Controller.objectReverseNames.get(this)

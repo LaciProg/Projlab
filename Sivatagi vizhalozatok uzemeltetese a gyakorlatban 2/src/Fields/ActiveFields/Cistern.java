@@ -3,6 +3,9 @@ package Fields.ActiveFields;
 import Controll.Szkeleton;
 import Controll.Controller;
 import Fields.Pipe;
+import Players.Player;
+
+import java.util.ArrayList;
 
 /**
  * Class for Cistern
@@ -61,11 +64,37 @@ public class Cistern extends ActiveFields{
 
     @Override
     public String toString() {
+        ArrayList<Player> players = this.getPlayers();
+        System.out.println(players);
+        String playersNames = "";
+        if (players == null) playersNames = null;
+        else {
+            for (int i = 0; i < players.size(); i++) {
+                playersNames += Controller.objectReverseNames.get(players.get(i));
+                if (i != players.size() - 1) {
+                    playersNames += ", ";
+                }
+            }
+        }
+
+
+        ArrayList<Pipe> pipes = this.getPipes();
+        String pipesNames = "";
+        if (pipes == null) pipesNames = null;
+        else {
+            for (int i = 0; i < pipes.size(); i++) {
+                pipesNames += Controller.objectReverseNames.get(pipes.get(i));
+                if (i != pipes.size() - 1) {
+                    pipesNames += ", ";
+                }
+            }
+        }
+
           return "name: "+ Controller.objectReverseNames.get(this)
                   + "\noccupied: " + this.isOccupied()
                   + "\nwater: " + getWaterNoChange()
                   + "\nbroken: " + this.isBroken()
-                  + "\nplayers: " + super.getPlayers()
-                  + "\npipes: " + super.getPipes();
+                  + "\nplayers: " + playersNames
+                  + "\npipes: " + pipesNames + "\n";
     }
 }

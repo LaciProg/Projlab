@@ -199,7 +199,7 @@ public class Controller {
         tmp.setStandingField(f);
         String[][] commands = new String[cmd.length-3][2];
         for(int i=3; i<cmd.length; i++){
-            System.out.println(cmd.length);
+            //System.out.println(cmd.length);
             commands[i-3] = cmd[i].split(":");
         }
         for(int i=0; i<commands.length; i++) {

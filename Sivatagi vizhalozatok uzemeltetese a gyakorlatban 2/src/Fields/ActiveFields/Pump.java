@@ -3,6 +3,10 @@ package Fields.ActiveFields;
 import Controll.Controller;
 import Controll.Szkeleton;
 import Fields.Pipe;
+import Players.Player;
+
+import java.util.ArrayList;
+
 /**
  * Class for Pump
  * */
@@ -31,6 +35,8 @@ public class Pump extends ActiveFields {
         this.waterFrom = 0;
         this.waterTo = 0;
     }
+
+    public int getTank() { return tank; }
 
     /**
      * Setter for the waterFrom.
@@ -84,8 +90,8 @@ public class Pump extends ActiveFields {
      * */
     @Override
     public boolean set(Pipe input, Pipe output) {
-        waterFrom = super.getPipes().indexOf(input);
-        waterTo = super.getPipes().indexOf(output);
+        waterFrom = this.getPipes().indexOf(input);
+        waterTo = this.getPipes().indexOf(output);
         if(waterFrom == -1 || waterTo == -1) return false;
         this.setWaterFrom(waterFrom);
         this.setWaterTo(waterTo);
@@ -99,13 +105,40 @@ public class Pump extends ActiveFields {
 
     @Override
     public String toString() {
+        ArrayList<Player> players = this.getPlayers();
+        System.out.println(players);
+        String playersNames = "";
+        if (players == null) playersNames = null;
+        else {
+            for (int i = 0; i < players.size(); i++) {
+                playersNames += Controller.objectReverseNames.get(players.get(i));
+                if (i != players.size() - 1) {
+                    playersNames += ", ";
+                }
+            }
+        }
+
+
+        ArrayList<Pipe> pipes = this.getPipes();
+        String pipesNames = "";
+        if (pipes == null) pipesNames = null;
+        else {
+            for (int i = 0; i < pipes.size(); i++) {
+                pipesNames += Controller.objectReverseNames.get(pipes.get(i));
+                if (i != pipes.size() - 1) {
+                    pipesNames += ", ";
+                }
+            }
+        }
+
         return "name: "+ Controller.objectReverseNames.get(this)
                 + "\noccupied: " + this.isOccupied()
                 + "\nwater: " + getWaterNoChange()
                 + "\nbroken: " + this.isBroken()
-                + "\nplayers: " + super.getPlayers()
-                //+ "\npipes: " + super.getPipes()
-                + "\nwaterTo: " + this.getWaterTo()
-                + "\nmaxFrom: " + this.getWaterFrom()+"\n";
+                + "\nplayers: " + playersNames
+                + "\npipes: " + pipesNames
+                + "\ntank: " + this.getTank()
+                + "\nwaterFrom: " + this.getWaterFrom()
+                + "\nwaterTo: " + this.getWaterTo() + "\n";
     }
 }
