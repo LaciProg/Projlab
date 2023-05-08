@@ -117,6 +117,6 @@ public class Mechanic extends Player {
         return "name: "+ Controller.objectReverseNames.get(this)
                 + "\nstandingField: " + Controller.objectReverseNames.get(this.getStandingField())
                 + "\nholdingPipe: " + this.getHoldingPipe()
-                + "\nholdingPump: " + this.getHoldingPump()+"\n";
+                + "\nholdingPump: " + this.getHoldingPump() + "\n"; //TODO ne hívja meg a pump tostring-jét
     }
 }
