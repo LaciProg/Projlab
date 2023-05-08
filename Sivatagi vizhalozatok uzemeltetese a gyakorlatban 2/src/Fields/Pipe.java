@@ -182,22 +182,35 @@ public class Pipe extends Field {
             return false;
         else {
             setOccupied(true);
+            setPlayers(p);
             return true;
         }
     }
 
     @Override
     public String toString() {
-        return "name: "+ Controller.objectReverseNames.get(this)
+        ArrayList<Player> players = super.getPlayers();
+        ArrayList<String> playersNames = new ArrayList<>();
+        for (int i = 0; i < players.size(); i++) {
+            playersNames.add(Controller.objectReverseNames.get(players.get(i)));
+        }
+
+        ArrayList<ActiveFields> fields = this.getFields();
+        ArrayList<String> fieldsNames = new ArrayList<>();
+        for (int i = 0; i < fields.size(); i++) {
+            playersNames.add(Controller.objectReverseNames.get(fields.get(i)));
+        }
+
+        return "name: " + Controller.objectReverseNames.get(this)
                 + "\noccupied: " + this.isOccupied()
                 + "\nwater: " + getWaterNoChange()
                 + "\nbroken: " + this.isBroken()
-                + "\nplayers: " + super.getPlayers()
-                //+ "\nfields: " + this.getFields()
+                + "\nplayers: " + playersNames
+                + "\nfields: " + fieldsNames
                 + "\ncapacity: " + this.getCapacity()
                 + "\nbreakable: " + this.getBreakable()
                 + "\nrfluidtime: " + this.getRemainingFluidTime()
                 + "\nleave: " + this.getLeave()
-                + "\nfluidity: " + this.getFluid()+"\n";
+                + "\nfluid: " + this.getFluid().toString().toLowerCase() + "\n";
     }
 }

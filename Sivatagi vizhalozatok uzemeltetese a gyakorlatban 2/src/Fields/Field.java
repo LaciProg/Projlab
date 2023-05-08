@@ -6,6 +6,7 @@ import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
 import Players.Player;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -54,8 +55,14 @@ public abstract class Field {
 	 * @return players.
 	 */
 	public ArrayList<Player> getPlayers() { //Basic getter if it is needed
-		if (players.size() == 0) return null;
+		if (players.size() == 0) {
+			return null;
+		}
 		return players;
+	}
+
+	public void setPlayers(Player p) {
+		players.add(p);
 	}
 
 	/**
