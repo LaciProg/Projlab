@@ -8,7 +8,7 @@ name: Pto
 occupied: true
 water: 0
 broken: false
-players: sab
+players: mech
 fields: Pto
 capacity: 100
 breakable: 0
@@ -20,13 +20,11 @@ name: Pfrom
 occupied: false 
 water: 0
 broken: false
-players: mech
+players: sab
 pipes: Pfrom
 tank: 100
 waterFrom: null
 waterTo: null
 
-name: mech
+name: sab
 standingField: Pfrom
-holdingPipe: null
-holdingPump: null

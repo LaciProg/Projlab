@@ -1,6 +1,6 @@
 pump brokenPump 100 broken:true
 mechanic mech brokenPump
-addplayer: brokenPump mech 
+addplayer brokenPump mech 
 create
-breakfield sab
+repair mech
 showobject brokenPump

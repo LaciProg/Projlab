@@ -1,7 +1,7 @@
 Sikeres művelet
 Sikeres művelet
 Sikeres művelet
-A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék! 
+A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!
 Sikeres művelet
 name: goodPipe
 occupied: true
@@ -14,3 +14,4 @@ breakable: 0
 rfluidtime: 0
 leave: true
 fluid: dry
+
