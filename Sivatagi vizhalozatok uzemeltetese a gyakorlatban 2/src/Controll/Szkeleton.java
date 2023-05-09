@@ -7,6 +7,7 @@ import Fields.Pipe;
 import Players.Mechanic;
 import Players.Saboteur;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -14,20 +15,34 @@ import java.util.Scanner;
  * Szkeleton class for testing purposes.
  * It contains the main method.
  * */
-
-
 @SuppressWarnings("DuplicatedCode")
 public class Szkeleton {
+
+    /**
+     * The number of tabs for the print.
+     * */
     public static int tabs = 0;
+
+    /**
+     * The number of the test case.
+     * */
     public static int testcase = -1;
 
+    /**
+     * The map of the objects and their names.
+     * */
     public static HashMap<Object, String> objectNames = new HashMap<>();
 
     /**
      * Main method.
+     * The test cases are called from here.
+     * Use only Integer values.
      * @param args String[]
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+        new Controller().Run();
+        System.out.println("End of program");
+        /*
         Scanner scanner = new Scanner(System.in);
         listTestNames();
         testcase = scanner.nextInt();
@@ -68,8 +83,13 @@ public class Szkeleton {
             }
             testcase = scanner.nextInt();
         }
+        */
+
     }
 
+    /**
+     * Prints the list of the test cases.
+     * */
     public static void listTestNames() {
         System.out.println("-1. Test Case List");
         System.out.println("0. Exit");
@@ -83,7 +103,6 @@ public class Szkeleton {
         System.out.println("8. PickUpPumpFromCistern");
         System.out.println("9. PickUpPumpFromPipe");
         System.out.println("10. WaterFlowsFromSpring");
-        //TODO Csak függvények
         System.out.println("11. WaterFlowsToCistern");
         System.out.println("12. DisconnectPipe");
         System.out.println("13. ConnectPipe");
@@ -94,7 +113,6 @@ public class Szkeleton {
         System.out.println("18. MechanicMoveFromPumpToPipe");
         System.out.println("19. MechanicMoveFromPumpToOccupiedPipe");
         System.out.println("20. SetPump");
-        //TODO szekvenciák is
         System.out.println("21. SaboteurMoveFromPipeToPump");
         System.out.println("22. SaboteurMoveFromPumpToPipe");
         System.out.println("23. SaboteurMoveFromPumpToOccupiedPipe");
@@ -107,12 +125,21 @@ public class Szkeleton {
         System.out.println("30. MechanicGetsPoints");
     }
 
+    /**
+     * Prints the tabs.
+     * */
     public static void printTabs() {
         for (int i = 0; i < Szkeleton.tabs; i++) {
             System.out.print("\t");
         }
     }
 
+    /**
+     * Test case for the breakPipe method.
+     * The pipe is not broken.
+     * Saboteur breaks the pipe.
+     * Result: success. The pipe is broken.
+     */
     public static void TestBreakPipe() {
         System.out.println("BreakPipe\n");
 
@@ -130,6 +157,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for the breakCistern method.
+     * The cistern isn't broken.
+     * Saboteur breaks the cistern.
+     * Result: fail. The cistern is not broken.
+     */
     public static void TestBreakCistern() {
         System.out.println("BreakCistern\n");
         System.out.println("Initialization:");
@@ -147,6 +180,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for the repairPipe method.
+     * The pipe is broken.
+     * Mechanic repairs the pipe.
+     * Result: success. The pipe is not broken.
+     */
     public static void TestRepairPipe() {
         System.out.println("RepairPipe\n");
         System.out.println("Initialization:");
@@ -164,6 +203,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for the repairPump method.
+     * The pump is broken.
+     * Mechanic repairs the pump.
+     * Result: success. The pump is not broken.
+     */
     public static void TestRepairPump() {
         System.out.println("RepairPump\n");
         System.out.println("Initialization:");
@@ -181,6 +226,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for the repairCistern method.
+     * The cistern cannot be broken.
+     * Mechanic repairs the cistern.
+     * Result: fail. The cistern is not broken, therefore cannot be repaired.
+     */
     public static void TestRepairCistern() {
         System.out.println("RepairCistern\n");
         System.out.println("Initialization:");
@@ -198,6 +249,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for the placePump method.
+     * The mechanic is standing on a pipe.
+     * The mechanic is holding a pump.
+     * Result: success. The pump is placed on the pipe.
+     */
     public static void TestPlacePumpOnPipe() {
         System.out.println("PlacePumpOnPipe\n");
         System.out.println("Initialization:");
@@ -221,6 +278,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for the placePump method.
+     * The mechanic is standing on a cistern.
+     * The mechanic is holding a pump.
+     * Result: fail. The pump cannot be placed on the cistern.
+     */
     public static void TestPlacePumpOnCistern() {
         System.out.println("PlacePumpOnCistern\n");
         System.out.println("Initialization:");
@@ -237,6 +300,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for the placePump method.
+     * The mechanic is standing on a cistern.
+     * The mechanic is not holding a pump.
+     * Result: success. The mechanic can pick up a pump from the cistern.
+     */
     public static void TestPickUpPumpFromCistern() {
         System.out.println("PickUpPumpFromCistern\n");
         System.out.println("Initialization:");
@@ -253,6 +322,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for the placePump method.
+     * The mechanic is standing on a pipe.
+     * The mechanic is not holding a pump.
+     * Result: fail. The mechanic cannot pick up a pump from the pipe.
+     */
     public static void TestPickUpPumpFromPipe() {
         System.out.println("PickUpPumpFromPipe\n");
         System.out.println("Initialization:");
@@ -269,6 +344,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for water flows from spring to pipe.
+     * The spring has water.
+     * The pipe has unused capacity.
+     * Result: success. The water flows from the spring to the pipe.
+     */
     public static void TestWaterFlowsFromSpring() {
         System.out.println("WaterFlowsFromSpring\n");
 
@@ -285,6 +366,11 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for water flows from pipe to cistern.
+     * The pipe has water.
+     * Result: success. The water flows from the pipe to the cistern.
+     */
     public static void TestWaterFlowsToCistern() {
         System.out.println("WaterFlowsToCistern\n");
 
@@ -307,6 +393,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for disconnecting a pipe.
+     * The mechanic is standing on the pump.
+     * The pipe is connected to the pump.
+     * Result: success. The pipe is disconnected from the pump.
+     */
     public static void TestDisconnectPipe() {
         System.out.println("DisconnectPipe\n");
 
@@ -329,6 +421,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for connecting a pipe.
+     * The mechanic is standing on the pump.
+     * The mechanic is holding a pipe.
+     * Result: success. The pipe is connected to the pump.
+     */
     public static void TestConnectPipe() {
         System.out.println("ConnectPipe\n");
 
@@ -351,6 +449,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for picking up a pipe from a cistern.
+     * The mechanic is standing on the cistern.
+     * The mechanic is not holding a pipe.
+     * Result: success. The mechanic picks up a pipe from the cistern.
+     */
     public static void TestPickUpPipeFromCistern() {
         System.out.println("PickUpPipeFromCistern\n");
 
@@ -369,6 +473,11 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for working pump pumping.
+     * The pump is not broken.
+     * Result: succes. The pump can pump.
+     */
     public static void TestWorkingPumpPumping() {
         System.out.println("WorkingPumpPumping\n");
 
@@ -392,6 +501,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+
+    /**
+     * Test case for broken pump pumping.
+     * The pump is broken.
+     * Result: fail. The pump cannot pump.
+     */
     public static void TestBrokenPumpPumping() {
         System.out.println("BrokenPumpPumping\n");
 
@@ -416,6 +531,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for mechanic moving from pipe to pump.
+     * The mechanic is standing on the pipe.
+     * The pipe is connected to the pump.
+     * Result: success. The mechanic moves to the pump.
+     */
     public static void TestMechanicMoveFromPipeToPump() {
         System.out.println("MechanicMoveFromPipeToPump\n");
 
@@ -439,6 +560,13 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for mechanic moving from pump to pipe.
+     * The mechanic is standing on the pump.
+     * The pump is connected to the pipe.
+     * The pipe is not occupied.
+     * Result: success. The mechanic moves to the pipe.
+     */
     public static void TestMechanicMoveFromPumpToPipe() {
         System.out.println("MechanicMoveFromPumpToPipe\n");
 
@@ -461,6 +589,13 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for mechanic moving from pump to occupied pipe.
+     * The mechanic is standing on the pump.
+     * The pump is connected to the pipe.
+     * The pipe is occupied.
+     * Result: fail. The mechanic cannot move to the pipe.
+     */
     public static void TestMechanicMoveFromPumpToOccupiedPipe() {
         System.out.println("MechanicMoveFromPumpToOccupiedPipe\n");
 
@@ -490,6 +625,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for setting the pump.
+     * The mechanic is standing on the pump.
+     * The pump is connected to the pipes.
+     * Result: success. The pump is set.
+     */
     public static void TestSetPump() {
         System.out.println("SetPump\n");
 
@@ -527,7 +668,13 @@ public class Szkeleton {
 
         objectNames.clear();
     }
-    
+
+    /**
+     * Test case for saboteur moving from pipe to pump.
+     * The saboteur is standing on the pipe.
+     * The pump is connected to the pipe.
+     * Result: success. The saboteur moves to the pump.
+     */
     public static void TestSaboteurMoveFromPipeToPump() {
         System.out.println("SaboteurMoveFromPipeToPump\n");
 
@@ -535,8 +682,8 @@ public class Szkeleton {
         Pipe pipe = new Pipe(20);
         objectNames.put(pipe, "pipe");
         Saboteur saboteur = new Saboteur();
-        saboteur.setStandingField(pipe);
         objectNames.put(saboteur, "saboteur");
+        saboteur.setStandingField(pipe);
         Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         pipe.connect(pump);
@@ -548,7 +695,14 @@ public class Szkeleton {
         System.out.println(result);
         objectNames.clear();
     }
-    
+
+    /**
+     * Test case for saboteur moving from pump to pipe.
+     * The saboteur is standing on the pump.
+     * The pump is connected to the pipe.
+     * The pipe is not occupied.
+     * Result: success. The saboteur moves to the pipe.
+     */
     public static void TestSaboteurMoveFromPumpToPipe() {
         System.out.println("SaboteurMoveFromPumpToPipe\n");
 
@@ -558,8 +712,8 @@ public class Szkeleton {
         Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         Saboteur saboteur = new Saboteur();
-        saboteur.setStandingField(pump);
         objectNames.put(saboteur, "saboteur");
+        saboteur.setStandingField(pump);
         pipe.connect(pump);
         pump.addPipe(pipe);
         boolean result;
@@ -569,7 +723,14 @@ public class Szkeleton {
         System.out.println(result);
         objectNames.clear();
     }
-    
+
+    /**
+     * Test case for saboteur moving from pump to pipe.
+     * The saboteur is standing on the pump.
+     * The pump is connected to the pipe.
+     * The pipe is occupied.
+     * Result: fail. The saboteur does not move to the pipe.
+     */
     public static void TestSaboteurMoveFromPumpToOccupiedPipe() {
         System.out.println("SaboteurMoveFromPumpToOccupiedPipe\n");
 
@@ -579,8 +740,8 @@ public class Szkeleton {
         Pump pump = new Pump(100);
         objectNames.put(pump, "pump");
         Saboteur saboteur = new Saboteur();
-        saboteur.setStandingField(pump);
         objectNames.put(saboteur, "saboteur");
+        saboteur.setStandingField(pump);
         pipe.connect(pump);
         pump.addPipe(pipe);
         pipe.setOccupied(true);
@@ -591,7 +752,13 @@ public class Szkeleton {
         System.out.println(result);
         objectNames.clear();
     }
-    
+
+    /**
+     * Test case for water flowing to full pipe.
+     * The pump is connected to the pipes.
+     * The pipe is full.
+     * Result: fail. The water cannot flow to the full pipe.
+     */
     public static void TestWaterFlowsToFullPipe() {
         System.out.println("WaterFlowsToFullPipe\n");
 
@@ -613,7 +780,13 @@ public class Szkeleton {
         pump.step();
         objectNames.clear();
     }
-    
+
+    /**
+     * Test case for water flowing to empty pipe.
+     * The pump is connected to the pipes.
+     * The pipe is empty.
+     * Result: success. The water flows to the empty pipe.
+     */
     public static void TestWaterFlowsToEmptyPipe() {
         System.out.println("WaterFlowsToEmptyPipe\n");
 
@@ -636,6 +809,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for water flowing to broken pipe.
+     * The pump is connected to the pipes.
+     * The pipe is broken.
+     * Result: success. The water flows to the broken pipe.
+     */
     public static void TestWaterFlowsToBrokenPipe() {
         System.out.println("WaterFlowsToBrokenPipe\n");
 
@@ -658,6 +837,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for water flowing to disconnected pipe.
+     * The pump is connected to the pipes.
+     * The pipe is disconnected.
+     * Result: success. The water flows to the disconnected pipe.
+     */
     public static void TestWaterFlowsToDisconnectedPipe() {
         System.out.println("WaterFlowsToDisconnectedPipe\n");
 
@@ -680,6 +865,12 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for breaking a pump.
+     * The pump has 100% chance to break.
+     * Testing if a pump can be broken.
+     * Result: success. The pump breaks.
+     */
     public static void TestPumpBreak100Chance() {
         System.out.println("TestPumpBreak100%Chance\n");
 
@@ -689,10 +880,14 @@ public class Szkeleton {
 
         System.out.println("\nTest:");
         boolean result = pump.breakField(); // Ez a step függvényben lesz később implementálva. Ez a teszteset azt mutatja, hogy el lehet törni egy pumpát.
-        System.out.println(result); //TODO
+        System.out.println(result);
         objectNames.clear();
     }
 
+    /**
+     * Test case for saboteurs getting points.
+     * Going through all the pipes and checking if the saboteurs get points.
+     */
     public static void TestSaboteursGetsPoints() {
         System.out.println("TestSabouteursGetPoints\n");
         System.out.println("Initialization:");
@@ -731,6 +926,10 @@ public class Szkeleton {
         objectNames.clear();
     }
 
+    /**
+     * Test case for mechanics getting points.
+     * Going through all the cisterns and checking if the mechanics get points.
+     */
     public static void TestMechanicGetsPoints() {
         System.out.println("TestMechanicsGetPoints\n");
         System.out.println("Initialization:");

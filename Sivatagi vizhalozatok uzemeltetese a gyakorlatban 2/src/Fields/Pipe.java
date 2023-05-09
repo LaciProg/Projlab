@@ -1,11 +1,11 @@
 package Fields;
 
-import Controll.Szkeleton;
+import Controll.Controller;
+import Enums.Fluid;
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
 import Players.Player;
 
-import java.security.spec.RSAOtherPrimeInfo;
 import java.util.ArrayList;
 
 /**
@@ -17,6 +17,10 @@ public class Pipe extends Field {
      * Capacity of the pipe
      */
     private final int capacity;
+    private int breakable = 0;
+    private int remainingFluidTime = 0;
+    private boolean leave = true;
+    private Fluid fluid = Fluid.DRY;
 
     /**
      * The ends of the pipe. Default is empty.
@@ -28,8 +32,6 @@ public class Pipe extends Field {
      * @param capacity Capacity of the pipe
      */
     public Pipe(int capacity) {
-        Szkeleton.printTabs();
-        System.out.println("new Pipe()");
         this.capacity = capacity;
     }
 
@@ -37,10 +39,37 @@ public class Pipe extends Field {
      * Setter for capacity. Only for initialization.
      */
     public void setFields(ArrayList<ActiveFields> fields) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".setFields()");
         this.fields = fields;
     }
+    public void setFields(ActiveFields a){fields.add(a);}
+
+    public void setBreakable(int breakable) {
+        this.breakable = breakable;
+    }
+
+    public void setFluidTime(int remainingFluidTime) {
+        this.remainingFluidTime = remainingFluidTime;
+    }
+
+    public void setLeave(boolean leave) {
+        this.leave = leave;
+    }
+
+    public void setFluid(Fluid fluid) {
+        this.fluid = fluid;
+    }
+
+    public ArrayList<ActiveFields> getFields() { return fields; }
+
+    public int getCapacity() { return capacity; }
+
+    public int getBreakable() { return breakable; }
+
+    public int getRemainingFluidTime() { return remainingFluidTime; }
+
+    public boolean getLeave() { return leave; }
+
+    public Fluid getFluid() { return fluid; }
 
     /**
       * Method for breaking the pipe.
@@ -48,8 +77,6 @@ public class Pipe extends Field {
      */
     @Override
     public boolean breakField() {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".breakField()");
         this.setBroken(true);
         return true;
     }
@@ -60,8 +87,6 @@ public class Pipe extends Field {
      */
     @Override
     public boolean repair() {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".repair()");
         return true;
     }
 
@@ -72,43 +97,24 @@ public class Pipe extends Field {
      */
     @Override
     public Pipe placePump(Pump newPump) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".placePump()");
         Pump oldPump = (Pump) fields.remove(0);
 
-        Szkeleton.tabs++;
         disconnect(oldPump);
-        Szkeleton.tabs--;
 
-        Szkeleton.tabs++;
         connect(newPump);
-        Szkeleton.tabs--;
 
-        Szkeleton.tabs++;
         oldPump.removePipe(this);
-        Szkeleton.tabs--;
 
-        Szkeleton.tabs++;
         Pipe newPipe = new Pipe(21);
-        Szkeleton.objectNames.put(newPipe, "newPipe");
-        Szkeleton.tabs--;
 
-        Szkeleton.tabs++;
         newPipe.connect(newPump);
-        Szkeleton.tabs--;
 
-        Szkeleton.tabs++;
         newPipe.connect(oldPump);
-        Szkeleton.tabs--;
 
-        Szkeleton.tabs++;
         newPump.addPipe(this);
         newPump.addPipe(newPipe);
-        Szkeleton.tabs--;
 
-        Szkeleton.tabs++;
         oldPump.addPipe(newPipe);
-        Szkeleton.tabs--;
 
         return newPipe;
     }
@@ -121,13 +127,8 @@ public class Pipe extends Field {
      */
     @Override
     public int getWater() {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".getWater()");
         int w = super.getWaterNoChange();
-        w = ((super.isBroken()) || (this.fields.size() < 2)) ? -w : w;
-        Szkeleton.printTabs();
-        System.out.println(w);
-        return w;
+        return ((super.isBroken()) || (this.fields.size() < 2)) ? -w : w;
     }
 
     /**
@@ -138,33 +139,15 @@ public class Pipe extends Field {
      */
     @Override
     public int fillInWater(int i) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".fillInWater()");
         int waterRightNow = super.getWaterNoChange();
         if (i - (capacity- waterRightNow) > 0) {
-            Szkeleton.printTabs();
-            System.out.println(i - (capacity - waterRightNow));
             return i - (capacity-waterRightNow);
         }
         else {
-            Szkeleton.printTabs();
-            System.out.println("0");
             return 0;
         }
     }
 
-
-    /**
-     * Method for setting the end of the pipe at a pump.
-     * @param p The pump to be set as the end of the pipe
-     * @return True if the pump was set as the end of the pipe
-     */
-    @Override
-    public boolean setEnd(Pump p) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".setEnd()");
-        return super.setEnd(p);
-    }//TODO jelenleg nem használjuk semmire a szekvenciadiagramban
 
     /**
      * Method for connecting the pipe to an ActiveField.
@@ -173,8 +156,6 @@ public class Pipe extends Field {
      */
     @Override
     public boolean connect(ActiveFields a) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".connect()");
         fields.add(a);
         return true;
     }
@@ -186,8 +167,6 @@ public class Pipe extends Field {
      */
     @Override
     public boolean disconnect(ActiveFields a) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".disconnect()");
         fields.remove(a);
         return true;
     }
@@ -199,13 +178,48 @@ public class Pipe extends Field {
      * */
     @Override
     public boolean accept(Player p) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".accept()");
         if(this.isOccupied())
             return false;
         else {
             setOccupied(true);
+            setPlayers(p);
             return true;
         }
+    }
+
+    @Override
+    public String toString() {
+        ArrayList<Player> players = this.getPlayers();
+        System.out.println(players);
+        String playersNames = "";
+        if (players.size() == 0) playersNames = null;
+        for (int i = 0; i < players.size(); i++) {
+            playersNames += Controller.objectReverseNames.get(players.get(i));
+            if (i != players.size() - 1) {
+                playersNames += ", ";
+            }
+        }
+
+        ArrayList<ActiveFields> fields = this.getFields();
+        String fieldsNames = "";
+        if (fields.size() == 0) fieldsNames = null;
+        for (int i = 0; i < fields.size(); i++) {
+            fieldsNames += Controller.objectReverseNames.get(fields.get(i));
+            if (i != fields.size() - 1) {
+                fieldsNames += ", ";
+            }
+        }
+
+        return "name: " + Controller.objectReverseNames.get(this)
+                + "\noccupied: " + this.isOccupied()
+                + "\nwater: " + getWaterNoChange()
+                + "\nbroken: " + this.isBroken()
+                + "\nplayers: " + playersNames
+                + "\nfields: " + fieldsNames
+                + "\ncapacity: " + this.getCapacity()
+                + "\nbreakable: " + this.getBreakable()
+                + "\nrfluidtime: " + this.getRemainingFluidTime()
+                + "\nleave: " + this.getLeave()
+                + "\nfluid: " + this.getFluid().toString().toLowerCase() + "\n";
     }
 }

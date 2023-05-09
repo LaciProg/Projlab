@@ -1,8 +1,11 @@
 package Fields.ActiveFields;
 
+import Controll.Controller;
 import Controll.Szkeleton;
 import Fields.Pipe;
 import Players.Player;
+
+import java.util.ArrayList;
 
 /**
  * Class for Pump
@@ -28,33 +31,31 @@ public class Pump extends ActiveFields {
      * Constructor for the pump.
      */
     public Pump(int tank) {
-        Szkeleton.printTabs();
-        System.out.println("new Pump()");
         this.tank = tank;
         this.waterFrom = 0;
         this.waterTo = 0;
     }
+
+    public int getTank() { return tank; }
 
     /**
      * Setter for the waterFrom.
      * @param waterFrom The index of the pipe from which the pump gets water. Only for initialization.
      */
     public void setWaterFrom(int waterFrom) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".setWaterFrom()");
         this.waterFrom = waterFrom;
     }
 
+    public int getWaterFrom() { return waterFrom; }
     /**
      * Setter for the waterTo.
      * @param waterTo The index of the pipe to which the pump gives water. Only for initialization.
      */
     public void setWaterTo(int waterTo) {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".setWaterTo()");
         this.waterTo = waterTo;
     }
 
+    public int getWaterTo() { return waterTo; }
     /**
      * Method for the game controlled events.
      * Gets the water pumps the water from the tank to the pipe and gets the water from the input and store it.
@@ -63,18 +64,12 @@ public class Pump extends ActiveFields {
     public void step() {
         super.step();
         if(!(super.isBroken())) {
-            Szkeleton.tabs++;
             int plusWater;
             plusWater = this.getPipes().get(waterTo).fillInWater(tank);
-            Szkeleton.tabs--;
 
-            Szkeleton.tabs++;
             int waterInPipe = this.getPipes().get(waterFrom).getWater();
-            Szkeleton.tabs--;
 
-            Szkeleton.tabs++;
             this.getPipes().get(waterFrom).fillInWater(waterInPipe + plusWater - tank);
-            Szkeleton.tabs--;
         }
     }
 
@@ -84,8 +79,6 @@ public class Pump extends ActiveFields {
      */
     @Override
     public boolean breakField() {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".breakField()");
         return true;
     }
 
@@ -97,22 +90,55 @@ public class Pump extends ActiveFields {
      * */
     @Override
     public boolean set(Pipe input, Pipe output) {
-        Szkeleton.printTabs();
-        Szkeleton.tabs++;
-        System.out.println(Szkeleton.objectNames.get(this)+ ".set()");
-        waterFrom = super.getPipes().indexOf(input);
-        waterTo = super.getPipes().indexOf(output);
+        waterFrom = this.getPipes().indexOf(input);
+        waterTo = this.getPipes().indexOf(output);
         if(waterFrom == -1 || waterTo == -1) return false;
         this.setWaterFrom(waterFrom);
         this.setWaterTo(waterTo);
-        Szkeleton.tabs--;
         return true;
     }
 
     @Override
     public boolean repair() {
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this)+ ".repair()");
         return true;
-    }   
+    }
+
+    @Override
+    public String toString() {
+        ArrayList<Player> players = this.getPlayers();
+        System.out.println(players);
+        String playersNames = "";
+        if (players == null) playersNames = null;
+        else {
+            for (int i = 0; i < players.size(); i++) {
+                playersNames += Controller.objectReverseNames.get(players.get(i));
+                if (i != players.size() - 1) {
+                    playersNames += ", ";
+                }
+            }
+        }
+
+
+        ArrayList<Pipe> pipes = this.getPipes();
+        String pipesNames = "";
+        if (pipes == null) pipesNames = null;
+        else {
+            for (int i = 0; i < pipes.size(); i++) {
+                pipesNames += Controller.objectReverseNames.get(pipes.get(i));
+                if (i != pipes.size() - 1) {
+                    pipesNames += ", ";
+                }
+            }
+        }
+
+        return "name: "+ Controller.objectReverseNames.get(this)
+                + "\noccupied: " + this.isOccupied()
+                + "\nwater: " + getWaterNoChange()
+                + "\nbroken: " + this.isBroken()
+                + "\nplayers: " + playersNames
+                + "\npipes: " + pipesNames
+                + "\ntank: " + this.getTank()
+                + "\nwaterFrom: " + this.getWaterFrom()
+                + "\nwaterTo: " + this.getWaterTo() + "\n";
+    }
 }
