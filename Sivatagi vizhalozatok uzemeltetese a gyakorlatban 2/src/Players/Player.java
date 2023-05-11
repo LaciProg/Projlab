@@ -43,14 +43,25 @@ public abstract class Player {
 	 * @return boolean - always false.
 	 * */
 	public boolean move(Field f) {
-        boolean result = f.accept(this);
+        Field result = f.accept(this);
         
-        if(result) {
-        	getStandingField().removePlayer(this);
-        	return true;
-        }
-        else
+        if(result == null) {
         	return false;
+        }
+        else if(result != f ) {
+			if (result != standingField) {
+				boolean result2 = standingField.removePlayer(this);
+				if (result2) standingField = result;
+				return result2;
+			}
+			return true;
+		}
+		if(result == f){
+			boolean result2 = standingField.removePlayer(this);
+			if(result2) standingField = result;
+			return result2;
+		}
+		else return false;
 	}
 	
 	/**
@@ -58,7 +69,7 @@ public abstract class Player {
 	 * @return boolean - always false.
 	 * */
 	public boolean breakField() {
-		return false;
+		return getStandingField().breakField();
 	}
 	
 	/**
@@ -121,7 +132,8 @@ public abstract class Player {
 	}
 
 	public boolean makeSticky(){
-		return false;
+		boolean result = standingField.makeSticky();
+		return result;
 	}
 
 	public boolean makeSlippery(){
