@@ -90,7 +90,12 @@ public class Pipe extends Field {
     @Override
     public boolean repair() {
         super.setBroken(false);
-        breakable = 5;//Todo Mennyi ideig legyen törhetetlen?
+        if (Controller.isTest()) {
+            breakable = 5;
+        }
+        else {
+            breakable = new Random().nextInt(3,10);
+        }
         return true;
     }
 
@@ -186,6 +191,10 @@ public class Pipe extends Field {
     public Field accept(Player p) {
         if(this.isOccupied())
             return null;
+        else {
+            this.setOccupied(true);
+            this.setPlayers(p);
+        }
         if(fluid == Fluid.SLIPPERY){
             fields.get(1).accept(p);
             return fields.get(1);
