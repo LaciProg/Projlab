@@ -15,18 +15,14 @@ public class Saboteur extends Player {
 	public Saboteur() {
 	}
 
-	/**
-	 *Method for breaking the field where the player is standing.
-	 * @return boolean - returns true if the field is broken.
-	 */
-	@Override
-	public boolean breakField() {
-		return getStandingField().breakField();
+	public boolean makeSlippery(){
+		boolean result = this.getStandingField().makeSlippery();
+		return result;
 	}
 
 	@Override
 	public String toString() {
 		return "name: "+ Controller.objectReverseNames.get(this)
-				+ "\nstandingField: " + Controller.objectReverseNames.get(this.getStandingField());
+				+ "\nstandingField: " + Controller.objectReverseNames.get(this.getStandingField()) + "\n";
 	}
 }

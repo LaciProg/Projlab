@@ -99,7 +99,9 @@ public class Mechanic extends Player {
      */
     @Override
     public Pump getPump() {
-        return getStandingField().createNewPump(true); // mechanic can get a new pump
+        boolean b = false;
+        if(holdingPump == null) b = true;
+        return getStandingField().createNewPump(b); // mechanic can get a new pump
     }
 
     /**
@@ -117,6 +119,6 @@ public class Mechanic extends Player {
         return "name: "+ Controller.objectReverseNames.get(this)
                 + "\nstandingField: " + Controller.objectReverseNames.get(this.getStandingField())
                 + "\nholdingPipe: " + this.getHoldingPipe()
-                + "\nholdingPump: " + this.getHoldingPump()+"\n";
+                + "\nholdingPump: " + this.getHoldingPump() + "\n"; //TODO ne hívja meg a pump tostring-jét
     }
 }

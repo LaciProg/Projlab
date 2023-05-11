@@ -7,6 +7,7 @@ import Fields.Pipe;
 import Players.Mechanic;
 import Players.Saboteur;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -38,7 +39,7 @@ public class Szkeleton {
      * Use only Integer values.
      * @param args String[]
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         new Controller().Run();
         System.out.println("End of program");
         /*

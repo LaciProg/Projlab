@@ -9,8 +9,10 @@ import Players.Mechanic;
 import Players.Player;
 import Players.Saboteur;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -28,12 +30,16 @@ public class Controller {
     public static boolean isTest() {return test;}
     private static String fileName="";
 
+    private static String filePath="";
+
+    private static ArrayList<String> outResults = new ArrayList<>();
+
     ArrayList<String> commandList = new ArrayList<>();
 
     private int pipes=0;
     private int pumps=0;
 
-    public void Run(){
+    public void Run() throws FileNotFoundException {
         while(true) {
             Scanner stdInScanner = new Scanner(System.in);
             if (commandList.size() == 0){
@@ -43,7 +49,7 @@ public class Controller {
             commandList.remove(0);
             String[] cmd = command.split(" ");
             switch(cmd[0]) {
-                case("load"): load(cmd); break;
+                case("load"): load(cmd); /*if(test) {save(cmd);}*/ break;
                 case("pipe"): pipe(cmd); break;
                 case("pump"): pump(cmd); break;
                 case("cistern"): cistern(cmd); break;
@@ -66,7 +72,8 @@ public class Controller {
                 case("pickuppipe"): pickuppipe(cmd); break;
                 case("makesticky"): makesticky(cmd); break;
                 case("makeslippery"): makeslippery(cmd); break;
-                case("save"): break;
+                case("save"): save(cmd); break;
+                /*case("testall"): testAll(cmd); break;*/
                 case("list"): list(cmd); break;
                 case("addplayer"): addplayer(cmd); break;
                 case("step"): step(cmd); break;
@@ -83,12 +90,20 @@ public class Controller {
 
     private void load(String[] cmd){
         try {
+            //System.out.println("ITT");
+            //System.out.println(cmd[1] + "\n");
+            outResults.clear();
             Scanner scanner = new Scanner(new File(cmd[1]));
+            filePath = cmd[1];
             String separator = "\\";
             String[] tmp=cmd[1].replaceAll(Pattern.quote(separator), "\\\\").split("\\\\");
             fileName = tmp[tmp.length-1];
             while (scanner.hasNextLine()){
                 commandList.add(scanner.nextLine());
+            }
+            if (test) {
+                commandList.add("save " + filePath.replace(".in", ".out"));
+                //save(cmd);
             }
         } catch (FileNotFoundException e) {
             System.out.println("Bánat");
@@ -110,7 +125,8 @@ public class Controller {
         }
         objectNames.put(cmd[1], tmp);
         objectReverseNames.put(tmp, cmd[1]);
-        System.out.println("Sikeres művelet");
+        if (test) outResults.add("Sikeres művelet");
+        else System.out.println("Sikeres művelet");
     }
 
     private void pipe(String[] cmd){
@@ -136,7 +152,8 @@ public class Controller {
         }
         objectNames.put(cmd[1], tmp);
         objectReverseNames.put(tmp, cmd[1]);
-        System.out.println("Sikeres művelet");
+        if (test) outResults.add("Sikeres művelet");
+        else System.out.println("Sikeres művelet");
     }
 
     private void cistern(String[] cmd){
@@ -153,14 +170,16 @@ public class Controller {
         }
         objectNames.put(cmd[1], tmp);
         objectReverseNames.put(tmp, cmd[1]);
-        System.out.println("Sikeres művelet");
+        if (test) outResults.add("Sikeres művelet");
+        else System.out.println("Sikeres művelet");
     }
 
     private void spring(String[] cmd){
         Spring tmp = new Spring(Integer.parseInt(cmd[2]));
         objectNames.put(cmd[1], tmp);
         objectReverseNames.put(tmp, cmd[1]);
-        System.out.println("Sikeres művelet");
+        if (test) outResults.add("Sikeres művelet");
+        else System.out.println("Sikeres művelet");
     }
 
     private void saboteur(String[] cmd){
@@ -169,17 +188,18 @@ public class Controller {
         tmp.setStandingField(f);
         objectNames.put(cmd[1], tmp);
         objectReverseNames.put(tmp, cmd[1]);
-        System.out.println("Sikeres művelet");
+        if (test) outResults.add("Sikeres művelet");
+        else System.out.println("Sikeres művelet");
     }
 
     private void mechanic(String[] cmd){
         Mechanic tmp = new Mechanic();
         Field f = (Field)objectNames.get(cmd[2]);
-        System.out.println(f);
+        //System.out.println(f);
         tmp.setStandingField(f);
         String[][] commands = new String[cmd.length-3][2];
         for(int i=3; i<cmd.length; i++){
-            System.out.println(cmd.length);
+            //System.out.println(cmd.length);
             commands[i-3] = cmd[i].split(":");
         }
         for(int i=0; i<commands.length; i++) {
@@ -194,7 +214,8 @@ public class Controller {
         }
         objectNames.put(cmd[1], tmp);
         objectReverseNames.put(tmp, cmd[1]);
-        System.out.println("Sikeres művelet");
+        if (test) outResults.add("Sikeres művelet");
+        else System.out.println("Sikeres művelet");
     }
 
     private void connectpipe(String[] cmd){
@@ -202,25 +223,42 @@ public class Controller {
         ActiveFields activeField = (ActiveFields)objectNames.get(cmd[2]);
         pipe.setFields(activeField);
         activeField.addPipe(pipe);
-        System.out.println("Sikeres művelet");
+        if (test) outResults.add("Sikeres művelet");
+        else System.out.println("Sikeres művelet");
     }
 
     private void random(String[] cmd){
-        if(cmd.length == 2){
-            switch (cmd[1]){
-                case "false": random = false;
-                    System.out.println("A véletlen események ki lettek kapcsolva."); break;
-                case "true": random = true;
-                    System.out.println("A véletlen események be lettek kapcsolva."); break;
+        if (test) {
+            if(cmd.length == 2){
+                switch (cmd[1]){
+                    case "false": random = false;
+                        outResults.add("A véletlen események ki lettek kapcsolva."); break;
+                    case "true": random = true;
+                        outResults.add("A véletlen események be lettek kapcsolva."); break;
+                }
+            }else {
+                random=true;
+                outResults.add("A véletlen események be lettek kapcsolva.");
             }
-        }else {
-            random=true;
-            System.out.println("A véletlen események be lettek kapcsolva.");
+        }
+        else {
+            if(cmd.length == 2){
+                switch (cmd[1]){
+                    case "false": random = false;
+                        System.out.println("A véletlen események ki lettek kapcsolva."); break;
+                    case "true": random = true;
+                        System.out.println("A véletlen események be lettek kapcsolva."); break;
+                }
+            }else {
+                random=true;
+                System.out.println("A véletlen események be lettek kapcsolva.");
+            }
         }
 
     }
     private void create(String[] cmd) {
-        System.out.println("A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!");
+        if (test) outResults.add("A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!");
+        else System.out.println("A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!");
     }
 
     private void show(String[] cmd){
@@ -228,39 +266,55 @@ public class Controller {
         String[] commands = cmd[2].split(":");
         switch (commands[1]){
             case "player":
+                if (test) outResults.add(p.toString()); //TODO jó-e így?
+                else System.out.println(p);
                 System.out.println(p);
                 break;
             case "field":
-                System.out.println(objectReverseNames.get(p.getStandingField()));
+                if (test) outResults.add(objectReverseNames.get(p.getStandingField()).toString()); //TODO jó-e így?
+                else System.out.println(objectReverseNames.get(p.getStandingField()));
                 break;
         }
     }
 
     private void showobject(String[] cmd){
         Object object = objectNames.get(cmd[1]);
-        System.out.println(object);
+        if (test) outResults.add(object.toString());
+        else System.out.println(object.toString()); //TODO tesztre
     }
 
     private void move(String[] cmd){
         Player p = (Player)objectNames.get(cmd[1]);
         Field f = (Field)objectNames.get(cmd[2]);
         if(p.move(f)){
-            System.out.println("Sikeres művelet");
-        }else  System.out.println("Sikertelen művelet");
+            if (test) outResults.add("Sikeres művelet");
+            else System.out.println("Sikeres művelet");
+        }else  {
+            if (test) outResults.add("Sikertelen művelet");
+            else System.out.println("Sikertelen művelet");
+        }
     }
 
     private void breakfield(String[] cmd){
         Player p = (Player)objectNames.get(cmd[1]);
         if(p.breakField()){
-            System.out.println("Sikeres művelet");
-        }else  System.out.println("Sikertelen művelet");
+            if (test) outResults.add("Sikeres művelet");
+            else System.out.println("Sikeres művelet");
+        }else  {
+            if (test) outResults.add("Sikertelen művelet");
+            else System.out.println("Sikertelen művelet");
+        }
     }
 
     private void repair(String[] cmd){
         Player p = (Player)objectNames.get(cmd[1]);
         if(p.repair()){
-            System.out.println("Sikeres művelet");
-        }else  System.out.println("Sikertelen művelet");
+            if (test) outResults.add("Sikeres művelet");
+            else System.out.println("Sikeres művelet");
+        }else  {
+            if (test) outResults.add("Sikertelen művelet");
+            else System.out.println("Sikertelen művelet");
+        }
     }
 
     private void placepump(String[] cmd){
@@ -271,29 +325,45 @@ public class Controller {
             String s = "NewPipe"+pipes;
             objectNames.put(s, pipe);
             objectReverseNames.put(pipe, s);
-            System.out.println("Sikeres művelet");
-        }else  System.out.println("Sikertelen művelet");
+            if (test) outResults.add("Sikeres művelet");
+            else System.out.println("Sikeres művelet");
+        }else  {
+            if (test) outResults.add("Sikertelen művelet");
+            else System.out.println("Sikertelen művelet");
+        }
     }
 
     private void set(String[] cmd){
          Player player = (Player)objectNames.get(cmd[1]);
          if(player.getStandingField().set((Pipe)objectNames.get(cmd[2]), (Pipe)objectNames.get(cmd[3]))){
-             System.out.println("Sikeres művelet");
-         }else System.out.println("Sikertelen művelet");
+             if (test) outResults.add("Sikeres művelet");
+             else System.out.println("Sikeres művelet");
+         }else  {
+             if (test) outResults.add("Sikertelen művelet");
+             else System.out.println("Sikertelen művelet");
+         }
     }
 
     private void disconnect(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.disconnect((Pipe)objectNames.get(cmd[2]))){
-            System.out.println("Sikeres művelet");
-        }else System.out.println("Sikertelen művelet");
+            if (test) outResults.add("Sikeres művelet");
+            else System.out.println("Sikeres művelet");
+        }else  {
+            if (test) outResults.add("Sikertelen művelet");
+            else System.out.println("Sikertelen művelet");
+        }
     }
 
     private void connect(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.connect()){
-            System.out.println("Sikeres művelet");
-        }else System.out.println("Sikertelen művelet");
+            if (test) outResults.add("Sikeres művelet");
+            else System.out.println("Sikeres művelet");
+        }else  {
+            if (test) outResults.add("Sikertelen művelet");
+            else System.out.println("Sikertelen művelet");
+        }
     }
 
     private void getpump(String[] cmd){
@@ -304,50 +374,134 @@ public class Controller {
             String s = "NewPump"+pumps;
             objectNames.put(s, pump);
             objectReverseNames.put(pump, s);
-            System.out.println("Sikeres művelet");
-        }else  System.out.println("Sikertelen művelet");
+            if (test) outResults.add("Sikeres művelet");
+            else System.out.println("Sikeres művelet");
+        }else  {
+            if (test) outResults.add("Sikertelen művelet");
+            else System.out.println("Sikertelen művelet");
+        }
     }
 
     private void pickuppipe(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.pickUpPipe()){
-            System.out.println("Sikeres művelet");
-        }else System.out.println("Sikertelen művelet");
+            if (test) outResults.add("Sikeres művelet");
+            else System.out.println("Sikeres művelet");
+        }else  {
+            if (test) outResults.add("Sikertelen művelet");
+            else System.out.println("Sikertelen művelet");
+        }
     }
 
     private void makesticky(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.makeSticky()){
-            System.out.println("Sikeres művelet");
-        }else System.out.println("Sikertelen művelet");
+            if (test) outResults.add("Sikeres művelet");
+            else System.out.println("Sikeres művelet");
+        }else  {
+            if (test) outResults.add("Sikertelen művelet");
+            else System.out.println("Sikertelen művelet");
+        }
     }
 
     private void makeslippery(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.makeSlippery()){
-            System.out.println("Sikeres művelet");
-        }else System.out.println("Sikertelen művelet");
+            if (test) outResults.add("Sikeres művelet");
+            else System.out.println("Sikeres művelet");
+        }else  {
+            if (test) outResults.add("Sikertelen művelet");
+            else System.out.println("Sikertelen művelet");
+        }
     }
+
+    private void save(String[] cmd) {
+        try (PrintWriter out = new PrintWriter(cmd[1].replace(".in", ".out"))) {
+            for (int i = 0; i < outResults.size(); i++) {
+                out.println(outResults.get(i));
+            }
+        }
+        catch(FileNotFoundException e) {
+            System.out.println("Nagyobb bánat");
+        }
+        try {
+            Scanner scannerResult = new Scanner(new File(filePath.replace(".in", ".out")));
+            Scanner scannerExpected = new Scanner(new File(filePath.replace(".in", ".test")));
+            ArrayList<String> result = new ArrayList<>();
+            ArrayList<String> expected = new ArrayList<>();
+            while (scannerResult.hasNextLine()){
+                result.add(scannerResult.nextLine());
+            }
+            while (scannerExpected.hasNextLine()){
+                expected.add(scannerExpected.nextLine());
+            }
+            System.out.println("Test name: " + fileName.replace(".in", ""));
+            if (result.size() != expected.size()) {
+                System.out.println("Test failed. The 2 files do not have the same amount of lines.");
+                return;
+            }
+            int errors = 0;
+            if (result.size() > 0 && expected.size() > 0) {
+                for (int i = 0; i < expected.size(); i++) {
+                    if (!result.get(i).equals(expected.get(i))) {
+                        System.out.println("Error in line " + (i+1) + ".\nExpected: " + expected.get(i) + ", but got: " + result.get(i));
+                        errors++;
+                    }
+                }
+            }
+            if (errors == 0 && result.size() > 0 && expected.size() > 0) {
+                System.out.println("Test succeeded.\n");
+            }
+            else {
+                System.out.println("Test failed.\n");
+            }
+        }
+        catch(FileNotFoundException e) {
+            System.out.println("Még nagyobb bánat");
+        }
+    }
+
+    //TODO lehetőség az összes teszt meghivására, nem követelmény szóval csak ha lesz rá idő xd
+    /*private void testAll(String[] cmd) {
+        commandList.add("load " + cmd[1] + "\\1SaboteurBreakPipe.in");
+        commandList.add("save " + cmd[1] + "\\1SaboteurBreakPipe.out");
+        commandList.add("load " + cmd[1] + "\\2BreakCistern.in");
+        commandList.add("save " + cmd[1] + "\\2BreakCistern.out");
+        commandList.add("load " + cmd[1] + "\\3RepairPipe.in");
+        commandList.add("save " + cmd[1] + "\\3RepairPipe.out");
+        String[] tmp = {"load", cmd[1] + "\\1SaboteurBreakPipe.in"};
+        load(tmp);
+        tmp[1] = cmd[1] + "\\2BreakCistern.in";
+        load(tmp);
+        tmp[1] = "\\3RepairPipe.in";
+        load(tmp);
+        //System.out.println(commandList);
+    }*/
 
     private void list(String[] cmd){
         ArrayList<String> values = (ArrayList<String>)objectReverseNames.values();
         for(String s : values){
-            System.out.print(s+" ");
+            System.out.print(s+" "); //TODO tesztre
         }
     }
 
-    private void addplayer(String[] cmd){
-        Field f = (Field)objectNames.get(cmd[1]);
-        Player p = (Player)objectNames.get(cmd[2]);
-        if(f.accept(p)){
-            System.out.println("Sikeres művelet");
-        }else System.out.println("Sikertelen művelet");
+    private void addplayer(String[] cmd) {
+        Field f = (Field) objectNames.get(cmd[1]);
+        Player p = (Player) objectNames.get(cmd[2]);
+        if(f.accept(p) != null) {
+            if (test) outResults.add("Sikeres művelet");
+            else System.out.println("Sikeres művelet");
+        }else  {
+            if (test) outResults.add("Sikertelen művelet");
+            else System.out.println("Sikertelen művelet");
+        }
     }
 
     private void step(String[] cmd){
         Steppable s = (Steppable)objectNames.get(cmd[1]);
         s.step();
-        System.out.println("Sikeres művelet");
+        if (test) outResults.add("Sikeres művelet");
+        else System.out.println("Sikeres művelet");
     }
 
     private void endturn(String[] cmd){
@@ -357,7 +511,8 @@ public class Controller {
 
     private void count(String[] cmd){
         waterCounter.count();
-        System.out.println("Sikeres művelet");
+        if (test) outResults.add("Sikeres művelet");
+        else System.out.println("Sikeres művelet");
     }
 
     private void restart(String[] cmd){
@@ -377,13 +532,18 @@ public class Controller {
 
     private void setend(String[] cmd){
         waterCounter.setEnd();
-        System.out.println("Sikeres művelet");
+        if (test) outResults.add("Sikeres művelet");
+        else System.out.println("Sikeres művelet");
     }
 
     private void setpump(String[] cmd){
         Pump pump = (Pump)objectNames.get(cmd[1]);
         if(pump.set((Pipe)objectNames.get(cmd[2]), (Pipe)objectNames.get(cmd[3]))){
-            System.out.println("Sikeres művelet");
-        }else System.out.println("Sikertelen művelet");
+            if (test) outResults.add("Sikeres művelet");
+            else System.out.println("Sikeres művelet");
+        }else  {
+            if (test) outResults.add("Sikertelen művelet");
+            else System.out.println("Sikertelen művelet");
+        }
     }
 }
