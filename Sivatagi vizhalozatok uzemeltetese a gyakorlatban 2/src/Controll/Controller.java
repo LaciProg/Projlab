@@ -485,10 +485,10 @@ public class Controller {
         }
     }
 
-    private void addplayer(String[] cmd){
-        Field f = (Field)objectNames.get(cmd[1]);
-        Player p = (Player)objectNames.get(cmd[2]);
-        if(f.accept(p)){
+    private void addplayer(String[] cmd) {
+        Field f = (Field) objectNames.get(cmd[1]);
+        Player p = (Player) objectNames.get(cmd[2]);
+        if(f.accept(p) != null) {
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
