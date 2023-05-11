@@ -40,9 +40,10 @@ public class Spring extends ActiveFields{
      */
     @Override
     public void step() {
-        for(int i = 0; i!= getPipes().size(); i++){
+        waterOut = maxOutWater;
+        for(int i = 0; i < this.getPipes().size(); i++){
             waterOut = getPipes().get(i).fillInWater(waterOut);
-            if(waterOut == 0){
+            if(waterOut <= 0){
                 break;
             }
         }

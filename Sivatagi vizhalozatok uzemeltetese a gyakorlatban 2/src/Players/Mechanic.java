@@ -99,7 +99,9 @@ public class Mechanic extends Player {
      */
     @Override
     public Pump getPump() {
-        return getStandingField().createNewPump(true); // mechanic can get a new pump
+        boolean b = false;
+        if(holdingPump == null) b = true;
+        return getStandingField().createNewPump(b); // mechanic can get a new pump
     }
 
     /**
