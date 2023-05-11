@@ -7,6 +7,7 @@ import Fields.ActiveFields.Pump;
 import Players.Player;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Class for Pipes
@@ -77,6 +78,7 @@ public class Pipe extends Field {
      */
     @Override
     public boolean breakField() {
+        if(this.breakable > 0) return false;
         this.setBroken(true);
         return true;
     }
@@ -87,6 +89,8 @@ public class Pipe extends Field {
      */
     @Override
     public boolean repair() {
+        super.setBroken(false);
+        breakable = 5;//Todo Mennyi ideig legyen törhetetlen?
         return true;
     }
 
@@ -105,7 +109,7 @@ public class Pipe extends Field {
 
         oldPump.removePipe(this);
 
-        Pipe newPipe = new Pipe(21);
+        Pipe newPipe = new Pipe(50);
 
         newPipe.connect(newPump);
 
@@ -128,6 +132,7 @@ public class Pipe extends Field {
     @Override
     public int getWater() {
         int w = super.getWaterNoChange();
+        super.setWater(0);
         return ((super.isBroken()) || (this.fields.size() < 2)) ? -w : w;
     }
 
@@ -173,20 +178,61 @@ public class Pipe extends Field {
 
     /**
      * Methods for accepting players.
+     *
      * @param p The player to be accepted.
      * @return True if the player was accepted.
-     * */
+     */
     @Override
-    public boolean accept(Player p) {
+    public Field accept(Player p) {
         if(this.isOccupied())
-            return false;
-        else {
-            setOccupied(true);
-            setPlayers(p);
-            return true;
+            return null;
+        if(fluid == Fluid.SLIPPERY){
+            fields.get(1).accept(p);
+            return fields.get(1);
         }
+        return this;
     }
 
+    public boolean removePlayer(){
+        if(fluid == Fluid.STICKY){
+            if(leave == true){
+                leave = false;
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+    public boolean makeSlippery(){
+        if(remainingFluidTime == 0){
+            remainingFluidTime = 5;//Todo MEnnyi legyen?
+            fluid = Fluid.SLIPPERY;
+            return true;
+        }
+        return false;
+    }
+
+    public  boolean makeSticky(){
+        if(remainingFluidTime == 0){
+            remainingFluidTime = 5;//Todo MEnnyi legyen?
+            fluid = Fluid.STICKY;
+            return true;
+        }
+        return false;
+    }
+
+    public void step(){
+        if(breakable > 0){
+            breakable--;
+        }
+        if(remainingFluidTime > 0){
+            remainingFluidTime--;
+            if(remainingFluidTime == 0){
+                fluid = Fluid.DRY;
+                leave = true;
+            }
+        }
+    }
     @Override
     public String toString() {
         ArrayList<Player> players = this.getPlayers();

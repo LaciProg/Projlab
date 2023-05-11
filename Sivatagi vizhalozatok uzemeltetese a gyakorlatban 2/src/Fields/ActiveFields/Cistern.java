@@ -12,11 +12,15 @@ import java.util.ArrayList;
  * */
 public class Cistern extends ActiveFields{
 
-
+    /**
+     *
+     */
+    private Pipe createdPipe;
     /**
      * Constructor for the cistern.
      */
     public Cistern() {
+        createdPipe = null;
         super.setWater(0);
     }
 
@@ -30,6 +34,11 @@ public class Cistern extends ActiveFields{
         for(Pipe pipe : getPipes()){
             super.setWater(super.getWater()+pipe.getWater());
         }
+        if(createdPipe == null){
+            createdPipe = new Pipe(65);
+            this.addPipe(createdPipe);
+            createdPipe.connect(this);
+        }
     }
 
     /**
@@ -39,7 +48,8 @@ public class Cistern extends ActiveFields{
      * */
     @Override
     public Pump createNewPump(boolean b) {
-        return new Pump(100);
+        if(b) return new Pump(100);
+        else return null;
     }
 
     /**
@@ -58,9 +68,8 @@ public class Cistern extends ActiveFields{
      */
     @Override
     public Pipe pickUpPipe() {
-        return new Pipe(65);
+        return createdPipe;
     }
-
 
     @Override
     public String toString() {
