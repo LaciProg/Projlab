@@ -70,6 +70,8 @@ public abstract class ActiveFields extends Field implements Steppable {
      */
        @Override
    	public Field accept(Player p) {
+           this.setOccupied(true);
+           this.setPlayers(p);
        	return this;
    	}
 }

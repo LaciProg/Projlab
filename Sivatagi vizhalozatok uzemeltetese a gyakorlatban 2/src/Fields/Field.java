@@ -52,9 +52,9 @@ public abstract class Field {
 	 * @return players.
 	 */
 	public ArrayList<Player> getPlayers() { //Basic getter if it is needed
-		if (players.size() == 0) {
+		/*if (players.size() == 0) {
 			return null;
-		}
+		}*/
 		return players;
 	}
 
