@@ -32,8 +32,8 @@ public class Pump extends ActiveFields {
      */
     public Pump(int tank) {
         this.tank = tank;
-        this.waterFrom = 0;
-        this.waterTo = 0;
+        this.waterFrom = -1;
+        this.waterTo = -1;
     }
 
     public int getTank() { return tank; }
@@ -64,24 +64,21 @@ public class Pump extends ActiveFields {
     public void step() {
         super.step();
         if(!(super.isBroken())) {
-            int plusWater;
-            plusWater = this.getPipes().get(waterTo).fillInWater(tank);
-
-            int waterInPipe = this.getPipes().get(waterFrom).getWater();
-
-            this.getPipes().get(waterFrom).fillInWater(waterInPipe + plusWater - tank);
+            super.setWater((this.getPipes().get(waterTo)).fillInWater(super.getWater()));
+            int newWater = (this.getPipes().get(waterFrom)).getWater();
+            if(newWater < 0) this.getPipes().get(waterFrom).fillInWater(newWater);
+            else{
+                if(super.getWaterNoChange() + newWater > tank){
+                    super.setWater(tank);
+                    this.getPipes().get(waterFrom).fillInWater(newWater-tank);
+                }
+                else super.setWater(super.getWaterNoChange() + newWater);
+            }
+        }
+        if(false){//Todo random szám legyen :)
+            super.setBroken(true);
         }
     }
-
-    /**
-     * Method for breaking the pump.
-     * @return True if the pump is broken
-     */
-    @Override
-    public boolean breakField() {
-        return true;
-    }
-
     /**
      * Method for setting the water flow in the pump.
      * @param input Pipe - The input pipe of the pump.
@@ -90,9 +87,9 @@ public class Pump extends ActiveFields {
      * */
     @Override
     public boolean set(Pipe input, Pipe output) {
-        waterFrom = this.getPipes().indexOf(input);
-        waterTo = this.getPipes().indexOf(output);
-        if(waterFrom == -1 || waterTo == -1) return false;
+        int newWaterFrom = this.getPipes().indexOf(input);
+        int newWaterTo = this.getPipes().indexOf(output);
+        if(newWaterFrom == -1 || newWaterTo == -1) return false;
         this.setWaterFrom(waterFrom);
         this.setWaterTo(waterTo);
         return true;
@@ -100,6 +97,7 @@ public class Pump extends ActiveFields {
 
     @Override
     public boolean repair() {
+        super.setBroken(false);
         return true;
     }
 
