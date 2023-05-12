@@ -42,6 +42,8 @@ connectpipe FC1 cistern1
 connectpipe AF A
 connectpipe AF F
 mechanic Mechanic1 F
+mechanic Mechanic2 A
 saboteur Saboteur1 C
+saboteur Saboteur2 B
 create
 
