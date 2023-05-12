@@ -1,6 +1,6 @@
 cistern cistern
 pump holdingPump 400
-mechanic mech cistren pump:holdingPump
+mechanic mech cistern pump:holdingPump
 addplayer cistern mech
 create
 placepump mech

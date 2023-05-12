@@ -2,6 +2,7 @@ pipe Pfrom 100
 pump Pto 100
 connectpipe Pfrom Pto
 mechanic mech Pfrom
+addplayer Pfrom mech
 create
 move mech Pto
 showobject Pfrom
