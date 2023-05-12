@@ -1,0 +1,10 @@
+﻿pipe Pfrom 100 fluid:sticky rfluidtime:3
+pump Pto 100
+connectpipe Pfrom Pto
+mechanic mech Pfrom
+addplayer Pfrom mech
+create
+move mech Pto
+showobject Pfrom
+showobject Pto
+showobject mech

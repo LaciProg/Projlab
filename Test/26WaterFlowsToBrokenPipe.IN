@@ -1,0 +1,11 @@
+﻿pipe pipe1 50 water:30
+pipe brokenPipe 40 water:0
+pump pump1 100
+connectpipe pipe1 pump1
+connectpipe emptyPipe pump1
+setpump pump1 pipe brokenPipe
+create
+step pump
+showobject pump1
+showobject pipe1
+showobject brokenPipe
