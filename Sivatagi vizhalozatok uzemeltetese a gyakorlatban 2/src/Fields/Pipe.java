@@ -200,7 +200,13 @@ public class Pipe extends Field {
         }
         if(fluid == Fluid.SLIPPERY){    //EZ MÉGIS HONNAN JÖTT?
             Random r = new Random();
-            int index = (r.nextInt() % 2);
+            int index;
+            if (Controller.isTest()) {
+                index = 1;
+            }
+            else {
+                index = new Random().nextInt(0,1);
+            }
             fields.get(index).accept(p);    //SENKI NEM MONDTA HOGY 1 AZ A MÁSIK VÉGE
             return fields.get(index);       //MEG NEM AZT BESZÉLTÜK? HOGY RANDOM HELYRE KERÜL?
         }
@@ -219,8 +225,12 @@ public class Pipe extends Field {
     }
     public boolean makeSlippery(){
         if(remainingFluidTime == 0){
-            Random r = new Random();
-            remainingFluidTime = r.nextInt(10-3)+3;
+            if (Controller.isTest()) {
+                remainingFluidTime = 5;
+            }
+            else {
+                remainingFluidTime = new Random().nextInt(3,10);
+            }
             fluid = Fluid.SLIPPERY;
             return true;
         }
@@ -229,8 +239,12 @@ public class Pipe extends Field {
 
     public  boolean makeSticky(){
         if(remainingFluidTime == 0){
-            Random r = new Random();
-            remainingFluidTime = r.nextInt(10-3)+3;
+            if (Controller.isTest()) {
+                remainingFluidTime = 5;
+            }
+            else {
+                remainingFluidTime = new Random().nextInt(3,10);
+            }
             fluid = Fluid.STICKY;
             return true;
         }
