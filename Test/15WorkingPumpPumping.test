@@ -6,6 +6,10 @@ Sikeres művelet
 Sikeres művelet
 Sikeres művelet
 Sikeres művelet
+Sikeres művelet
+Sikeres művelet
+Sikeres művelet
+Sikeres művelet
 A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!
 Sikeres művelet
 name: Pin
@@ -13,7 +17,7 @@ occupied: false
 water: 0
 broken: false
 players: null
-fields: pump
+fields: pump, tmp
 capacity: 65
 breakable: 0
 rfluidtime: 0
@@ -25,14 +29,14 @@ occupied: false
 water: 50
 broken: false
 players: null
-fields: pump
+fields: pump, tmp
 capacity: 65
 breakable: 0
 rfluidtime: 0
 leave: true
 fluid: dry
-name: pump
 
+name: pump
 occupied: false
 water: 65
 broken: false
@@ -41,4 +45,5 @@ pipes: Pin, Pout
 tank: 100
 waterFrom: Pin
 waterTo: Pout
+
 A véletlen események be lettek kapcsolva.

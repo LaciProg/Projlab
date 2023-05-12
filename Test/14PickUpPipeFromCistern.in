@@ -1,6 +1,5 @@
 cistern c
-pipe newPipe1 100
-connectpipe newPipe1 c
+step c
 mechanic m c
 addplayer c m
 create

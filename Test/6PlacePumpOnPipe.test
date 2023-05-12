@@ -3,6 +3,7 @@ Sikeres művelet
 Sikeres művelet
 Sikeres művelet
 Sikeres művelet
+Sikeres művelet
 A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék! 
 Sikeres művelet
 name: holdingPump
@@ -19,3 +20,4 @@ name: mech
 standingField: oldPipe
 holdingPipe: null
 holdingPump: null
+

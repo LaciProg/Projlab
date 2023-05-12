@@ -2,18 +2,17 @@ Sikeres művelet
 Sikeres művelet
 Sikeres művelet
 Sikeres művelet
-Sikeres művelet
 A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!
 Sikeres művelet
 name: c
-occupied:false
+occupied: false
 water: 0
 broken: false
-players:
-pipes: null
-waterStored:0
+players: m
+pipes: newPipe1
 
 name: m
 standingField: c
 holdingPipe: newPipe1
 holdingPump: null
+
