@@ -2,6 +2,7 @@ Sikeres művelet
 Sikeres művelet
 Sikeres művelet
 Sikeres művelet
+Sikeres művelet
 A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!
 Sikeres művelet
 name: Pfrom
@@ -17,7 +18,7 @@ leave: true
 fluid: dry
 
 name: Pto
-occupied: false 
+occupied: false
 water: 0
 broken: false
 players: mech
@@ -25,8 +26,9 @@ pipes: Pfrom
 tank: 100
 waterFrom: null
 waterTo: null
-name: mech
 
+name: mech
 standingField: Pto
 holdingPipe: null
 holdingPump: null
+

@@ -4,8 +4,11 @@ Sikeres művelet
 Sikeres művelet
 Sikeres művelet
 Sikeres művelet
+Sikeres művelet
+Sikeres művelet
 A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!
 Sikeres művelet
+name: pump
 occupied: false
 water: 50
 broken: false
@@ -14,4 +17,5 @@ pipes: Pin, Pout
 tank: 100
 waterFrom: Pin
 waterTo: Pout
+
 A véletlen események be lettek kapcsolva.
