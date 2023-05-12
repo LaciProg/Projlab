@@ -2,5 +2,5 @@ pipe brokenPipe 34 broken:true
 mechanic mech brokenPipe
 addplayer brokenPipe mech
 create
-repair sab
+repair mech
 showobject brokenPipe
