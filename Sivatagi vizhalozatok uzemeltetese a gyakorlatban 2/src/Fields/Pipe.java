@@ -150,10 +150,13 @@ public class Pipe extends Field {
     @Override
     public int fillInWater(int i) {
         int waterRightNow = super.getWaterNoChange();
+        if(waterRightNow == capacity) return i;
         if (i - (capacity- waterRightNow) > 0) {
+            super.setWater(capacity - waterRightNow);
             return i - (capacity-waterRightNow);
         }
         else {
+            super.setWater(i);
             return 0;
         }
     }
@@ -195,9 +198,9 @@ public class Pipe extends Field {
             this.setOccupied(true);
             this.setPlayers(p);
         }
-        if(fluid == Fluid.SLIPPERY){
-            fields.get(1).accept(p);
-            return fields.get(1);
+        if(fluid == Fluid.SLIPPERY){    //EZ MÉGIS HONNAN JÖTT?
+            fields.get(1).accept(p);    //SENKI NEM MONDTA HOGY 1 AZ A MÁSIK VÉGE
+            return fields.get(1);       //MEG NEM AZT BESZÉLTÜK? HOGY RANDOM HELYRE KERÜL?
         }
         return this;
     }
@@ -214,7 +217,7 @@ public class Pipe extends Field {
     }
     public boolean makeSlippery(){
         if(remainingFluidTime == 0){
-            remainingFluidTime = 5;//Todo MEnnyi legyen?
+            remainingFluidTime = 5;//Todo MEnnyi legyen? //MEGBESZÉLTÜK HOGY 3..10 RANDOM ÉRTÉK LESZ
             fluid = Fluid.SLIPPERY;
             return true;
         }
@@ -245,10 +248,11 @@ public class Pipe extends Field {
     @Override
     public String toString() {
         ArrayList<Player> players = this.getPlayers();
-        System.out.println(players);
-        String playersNames = "";
-        if (players.size() == 0) playersNames = null;
+
+        String playersNames = "null";
+
         for (int i = 0; i < players.size(); i++) {
+            if(i == 0) playersNames = "";
             playersNames += Controller.objectReverseNames.get(players.get(i));
             if (i != players.size() - 1) {
                 playersNames += ", ";
@@ -256,9 +260,9 @@ public class Pipe extends Field {
         }
 
         ArrayList<ActiveFields> fields = this.getFields();
-        String fieldsNames = "";
-        if (fields.size() == 0) fieldsNames = null;
+        String fieldsNames ="null";
         for (int i = 0; i < fields.size(); i++) {
+            if(i == 0) fieldsNames = "";
             fieldsNames += Controller.objectReverseNames.get(fields.get(i));
             if (i != fields.size() - 1) {
                 fieldsNames += ", ";

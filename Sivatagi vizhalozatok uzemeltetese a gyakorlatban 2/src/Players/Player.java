@@ -1,5 +1,6 @@
 package Players;
 
+import Controll.Controller;
 import Controll.Szkeleton;
 import Fields.ActiveFields.Pump;
 import Fields.Field;
@@ -44,7 +45,6 @@ public abstract class Player {
 	 * */
 	public boolean move(Field f) {
         Field result = f.accept(this);
-        
         if(result == null) {
         	return false;
         }
@@ -58,10 +58,10 @@ public abstract class Player {
 		}
 		if(result == f){
 			boolean result2 = standingField.removePlayer(this);
-			if(result2) standingField = result;
+			if(result2){ standingField = result;}
 			return result2;
 		}
-		else return false;
+		else{ return false;}
 	}
 	
 	/**

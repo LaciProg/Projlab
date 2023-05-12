@@ -10,6 +10,7 @@ import java.util.ArrayList;
 /**
  * Class for Pump
  * */
+@SuppressWarnings("UnusedAssignment")
 public class Pump extends ActiveFields {
 
     /**
@@ -66,7 +67,7 @@ public class Pump extends ActiveFields {
         if(!(super.isBroken())) {
             super.setWater((this.getPipes().get(waterTo)).fillInWater(super.getWater()));
             int newWater = (this.getPipes().get(waterFrom)).getWater();
-            if(newWater < 0) this.getPipes().get(waterFrom).fillInWater(newWater);
+            if(newWater < 0) this.getPipes().get(waterFrom).fillInWater(-newWater);
             else{
                 if(super.getWaterNoChange() + newWater > tank){
                     super.setWater(tank);
@@ -90,8 +91,8 @@ public class Pump extends ActiveFields {
         int newWaterFrom = this.getPipes().indexOf(input);
         int newWaterTo = this.getPipes().indexOf(output);
         if(newWaterFrom == -1 || newWaterTo == -1) return false;
-        this.setWaterFrom(waterFrom);
-        this.setWaterTo(waterTo);
+        this.setWaterFrom(newWaterFrom);
+        this.setWaterTo(newWaterTo);
         return true;
     }
 
@@ -104,30 +105,40 @@ public class Pump extends ActiveFields {
     @Override
     public String toString() {
         ArrayList<Player> players = this.getPlayers();
-        System.out.println(players);
-        String playersNames = "";
-        if (players == null) playersNames = null;
-        else {
-            for (int i = 0; i < players.size(); i++) {
-                playersNames += Controller.objectReverseNames.get(players.get(i));
-                if (i != players.size() - 1) {
-                    playersNames += ", ";
-                }
+
+        String playersNames = "null";
+
+        for (int i = 0; i < players.size(); i++) {
+            if(i == 0) playersNames = "";
+            playersNames += Controller.objectReverseNames.get(players.get(i));
+            if (i != players.size() - 1) {
+                playersNames += ", ";
             }
         }
 
-
         ArrayList<Pipe> pipes = this.getPipes();
-        String pipesNames = "";
-        if (pipes == null) pipesNames = null;
-        else {
+        String pipesNames ="null";
+        if(pipes != null) {
             for (int i = 0; i < pipes.size(); i++) {
+                if (i == 0) pipesNames = "";
                 pipesNames += Controller.objectReverseNames.get(pipes.get(i));
                 if (i != pipes.size() - 1) {
                     pipesNames += ", ";
                 }
             }
         }
+
+
+        String SWaterFrom="";
+        String SWaterTo="";
+        if(getWaterFrom() == -1 && getWaterTo() == -1 ){
+            SWaterFrom = SWaterTo = "null";
+        }
+        else{
+            SWaterFrom = ""+Controller.objectReverseNames.get(getPipes().get(getWaterFrom()));
+            SWaterTo = ""+Controller.objectReverseNames.get(getPipes().get(getWaterTo()));
+        }
+
 
         return "name: "+ Controller.objectReverseNames.get(this)
                 + "\noccupied: " + this.isOccupied()
@@ -136,7 +147,7 @@ public class Pump extends ActiveFields {
                 + "\nplayers: " + playersNames
                 + "\npipes: " + pipesNames
                 + "\ntank: " + this.getTank()
-                + "\nwaterFrom: " + this.getWaterFrom()
-                + "\nwaterTo: " + this.getWaterTo() + "\n";
+                + "\nwaterFrom: " +SWaterFrom
+                + "\nwaterTo: " +SWaterTo  + "\n";
     }
 }

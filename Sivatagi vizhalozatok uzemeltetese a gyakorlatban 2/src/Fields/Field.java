@@ -111,7 +111,8 @@ public abstract class Field {
 	 * */
 	public boolean removePlayer(Player p) {
 		setOccupied(false);
-		return false;
+		players.remove(p);
+		return true;
 	}
 
 	/**
@@ -164,7 +165,7 @@ public abstract class Field {
 	 * @return The amount of water in the field. - always 0.
 	 * */
 	public int getWater() {
-		return 0;
+		return water;
 	}
 
 	/**
