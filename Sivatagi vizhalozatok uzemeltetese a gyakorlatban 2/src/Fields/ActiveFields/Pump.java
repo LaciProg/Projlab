@@ -6,6 +6,7 @@ import Fields.Pipe;
 import Players.Player;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Class for Pump
@@ -76,7 +77,14 @@ public class Pump extends ActiveFields {
                 else super.setWater(super.getWaterNoChange() + newWater);
             }
         }
-        if(false){//Todo random szám legyen :)
+        int r;
+        if (Controller.isTest()) {
+            r = 0;
+        }
+        else {
+            r = new Random().nextInt(0,10);
+        }
+        if(r < 3){
             super.setBroken(true);
         }
     }
