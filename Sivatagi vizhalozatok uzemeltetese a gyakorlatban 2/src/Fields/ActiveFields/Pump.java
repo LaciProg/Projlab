@@ -78,15 +78,15 @@ public class Pump extends ActiveFields {
             }
         }
         int r;
-        if (Controller.isTest()) {
-            r = 0;
-        }
-        else {
+        if (!Controller.isTest()) {
             r = new Random().nextInt(0,10);
+
+            if(r < 3) {
+                super.setBroken(true);
+            }
         }
-        if(r < 3){
-            super.setBroken(true);
-        }
+
+
     }
     /**
      * Method for setting the water flow in the pump.

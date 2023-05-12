@@ -4,7 +4,7 @@ Sikeres művelet
 A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!
 Sikertelen művelet
 name: cistern
-occupied: true
+occupied: false
 water: 0
 broken: false
 players: sab
