@@ -1,5 +1,6 @@
 package Fields.ActiveFields;
 
+import Controll.Controller;
 import Fields.Field;
 import Fields.Pipe;
 import Interfaces.Steppable;
@@ -70,6 +71,8 @@ public abstract class ActiveFields extends Field implements Steppable {
      */
        @Override
    	public Field accept(Player p) {
+           this.setOccupied(false);
+           this.setPlayers(p);
        	return this;
    	}
 }

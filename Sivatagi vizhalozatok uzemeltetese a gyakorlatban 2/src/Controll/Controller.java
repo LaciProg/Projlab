@@ -9,7 +9,6 @@ import Players.Mechanic;
 import Players.Player;
 import Players.Saboteur;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -22,7 +21,7 @@ import java.util.regex.Pattern;
 public class Controller {
     private static boolean random = true;
     public static boolean isRandom() {return random; }
-    private static HashMap<String, Object> objectNames = new HashMap<>();
+    public static HashMap<String, Object> objectNames = new HashMap<>();
     public static HashMap<Object, String> objectReverseNames = new HashMap<>();
     private static WaterCounter waterCounter = new WaterCounter();
     private static boolean test = false;
@@ -36,8 +35,8 @@ public class Controller {
 
     ArrayList<String> commandList = new ArrayList<>();
 
-    private int pipes=0;
-    private int pumps=0;
+    public static int pipes=0;
+    public static int pumps=0;
 
     public void Run() throws FileNotFoundException {
         while(true) {
@@ -195,11 +194,9 @@ public class Controller {
     private void mechanic(String[] cmd){
         Mechanic tmp = new Mechanic();
         Field f = (Field)objectNames.get(cmd[2]);
-        //System.out.println(f);
         tmp.setStandingField(f);
         String[][] commands = new String[cmd.length-3][2];
         for(int i=3; i<cmd.length; i++){
-            //System.out.println(cmd.length);
             commands[i-3] = cmd[i].split(":");
         }
         for(int i=0; i<commands.length; i++) {
@@ -268,7 +265,7 @@ public class Controller {
             case "player":
                 if (test) outResults.add(p.toString()); //TODO jó-e így?
                 else System.out.println(p);
-                System.out.println(p);
+                //System.out.println(p);
                 break;
             case "field":
                 if (test) outResults.add(objectReverseNames.get(p.getStandingField()).toString()); //TODO jó-e így?
@@ -279,6 +276,7 @@ public class Controller {
 
     private void showobject(String[] cmd){
         Object object = objectNames.get(cmd[1]);
+        //System.out.println(cmd[1]);
         if (test) outResults.add(object.toString());
         else System.out.println(object.toString()); //TODO tesztre
     }
@@ -322,7 +320,7 @@ public class Controller {
         Pipe pipe = p.placePump();
         if(pipe != null ){
             pipes++;
-            String s = "NewPipe"+pipes;
+            String s = "newPipe"+pipes;
             objectNames.put(s, pipe);
             objectReverseNames.put(pipe, s);
             if (test) outResults.add("Sikeres művelet");
@@ -371,7 +369,7 @@ public class Controller {
         Pump pump = p.getPump();
         if(pump != null ){
             pumps++;
-            String s = "NewPump"+pumps;
+            String s = "newPump"+pumps;
             objectNames.put(s, pump);
             objectReverseNames.put(pump, s);
             if (test) outResults.add("Sikeres művelet");
@@ -430,10 +428,10 @@ public class Controller {
             ArrayList<String> result = new ArrayList<>();
             ArrayList<String> expected = new ArrayList<>();
             while (scannerResult.hasNextLine()){
-                result.add(scannerResult.nextLine());
+                result.add(scannerResult.nextLine().strip());
             }
             while (scannerExpected.hasNextLine()){
-                expected.add(scannerExpected.nextLine());
+                expected.add(scannerExpected.nextLine().strip());
             }
             System.out.println("Test name: " + fileName.replace(".in", ""));
             if (result.size() != expected.size()) {
@@ -455,6 +453,7 @@ public class Controller {
             else {
                 System.out.println("Test failed.\n");
             }
+            pipes=pumps=0;
         }
         catch(FileNotFoundException e) {
             System.out.println("Még nagyobb bánat");
@@ -485,10 +484,10 @@ public class Controller {
         }
     }
 
-    private void addplayer(String[] cmd){
-        Field f = (Field)objectNames.get(cmd[1]);
-        Player p = (Player)objectNames.get(cmd[2]);
-        if(f.accept(p)){
+    private void addplayer(String[] cmd) {
+        Field f = (Field) objectNames.get(cmd[1]);
+        Player p = (Player) objectNames.get(cmd[2]);
+        if(f.accept(p) != null) {
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {

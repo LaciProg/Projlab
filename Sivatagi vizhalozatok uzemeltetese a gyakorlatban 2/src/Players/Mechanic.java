@@ -61,7 +61,9 @@ public class Mechanic extends Player {
      */
     @Override
     public Pipe placePump() {
-        return getStandingField().placePump(holdingPump);
+        Pipe p = getStandingField().placePump(holdingPump);
+        if(p != null) holdingPump = null;
+        return p;
     }
 
     /**
@@ -90,7 +92,9 @@ public class Mechanic extends Player {
         if(holdingPipe == null) return false;
         boolean result = super.getStandingField().addPipe(holdingPipe);
 		if(!result) return false;
-        return holdingPipe.connect((ActiveFields)super.getStandingField());
+        boolean b = holdingPipe.connect((ActiveFields)super.getStandingField());
+        if(b) holdingPipe = null;
+        return b;
     }
 
     /**
@@ -101,7 +105,8 @@ public class Mechanic extends Player {
     public Pump getPump() {
         boolean b = false;
         if(holdingPump == null) b = true;
-        return getStandingField().createNewPump(b); // mechanic can get a new pump
+        holdingPump = getStandingField().createNewPump(b);
+        return holdingPump; // mechanic can get a new pump
     }
 
     /**
@@ -118,7 +123,7 @@ public class Mechanic extends Player {
     public String toString() {
         return "name: "+ Controller.objectReverseNames.get(this)
                 + "\nstandingField: " + Controller.objectReverseNames.get(this.getStandingField())
-                + "\nholdingPipe: " + this.getHoldingPipe()
-                + "\nholdingPump: " + this.getHoldingPump() + "\n"; //TODO ne hívja meg a pump tostring-jét
+                + "\nholdingPipe: " + Controller.objectReverseNames.get(this.getHoldingPipe())
+                + "\nholdingPump: " + Controller.objectReverseNames.get(this.getHoldingPump()) + "\n";
     }
 }

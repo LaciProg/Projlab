@@ -1,9 +1,11 @@
 random false
 pipe Pin 65 water:65
 pipe Pout 65
-pump pump 100 water: 50
+pump pump 100 water:50
 connectpipe Pin pump
 connectpipe Pout pump
+mechanic mech pump
+addplayer pump mech
 create
 set mech Pin Pout
 showobject pump
