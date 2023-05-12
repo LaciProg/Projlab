@@ -32,7 +32,7 @@ public class WaterCounter {
     /**
      * Shows if the game ended. Default value false.
      */
-    private boolean gameEnded = false;
+    private boolean end = false;
 
     /**
      *WaterCounter constructor.
@@ -64,12 +64,12 @@ public class WaterCounter {
     }
 
     /**
-     * Method that changes gameended to true.
+     * Method that changes end to true.
      */
     public void setEnd(){
         Szkeleton.printTabs();
         System.out.println(Szkeleton.objectNames.get(this) + ".setEnd");
-        gameEnded = true;
+        end = true;
     }
     /**
      *Count method.
@@ -83,7 +83,7 @@ public class WaterCounter {
             } else
                 saboteur += w;
         }
-        if(gameEnded) {
+        if(end) {
             for (Cistern cistern : cisterns) {
                 int w = cistern.getWater();
                 mechanic += w;

@@ -1,6 +1,5 @@
 package Fields.ActiveFields;
 
-import Controll.Szkeleton;
 import Fields.Field;
 import Fields.Pipe;
 import Interfaces.Steppable;
@@ -64,12 +63,15 @@ public abstract class ActiveFields extends Field implements Steppable {
     }
     
     /**
-   	 * Methods for accepting players.
-   	 * @param p The player to be accepted.
-   	 * @return True if the player was accepted. - always true
-   	 * */
+     * Methods for accepting players.
+     *
+     * @param p The player to be accepted.
+     * @return
+     */
        @Override
-   	public boolean accept(Player p) {
-       	return true;
+   	public Field accept(Player p) {
+           this.setOccupied(true);
+           this.setPlayers(p);
+       	return this;
    	}
 }

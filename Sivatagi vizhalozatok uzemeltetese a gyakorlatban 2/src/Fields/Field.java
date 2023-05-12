@@ -1,12 +1,9 @@
 package Fields;
 
-import Controll.Szkeleton;
-import Enums.Fluid;
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
 import Players.Player;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -55,9 +52,9 @@ public abstract class Field {
 	 * @return players.
 	 */
 	public ArrayList<Player> getPlayers() { //Basic getter if it is needed
-		if (players.size() == 0) {
+		/*if (players.size() == 0) {
 			return null;
-		}
+		}*/
 		return players;
 	}
 
@@ -87,12 +84,13 @@ public abstract class Field {
 	}
 
 	/**
-	 * Methods for accepting players.
-	 * @param p The player to be accepted.
-	 * @return True if the player was accepted. - always false.
-	 * */
-	public boolean accept(Player p) {
-		return false;
+     * Methods for accepting players.
+     *
+     * @param p The player to be accepted.
+     * @return True if the player was accepted. - always false.
+     */
+	public Field accept(Player p) {
+		return this;
 	}
 
 
@@ -236,6 +234,14 @@ public abstract class Field {
 	 * @return True if the field was disconnected. - always false.
 	 * */
 	public boolean disconnect(ActiveFields a) {
+		return false;
+	}
+
+	public boolean makeSlippery(){
+		return false;
+	}
+
+	public boolean makeSticky(){
 		return false;
 	}
 }
