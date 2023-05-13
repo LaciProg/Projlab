@@ -1,4 +1,4 @@
-﻿pipe goodPipe 34 breakable:2
+pipe goodPipe 34 breakable:2
 mechanic mech goodPipe
 addplayer goodPipe mech
 create
