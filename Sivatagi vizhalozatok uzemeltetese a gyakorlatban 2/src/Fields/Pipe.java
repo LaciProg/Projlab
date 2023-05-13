@@ -113,9 +113,12 @@ public class Pipe extends Field {
         connect(newPump);
 
         oldPump.removePipe(this);
-
-        Pipe newPipe = new Pipe(50);
-
+        Pipe newPipe;
+        Random r = new Random();
+        if(Controller.isTest()) {
+            newPipe = new Pipe(50);
+        }
+        else newPipe = new Pipe(r.nextInt(30,70));
         newPipe.connect(newPump);
 
         newPipe.connect(oldPump);
