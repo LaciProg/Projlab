@@ -144,10 +144,11 @@ public class Controller {
                         case "slippery": tmp.setFluid(Fluid.SLIPPERY); break;
                     }
                     break;
-                case "rfluidtime": tmp.setFluidTime(Integer.parseInt(commands[i][2])); break;
+                case "rfluidtime": tmp.setFluidTime(Integer.parseInt(commands[i][1])); break;
                 case "breakable": tmp.setBreakable(Integer.parseInt(commands[i][1])); break;
                 case "broken": tmp.setBroken(Boolean.parseBoolean(commands[i][1])); break;
                 case "water": tmp.setWater(Integer.parseInt(commands[i][1])); break;
+                case "leave": tmp.setLeave(Boolean.parseBoolean(commands[i][1])); break;
             }
         }
         objectNames.put(cmd[1], tmp);
