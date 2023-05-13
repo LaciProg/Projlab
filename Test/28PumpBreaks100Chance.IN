@@ -1,3 +1,4 @@
-﻿pump p 100 broken
+﻿
+pump p 100 broken:true
 create
 showobject p

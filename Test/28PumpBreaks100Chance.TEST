@@ -1,4 +1,4 @@
-﻿Sikeres művelet
+Sikeres művelet
 A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!
 name: p
 occupied: false
@@ -9,3 +9,4 @@ pipes: null
 tank: 100
 waterFrom: null
 waterTo: null
+

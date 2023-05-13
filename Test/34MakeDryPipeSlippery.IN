@@ -1,4 +1,5 @@
-﻿pipe p 100 
+
+pipe p 100 
 saboteur sab p
 addplayer p sab
 create
