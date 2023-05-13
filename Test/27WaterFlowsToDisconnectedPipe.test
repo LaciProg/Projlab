@@ -4,24 +4,26 @@ Sikeres művelet
 Sikeres művelet
 Sikeres művelet
 Sikeres művelet
+Sikeres művelet
+Sikeres művelet
 A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!
 Sikeres művelet
 name: pump1
 occupied: false 
-water: 0
+water: 30
 broken: false
 players: null
 pipes: pipe1, disconnectedPipe
 tank: 100
-waterFrom: 0 (index of pipe1)
-waterTo: 1 (index of disconnectedPipe)
+waterFrom: pipe1
+waterTo: disconnectedPipe
 
 name: pipe1
 occupied: false
 water: 0
 broken: false
 players: null
-fields: pump1
+fields: pump1, pump2
 capacity: 50
 breakable: 0
 rfluidtime: 0
