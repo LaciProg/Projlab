@@ -1,4 +1,4 @@
-﻿pipe goodPipe 34 breakable:3
+pipe goodPipe 34 breakable:3
 saboteur sab goodPipe
 addplayer goodPipe sab
 create
