@@ -38,6 +38,7 @@ public class Cistern extends ActiveFields{
         }
         if(createdPipe == null){
             createdPipe = new Pipe(65);     //TODO: randomize the capacity
+            Controller.waterCounter.addPipe(createdPipe);
             Controller.pipes++;
             Controller.objectNames.put("newPipe"+Controller.pipes, createdPipe);
             Controller.objectReverseNames.put(createdPipe, "newPipe"+Controller.pipes);

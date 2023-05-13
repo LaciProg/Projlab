@@ -224,6 +224,7 @@ public class Pipe extends Field {
         return true;
     }
     public boolean makeSlippery(){
+        if(fluid == Fluid.STICKY) return false;
         if(remainingFluidTime == 0){
             if (Controller.isTest()) {
                 remainingFluidTime = 5;
@@ -238,6 +239,7 @@ public class Pipe extends Field {
     }
 
     public  boolean makeSticky(){
+        if(fluid == Fluid.SLIPPERY) return false;
         if(remainingFluidTime == 0){
             if (Controller.isTest()) {
                 remainingFluidTime = 5;
