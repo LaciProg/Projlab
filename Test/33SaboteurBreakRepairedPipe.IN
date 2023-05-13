@@ -1,0 +1,6 @@
+﻿pipe goodPipe 34 breakable:3
+saboteur sab goodPipe
+addplayer goodPipe sab
+create
+breakfield sab
+showobject goodPipe

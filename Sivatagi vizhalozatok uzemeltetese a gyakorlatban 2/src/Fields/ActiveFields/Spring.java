@@ -52,28 +52,26 @@ public class Spring extends ActiveFields{
     @Override
     public String toString() {
         ArrayList<Player> players = this.getPlayers();
-        System.out.println(players);
-        String playersNames = "";
-        if (players == null) playersNames = null;
-        else {
-            for (int i = 0; i < players.size(); i++) {
-                playersNames += Controller.objectReverseNames.get(players.get(i));
-                if (i != players.size() - 1) {
-                    playersNames += ", ";
-                }
+
+        String playersNames = "null";
+
+        for (int i = 0; i < players.size(); i++) {
+            if(i == 0) playersNames = "";
+            playersNames += Controller.objectReverseNames.get(players.get(i));
+            if (i != players.size() - 1) {
+                playersNames += ", ";
             }
         }
 
 
+
         ArrayList<Pipe> pipes = this.getPipes();
-        String pipesNames = "";
-        if (pipes == null) pipesNames = null;
-        else {
-            for (int i = 0; i < pipes.size(); i++) {
-                pipesNames += Controller.objectReverseNames.get(pipes.get(i));
-                if (i != pipes.size() - 1) {
-                    pipesNames += ", ";
-                }
+        String pipesNames ="null";
+        for (int i = 0; i < pipes.size(); i++) {
+            if(i == 0) pipesNames = "";
+            pipesNames += Controller.objectReverseNames.get(pipes.get(i));
+            if (i != pipes.size() - 1) {
+                pipesNames += ", ";
             }
         }
         return "name: "+ Controller.objectReverseNames.get(this)
@@ -83,6 +81,6 @@ public class Spring extends ActiveFields{
                 + "\nplayers: " + playersNames
                 + "\npipes: " + pipesNames
                 + "\nwaterOut: " + this.getWaterOut()
-                + "\nmaxWaterOut: " + this.getMaxOutWater() + "\n";
+                + "\nmaxOutWater: " + this.getMaxOutWater() + "\n";
     }
 }
