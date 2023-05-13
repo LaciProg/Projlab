@@ -1,4 +1,4 @@
-﻿pipe goodPipe 34 
+pipe goodPipe 34 
 mechanic mech goodPipe
 addplayer goodPipe mech
 create
