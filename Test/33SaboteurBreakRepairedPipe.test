@@ -1,4 +1,4 @@
-﻿Sikeres művelet
+Sikeres művelet
 Sikeres művelet
 Sikeres művelet
 A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!
@@ -14,3 +14,4 @@ breakable: 3
 rfluidtime: 0
 leave: true
 fluid: dry
+

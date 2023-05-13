@@ -1,4 +1,4 @@
-﻿Sikeres művelet
+Sikeres művelet
 Sikeres művelet
 Sikeres művelet
 A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!
@@ -7,10 +7,11 @@ name: p
 occupied: true
 water: 0
 broken: false
-players: sab
+players: mech
 fields: null
 capacity: 100
 breakable: 0
 rfluidtime: 5
 leave: true
 fluid: sticky
+
