@@ -194,10 +194,6 @@ public class Pipe extends Field {
     public Field accept(Player p) {
         if(this.isOccupied())
             return null;
-        else {
-            this.setOccupied(true);
-            this.setPlayers(p);
-        }
         if(fluid == Fluid.SLIPPERY){    //EZ MÉGIS HONNAN JÖTT?
             Random r = new Random();
             int index;
@@ -210,17 +206,25 @@ public class Pipe extends Field {
             fields.get(index).accept(p);    //SENKI NEM MONDTA HOGY 1 AZ A MÁSIK VÉGE
             return fields.get(index);       //MEG NEM AZT BESZÉLTÜK? HOGY RANDOM HELYRE KERÜL?
         }
+        else {
+            this.setOccupied(true);
+            this.setPlayers(p);
+        }
         return this;
     }
 
-    public boolean removePlayer(){
+    public boolean removePlayer(Player p){
         if(fluid == Fluid.STICKY){
             if(leave == true){
                 leave = false;
+                setOccupied(false);
+                this.removePlayer(p);
                 return true;
             }
             return false;
         }
+        setOccupied(false);
+        this.removePlayer(p);
         return true;
     }
     public boolean makeSlippery(){
