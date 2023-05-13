@@ -17,27 +17,25 @@ leave: true
 fluid: slippery
 
 name: Psameend
-occupied: false
+occupied: true
 water: 0
 broken: false
-players: null
+players: sab
 pipes: Psameend
 tank: 100
 waterFrom: null
 waterTo: null
 
 name: Potherend
-occupied: true
+occupied: false
 water: 0
 broken: false
-players: mech
+players: null
 pipes: Potherend
 tank: 100
 waterFrom: null
 waterTo: null
 
-name: mech
-standingField: Potherend
-holdingPipe: null
-holdingPump: null
+name: sab
+standingField: Psameend
 
