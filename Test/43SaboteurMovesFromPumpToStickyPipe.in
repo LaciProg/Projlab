@@ -1,4 +1,4 @@
-﻿pump Pfrom 100
+pump Pfrom 100
 pipe Pto 100 fluid:sticky
 connectpipe Pto Pfrom
 saboteur sab Pfrom
