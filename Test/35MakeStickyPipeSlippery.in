@@ -1,4 +1,4 @@
-﻿pipe p 100 sticky
+pipe p 100 sticky
 saboteur sab p
 addplayer p sab
 create
