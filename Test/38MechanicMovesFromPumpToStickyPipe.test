@@ -1,4 +1,4 @@
-﻿Sikeres művelet
+Sikeres művelet
 Sikeres művelet
 Sikeres művelet
 Sikeres művelet
@@ -8,7 +8,7 @@ name: Pto
 occupied: true
 water: 0
 broken: false
-players: sab
+players: mech
 fields: Pto
 capacity: 100
 breakable: 0
@@ -26,5 +26,8 @@ tank: 100
 waterFrom: null
 waterTo: null
 
-name: sab
+name: mech
 standingField: Pto
+holdingPipe: null
+holdingPump: null
+

@@ -1,4 +1,3 @@
-﻿
 pipe p 100 
 mechanic mech p
 addplayer p mech

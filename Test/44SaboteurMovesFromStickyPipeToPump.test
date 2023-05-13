@@ -1,22 +1,22 @@
-﻿Sikeres művelet
+Sikeres művelet
 Sikeres művelet
 Sikeres művelet
 Sikeres művelet
 A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!
-Sikeres művelet
-name: Pto
+Sikertelen művelet
+name: Pfrom
 occupied: true
 water: 0
 broken: false
-players: mech
+players: sab
 fields: Pto
 capacity: 100
 breakable: 0
-rfluidtime: 0
+rfluidtime: 3
 leave: false
 fluid: sticky
 
-name: Pfrom
+name: Pto
 occupied: false 
 water: 0
 broken: false
@@ -26,7 +26,6 @@ tank: 100
 waterFrom: null
 waterTo: null
 
-name: mech
-standingField: Pto
-holdingPipe: null
-holdingPump: null
+name: sab
+standingField: Pfrom
+
