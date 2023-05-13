@@ -10,7 +10,7 @@ broken: true
 players: mech
 fields: null
 capacity: 34
-breakable: 5
+breakable: 0
 rfluidtime: 0
 leave: true
 fluid: dry
