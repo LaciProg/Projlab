@@ -1,4 +1,5 @@
-﻿pipe p 100 
+﻿
+pipe p 100 
 mechanic mech p
 addplayer p mech
 create

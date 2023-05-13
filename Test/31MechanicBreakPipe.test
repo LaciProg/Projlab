@@ -1,16 +1,16 @@
-﻿Sikeres művelet
 Sikeres művelet
 Sikeres művelet
-A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék! 
-Sikertelen művelet
+Sikeres művelet
+A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!
+Sikeres művelet
 name: goodPipe
 occupied: true
 water: 0
-broken: false
+broken: true
 players: mech
 fields: null
 capacity: 34
-breakable: 2
+breakable: 5
 rfluidtime: 0
 leave: true
 fluid: dry
