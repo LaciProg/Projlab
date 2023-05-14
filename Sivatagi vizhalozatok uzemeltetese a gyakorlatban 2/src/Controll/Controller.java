@@ -1,9 +1,12 @@
 package Controll;
 
 import Enums.Fluid;
+import Fields.ActiveFields.ActiveFields;
+import Fields.ActiveFields.Cistern;
+import Fields.ActiveFields.Pump;
+import Fields.ActiveFields.Spring;
 import Fields.Field;
 import Fields.Pipe;
-import Fields.ActiveFields.*;
 import Interfaces.Steppable;
 import Players.Mechanic;
 import Players.Player;
@@ -14,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -23,7 +27,7 @@ public class Controller {
     public static boolean isRandom() {return random; }
     public static HashMap<String, Object> objectNames = new HashMap<>();
     public static HashMap<Object, String> objectReverseNames = new HashMap<>();
-    private static WaterCounter waterCounter = new WaterCounter();
+    public static WaterCounter waterCounter = new WaterCounter();
     private static boolean test = false;
 
     public static boolean isTest() {return test;}
@@ -31,15 +35,25 @@ public class Controller {
 
     private static String filePath="";
 
-    private static ArrayList<String> outResults = new ArrayList<>();
+    private static final ArrayList<String> outResults = new ArrayList<>();
 
-    ArrayList<String> commandList = new ArrayList<>();
+    private static final ArrayList<Player> activePlayers = new ArrayList<>();
+
+    private static Player currentPlayer;
+
+    static ArrayList<String> commandList = new ArrayList<>();
 
     public static int pipes=0;
     public static int pumps=0;
 
-    public void Run() throws FileNotFoundException {
-        while(true) {
+    public static boolean gameMode = false;
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Run();
+    }
+
+    public static void Run() throws FileNotFoundException {
+        while(!gameMode) {
             Scanner stdInScanner = new Scanner(System.in);
             if (commandList.size() == 0){
                 commandList.add(stdInScanner.nextLine());
@@ -48,7 +62,7 @@ public class Controller {
             commandList.remove(0);
             String[] cmd = command.split(" ");
             switch(cmd[0]) {
-                case("load"): load(cmd); /*if(test) {save(cmd);}*/ break;
+                case("load"): load(cmd[1]); break;
                 case("pipe"): pipe(cmd); break;
                 case("pump"): pump(cmd); break;
                 case("cistern"): cistern(cmd); break;
@@ -72,7 +86,7 @@ public class Controller {
                 case("makesticky"): makesticky(cmd); break;
                 case("makeslippery"): makeslippery(cmd); break;
                 case("save"): save(cmd); break;
-                /*case("testall"): testAll(cmd); break;*/
+                case("testall"): testAll(cmd); break;
                 case("list"): list(cmd); break;
                 case("addplayer"): addplayer(cmd); break;
                 case("step"): step(cmd); break;
@@ -82,34 +96,83 @@ public class Controller {
                 case("setend"): setend(cmd); break;
                 case("setpump"): setpump(cmd); break;
                 case("restart"): restart(cmd); break;
-                case("exit"): return; //System.exit(0); break;
+                case("exit"): return;
+                default: System.out.println("Hibás parancs.");
             }
         }
+        Game();
     }
 
-    private void load(String[] cmd){
+    public static void Game() throws FileNotFoundException {
+        int moves = 0;
+        while(gameMode) {
+            currentPlayer = activePlayers.get(0); // az első játékos a sor végére rakom, jelenleg ő az aktív
+            activePlayers.remove(0);
+            activePlayers.add(currentPlayer);
+            moves++;
+            Scanner stdInScanner = new Scanner(System.in);
+            if (commandList.size() == 0){
+                commandList.add(stdInScanner.nextLine());
+            }
+            String command = commandList.get(0);
+            commandList.remove(0);
+            String[] cmd = command.split(" ");
+            switch(cmd[0]) {
+                case("show"): show(cmd); break;
+                case("showobject"): showobject(cmd); break;
+                case("move"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else move(cmd); break;
+                case("breakfield"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else breakfield(cmd); break;
+                case("repair"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else repair(cmd); break;
+                case("placepump"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else placepump(cmd); break;
+                case("set"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else set(cmd); break;
+                case("disconnect"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else disconnect(cmd); break;
+                case("connect"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else connect(cmd); break;
+                case("getpump"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else getpump(cmd); break;
+                case("pickuppipe"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!");else pickuppipe(cmd); break;
+                case("makesticky"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else makesticky(cmd); break;
+                case("makeslippery"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else makeslippery(cmd); break;
+                case("save"): save(cmd); break;
+                case("testall"): testAll(cmd); break;
+                case("list"): list(cmd); break;
+                case("addplayer"): addplayer(cmd); break;
+                case("step"): step(cmd); break;
+                case("endturn"): endturn(cmd); break;
+                case("count"): count(cmd); break;
+                case("test"): test(cmd); break;
+                case("setend"): setend(cmd); break;
+                case("setpump"): setpump(cmd); break;
+                case("restart"): restart(cmd); break;
+                case("exit"): return;
+                default: System.out.println("Hibás parancs.");
+            }
+            if (moves == activePlayers.size()) {
+                moves = 0;
+                endturn(cmd);
+            }
+        }
+        Run();
+    }
+
+    private static void load(String cmd){
         try {
-            //System.out.println("ITT");
-            //System.out.println(cmd[1] + "\n");
             outResults.clear();
-            Scanner scanner = new Scanner(new File(cmd[1]));
-            filePath = cmd[1];
+            Scanner scanner = new Scanner(new File(cmd));
+            filePath = cmd;
             String separator = "\\";
-            String[] tmp=cmd[1].replaceAll(Pattern.quote(separator), "\\\\").split("\\\\");
+            String[] tmp=cmd.replaceAll(Pattern.quote(separator), "\\\\").split("\\\\");
             fileName = tmp[tmp.length-1];
             while (scanner.hasNextLine()){
                 commandList.add(scanner.nextLine());
             }
             if (test) {
                 commandList.add("save " + filePath.replace(".in", ".out"));
-                //save(cmd);
             }
         } catch (FileNotFoundException e) {
             System.out.println("Bánat");
         }
     }
 
-    private void pump(String[] cmd){
+    private static void pump(String[] cmd){
         Pump tmp = new Pump(Integer.parseInt(cmd[2]));
         String[][] commands = new String[cmd.length-3][2];
         for(int i=3; i<cmd.length; i++){
@@ -128,7 +191,7 @@ public class Controller {
         else System.out.println("Sikeres művelet");
     }
 
-    private void pipe(String[] cmd){
+    private static void pipe(String[] cmd){
         Pipe tmp = new Pipe(Integer.parseInt(cmd[2]));
         String[][] commands = new String[cmd.length-3][2];
         for(int i=3; i<cmd.length; i++){
@@ -143,19 +206,21 @@ public class Controller {
                         case "slippery": tmp.setFluid(Fluid.SLIPPERY); break;
                     }
                     break;
-                case "rfluidtime": tmp.setFluidTime(Integer.parseInt(commands[i][2])); break;
+                case "rfluidtime": tmp.setFluidTime(Integer.parseInt(commands[i][1])); break;
                 case "breakable": tmp.setBreakable(Integer.parseInt(commands[i][1])); break;
                 case "broken": tmp.setBroken(Boolean.parseBoolean(commands[i][1])); break;
                 case "water": tmp.setWater(Integer.parseInt(commands[i][1])); break;
+                case "leave": tmp.setLeave(Boolean.parseBoolean(commands[i][1])); break;
             }
         }
         objectNames.put(cmd[1], tmp);
         objectReverseNames.put(tmp, cmd[1]);
+        waterCounter.addPipe(tmp);
         if (test) outResults.add("Sikeres művelet");
         else System.out.println("Sikeres művelet");
     }
 
-    private void cistern(String[] cmd){
+    private static void cistern(String[] cmd){
         Cistern tmp = new Cistern();
         String[][] commands = new String[cmd.length-2][2];
         for(int i=2; i<cmd.length; i++){
@@ -169,11 +234,12 @@ public class Controller {
         }
         objectNames.put(cmd[1], tmp);
         objectReverseNames.put(tmp, cmd[1]);
+        waterCounter.addCistern(tmp);
         if (test) outResults.add("Sikeres művelet");
         else System.out.println("Sikeres művelet");
     }
 
-    private void spring(String[] cmd){
+    private static void spring(String[] cmd){
         Spring tmp = new Spring(Integer.parseInt(cmd[2]));
         objectNames.put(cmd[1], tmp);
         objectReverseNames.put(tmp, cmd[1]);
@@ -181,7 +247,7 @@ public class Controller {
         else System.out.println("Sikeres művelet");
     }
 
-    private void saboteur(String[] cmd){
+    private static void saboteur(String[] cmd){
         Saboteur tmp = new Saboteur();
         Field f = (Field)objectNames.get(cmd[2]);
         tmp.setStandingField(f);
@@ -189,9 +255,10 @@ public class Controller {
         objectReverseNames.put(tmp, cmd[1]);
         if (test) outResults.add("Sikeres művelet");
         else System.out.println("Sikeres művelet");
+        activePlayers.add(tmp);
     }
 
-    private void mechanic(String[] cmd){
+    private static void mechanic(String[] cmd){
         Mechanic tmp = new Mechanic();
         Field f = (Field)objectNames.get(cmd[2]);
         tmp.setStandingField(f);
@@ -213,9 +280,10 @@ public class Controller {
         objectReverseNames.put(tmp, cmd[1]);
         if (test) outResults.add("Sikeres művelet");
         else System.out.println("Sikeres művelet");
+        activePlayers.add(tmp);
     }
 
-    private void connectpipe(String[] cmd){
+    private static void connectpipe(String[] cmd){
         Pipe pipe = (Pipe)objectNames.get(cmd[1]);
         ActiveFields activeField = (ActiveFields)objectNames.get(cmd[2]);
         pipe.setFields(activeField);
@@ -224,7 +292,7 @@ public class Controller {
         else System.out.println("Sikeres művelet");
     }
 
-    private void random(String[] cmd){
+    private static void random(String[] cmd){
         if (test) {
             if(cmd.length == 2){
                 switch (cmd[1]){
@@ -253,35 +321,36 @@ public class Controller {
         }
 
     }
-    private void create(String[] cmd) {
+    private static void create(String[] cmd) {
+        objectNames.put("wc", waterCounter);
+        objectReverseNames.put(waterCounter, "wc");
         if (test) outResults.add("A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!");
         else System.out.println("A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!");
+        if(!test) gameMode = true;
     }
 
-    private void show(String[] cmd){
+    private static void show(String[] cmd){
         Player p = (Player)objectNames.get(cmd[1]);
         String[] commands = cmd[2].split(":");
         switch (commands[1]){
             case "player":
-                if (test) outResults.add(p.toString()); //TODO jó-e így?
+                if (test) outResults.add(p.toString());
                 else System.out.println(p);
-                //System.out.println(p);
                 break;
             case "field":
-                if (test) outResults.add(objectReverseNames.get(p.getStandingField()).toString()); //TODO jó-e így?
+                if (test) outResults.add(objectReverseNames.get(p.getStandingField()).toString());
                 else System.out.println(objectReverseNames.get(p.getStandingField()));
                 break;
         }
     }
 
-    private void showobject(String[] cmd){
+    private static void showobject(String[] cmd){
         Object object = objectNames.get(cmd[1]);
-        //System.out.println(cmd[1]);
         if (test) outResults.add(object.toString());
-        else System.out.println(object.toString()); //TODO tesztre
+        else System.out.println(object.toString());
     }
 
-    private void move(String[] cmd){
+    private static void move(String[] cmd){
         Player p = (Player)objectNames.get(cmd[1]);
         Field f = (Field)objectNames.get(cmd[2]);
         if(p.move(f)){
@@ -293,7 +362,7 @@ public class Controller {
         }
     }
 
-    private void breakfield(String[] cmd){
+    private static void breakfield(String[] cmd){
         Player p = (Player)objectNames.get(cmd[1]);
         if(p.breakField()){
             if (test) outResults.add("Sikeres művelet");
@@ -304,7 +373,7 @@ public class Controller {
         }
     }
 
-    private void repair(String[] cmd){
+    private static void repair(String[] cmd){
         Player p = (Player)objectNames.get(cmd[1]);
         if(p.repair()){
             if (test) outResults.add("Sikeres művelet");
@@ -315,7 +384,7 @@ public class Controller {
         }
     }
 
-    private void placepump(String[] cmd){
+    private static void placepump(String[] cmd){
         Player p = (Player)objectNames.get(cmd[1]);
         Pipe pipe = p.placePump();
         if(pipe != null ){
@@ -323,6 +392,7 @@ public class Controller {
             String s = "newPipe"+pipes;
             objectNames.put(s, pipe);
             objectReverseNames.put(pipe, s);
+            waterCounter.addPipe(pipe);
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
@@ -331,7 +401,7 @@ public class Controller {
         }
     }
 
-    private void set(String[] cmd){
+    private static void set(String[] cmd){
          Player player = (Player)objectNames.get(cmd[1]);
          if(player.getStandingField().set((Pipe)objectNames.get(cmd[2]), (Pipe)objectNames.get(cmd[3]))){
              if (test) outResults.add("Sikeres művelet");
@@ -342,7 +412,7 @@ public class Controller {
          }
     }
 
-    private void disconnect(String[] cmd){
+    private static void disconnect(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.disconnect((Pipe)objectNames.get(cmd[2]))){
             if (test) outResults.add("Sikeres művelet");
@@ -353,7 +423,7 @@ public class Controller {
         }
     }
 
-    private void connect(String[] cmd){
+    private static void connect(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.connect()){
             if (test) outResults.add("Sikeres művelet");
@@ -364,7 +434,7 @@ public class Controller {
         }
     }
 
-    private void getpump(String[] cmd){
+    private static void getpump(String[] cmd){
         Player p = (Player)objectNames.get(cmd[1]);
         Pump pump = p.getPump();
         if(pump != null ){
@@ -380,7 +450,7 @@ public class Controller {
         }
     }
 
-    private void pickuppipe(String[] cmd){
+    private static void pickuppipe(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.pickUpPipe()){
             if (test) outResults.add("Sikeres művelet");
@@ -391,7 +461,7 @@ public class Controller {
         }
     }
 
-    private void makesticky(String[] cmd){
+    private static void makesticky(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.makeSticky()){
             if (test) outResults.add("Sikeres művelet");
@@ -402,7 +472,7 @@ public class Controller {
         }
     }
 
-    private void makeslippery(String[] cmd){
+    private static void makeslippery(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.makeSlippery()){
             if (test) outResults.add("Sikeres művelet");
@@ -413,7 +483,7 @@ public class Controller {
         }
     }
 
-    private void save(String[] cmd) {
+    private static void save(String[] cmd) {
         try (PrintWriter out = new PrintWriter(cmd[1].replace(".in", ".out"))) {
             for (int i = 0; i < outResults.size(); i++) {
                 out.println(outResults.get(i));
@@ -423,8 +493,8 @@ public class Controller {
             System.out.println("Nagyobb bánat");
         }
         try {
-            Scanner scannerResult = new Scanner(new File(filePath.replace(".in", ".out")));
-            Scanner scannerExpected = new Scanner(new File(filePath.replace(".in", ".test")));
+            Scanner scannerResult = new Scanner(new File(cmd[1]));
+            Scanner scannerExpected = new Scanner((new File(cmd[1].replace(".out", ".test"))));
             ArrayList<String> result = new ArrayList<>();
             ArrayList<String> expected = new ArrayList<>();
             while (scannerResult.hasNextLine()){
@@ -433,7 +503,10 @@ public class Controller {
             while (scannerExpected.hasNextLine()){
                 expected.add(scannerExpected.nextLine().strip());
             }
-            System.out.println("Test name: " + fileName.replace(".in", ""));
+            String separator = "\\";
+            String[] tmp=cmd[1].replaceAll(Pattern.quote(separator), "\\\\").split("\\\\");
+            fileName = tmp[tmp.length-1];
+            System.out.println("Test name: " + fileName.replace(".out", ""));
             if (result.size() != expected.size()) {
                 System.out.println("Test failed. The 2 files do not have the same amount of lines.");
                 return;
@@ -454,37 +527,35 @@ public class Controller {
                 System.out.println("Test failed.\n");
             }
             pipes=pumps=0;
+            waterCounter.reset();
+            objectNames.clear();
+            objectReverseNames.clear();
         }
         catch(FileNotFoundException e) {
             System.out.println("Még nagyobb bánat");
         }
+        outResults.clear();
     }
 
-    //TODO lehetőség az összes teszt meghivására, nem követelmény szóval csak ha lesz rá idő xd
-    /*private void testAll(String[] cmd) {
-        commandList.add("load " + cmd[1] + "\\1SaboteurBreakPipe.in");
-        commandList.add("save " + cmd[1] + "\\1SaboteurBreakPipe.out");
-        commandList.add("load " + cmd[1] + "\\2BreakCistern.in");
-        commandList.add("save " + cmd[1] + "\\2BreakCistern.out");
-        commandList.add("load " + cmd[1] + "\\3RepairPipe.in");
-        commandList.add("save " + cmd[1] + "\\3RepairPipe.out");
-        String[] tmp = {"load", cmd[1] + "\\1SaboteurBreakPipe.in"};
-        load(tmp);
-        tmp[1] = cmd[1] + "\\2BreakCistern.in";
-        load(tmp);
-        tmp[1] = "\\3RepairPipe.in";
-        load(tmp);
-        //System.out.println(commandList);
-    }*/
-
-    private void list(String[] cmd){
-        ArrayList<String> values = (ArrayList<String>)objectReverseNames.values();
-        for(String s : values){
-            System.out.print(s+" "); //TODO tesztre
+    private static void testAll(String[] cmd) {
+        try {
+            Scanner scanner = new Scanner(new File(cmd[1] + "\\Alltests.txt"));
+            while(scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                load(cmd[1] + "\\" + line);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("A legnagyobb bánat");
         }
     }
 
-    private void addplayer(String[] cmd) {
+    private static void list(String[] cmd){
+        for (Object obj : objectNames.values()) {
+            System.out.print(objectReverseNames.get(obj) + " ");
+        }
+    }
+
+    private static void addplayer(String[] cmd) {
         Field f = (Field) objectNames.get(cmd[1]);
         Player p = (Player) objectNames.get(cmd[2]);
         if(f.accept(p) != null) {
@@ -496,59 +567,75 @@ public class Controller {
         }
     }
 
-    private void step(String[] cmd){
+    private static void step(String[] cmd){
         Steppable s = (Steppable)objectNames.get(cmd[1]);
         s.step();
         if (test) outResults.add("Sikeres művelet");
         else System.out.println("Sikeres művelet");
     }
 
-    private void endturn(String[] cmd){
+    private static void endturn(String[] cmd){
         //elvégzi a kör végével járó lépéseket (vízszámolás, objektumok step függvényének hívása stb…)
         //vízszámlálás
         //water counter lehet hogy üres
         waterCounter.count();
         //léptetés
-        for (Object obj : objectNames.values()) {
+
+        Iterator<Object> iter = objectNames.values().iterator();
+        //Iterator iter = objectNames.entrySet().iterator();
+        int i = 1;
+        while(iter.hasNext()) {
+            Object obj = iter.next();
+            if (obj instanceof Steppable) {
+                Steppable value = (Steppable) obj;
+                value.step();
+
+                System.out.println("asd" + i++ + " " + objectReverseNames.get(obj));
+            }
+            iter.remove();
+        }
+       /* int i = 0;
+         for (Object obj : objectNames.values()) {
             if(obj instanceof Steppable) {
                 Steppable value = (Steppable)obj;
                 value.step();
+                System.out.println(i++);
             }
-        }
+        }*/
         System.out.println("Sikeres művelet");
     }
 
-    private void count(String[] cmd){
+    private static void count(String[] cmd){
         waterCounter.count();
         if (test) outResults.add("Sikeres művelet");
         else System.out.println("Sikeres művelet");
     }
 
-    private void restart(String[] cmd){
+    private static void restart(String[] cmd){
         //TODO
-        //program újraindítása
         random = true;
         objectNames.clear();
         objectReverseNames.clear();
-        //water counter még kérdőjeles
+        waterCounter.reset();
         test = false;
         pumps=pipes=0;
         System.out.println("Sikeres művelet");
+        if(!test) gameMode = false;
     }
 
-    private void test(String[] cmd){
+    private static void test(String[] cmd){
         if(cmd[1].equals("true")) test=true;
         else if(cmd[1].equals("false")) test=false;
         System.out.println("Sikeres művelet");
     }
 
-    private void setend(String[] cmd){
+    private static void setend(String[] cmd){
         waterCounter.setEnd();
         if (test) outResults.add("Sikeres művelet");
         else System.out.println("Sikeres művelet");
     }
 
-    private void setpump(String[] cmd){
+    private static void setpump(String[] cmd){
         Pump pump = (Pump)objectNames.get(cmd[1]);
         if(pump.set((Pipe)objectNames.get(cmd[2]), (Pipe)objectNames.get(cmd[3]))){
             if (test) outResults.add("Sikeres művelet");

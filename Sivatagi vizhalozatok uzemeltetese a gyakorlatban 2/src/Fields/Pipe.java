@@ -18,9 +18,21 @@ public class Pipe extends Field {
      * Capacity of the pipe
      */
     private final int capacity;
+    /**
+     * Time left until the pipe can be broken
+     */
     private int breakable = 0;
+    /**
+     * Time left until the pipe is sticky or slippery
+     */
     private int remainingFluidTime = 0;
+    /**
+     * If true the player can leave the pipe. Is false they can't
+     */
     private boolean leave = true;
+    /**
+     * Fluid state of pipe
+     */
     private Fluid fluid = Fluid.DRY;
 
     /**
@@ -42,34 +54,57 @@ public class Pipe extends Field {
     public void setFields(ArrayList<ActiveFields> fields) {
         this.fields = fields;
     }
+    /**
+     * Setter for field.
+     */
     public void setFields(ActiveFields a){fields.add(a);}
-
+    /**
+     * Setter for breakable.
+     */
     public void setBreakable(int breakable) {
         this.breakable = breakable;
     }
-
+    /**
+     * Setter for remainingFluidTime.
+     */
     public void setFluidTime(int remainingFluidTime) {
         this.remainingFluidTime = remainingFluidTime;
     }
-
+    /**
+     * Setter for leave.
+     */
     public void setLeave(boolean leave) {
         this.leave = leave;
     }
-
+    /**
+     * Setter for fluid.
+     */
     public void setFluid(Fluid fluid) {
         this.fluid = fluid;
     }
-
+    /**
+     * Getter for fields.
+     */
     public ArrayList<ActiveFields> getFields() { return fields; }
-
+    /**
+     * Getter for capacity.
+     */
     public int getCapacity() { return capacity; }
-
+    /**
+     * Getter for breakable.
+     */
     public int getBreakable() { return breakable; }
-
+    /**
+     * Getter for remainingFluidTime.
+     */
     public int getRemainingFluidTime() { return remainingFluidTime; }
-
+    /**
+     * Getter for leave.
+     */
     public boolean getLeave() { return leave; }
-
+    /**
+     * Getter for fluid.
+     */
     public Fluid getFluid() { return fluid; }
 
     /**
@@ -94,7 +129,7 @@ public class Pipe extends Field {
             breakable = 5;
         }
         else {
-            breakable = new Random().nextInt(3,10);
+            breakable = 3+ new Random().nextInt(8);
         }
         return true;
     }
@@ -113,9 +148,12 @@ public class Pipe extends Field {
         connect(newPump);
 
         oldPump.removePipe(this);
-
-        Pipe newPipe = new Pipe(50);
-
+        Pipe newPipe;
+        Random r = new Random();
+        if(Controller.isTest()) {
+            newPipe = new Pipe(50);
+        }
+        else newPipe = new Pipe(30+r.nextInt(41));
         newPipe.connect(newPump);
 
         newPipe.connect(oldPump);
@@ -194,45 +232,85 @@ public class Pipe extends Field {
     public Field accept(Player p) {
         if(this.isOccupied())
             return null;
+        if(fluid == Fluid.SLIPPERY){
+            Random r = new Random();
+            int index;
+            if (Controller.isTest()) {
+                index = 1;
+            }
+            else {
+                index = new Random().nextInt(2);
+            }
+            fields.get(index).accept(p);
+            return fields.get(index);
+        }
         else {
             this.setOccupied(true);
             this.setPlayers(p);
         }
-        if(fluid == Fluid.SLIPPERY){    //EZ MÉGIS HONNAN JÖTT?
-            fields.get(1).accept(p);    //SENKI NEM MONDTA HOGY 1 AZ A MÁSIK VÉGE
-            return fields.get(1);       //MEG NEM AZT BESZÉLTÜK? HOGY RANDOM HELYRE KERÜL?
-        }
         return this;
     }
-
-    public boolean removePlayer(){
+    /**
+     * Methods for removing players.
+     *
+     * @param p The player to be removed.
+     * @return True if the player was removed.
+     */
+    public boolean removePlayer(Player p){
         if(fluid == Fluid.STICKY){
             if(leave == true){
                 leave = false;
+                setOccupied(false);
+                getPlayers().remove(p);
                 return true;
             }
             return false;
         }
+        setOccupied(false);
+        getPlayers().remove(p);
         return true;
     }
+    /**
+     * Methods for making the pipe slippery.
+     * @return True if the pipe successfully became slippery.
+     */
     public boolean makeSlippery(){
+        if(fluid == Fluid.STICKY) return false;
         if(remainingFluidTime == 0){
-            remainingFluidTime = 5;//Todo MEnnyi legyen? //MEGBESZÉLTÜK HOGY 3..10 RANDOM ÉRTÉK LESZ
+            if (Controller.isTest()) {
+                remainingFluidTime = 5;
+            }
+            else {
+                remainingFluidTime = 3+new Random().nextInt(8);
+            }
             fluid = Fluid.SLIPPERY;
             return true;
         }
         return false;
     }
-
+    /**
+     * Methods for making the pipe sticky.
+     * @return True if the pipe successfully became sticky.
+     */
     public  boolean makeSticky(){
+        if(fluid == Fluid.SLIPPERY) return false;
         if(remainingFluidTime == 0){
-            remainingFluidTime = 5;//Todo MEnnyi legyen?
+            if (Controller.isTest()) {
+                remainingFluidTime = 5;
+            }
+            else {
+                remainingFluidTime = 3+new Random().nextInt(8);
+            }
             fluid = Fluid.STICKY;
             return true;
         }
         return false;
     }
-
+    /**
+     * Method for the game controlled events.
+     * Reduces the amount of time left until the pipe becomes dry.
+     * If the time is 0 makes the pipe dry.
+     */
     public void step(){
         if(breakable > 0){
             breakable--;
@@ -245,6 +323,10 @@ public class Pipe extends Field {
             }
         }
     }
+    /**
+     * Method for getting a string containing all the important information about the pipe.
+     * @return String - returns the important information.
+     */
     @Override
     public String toString() {
         ArrayList<Player> players = this.getPlayers();

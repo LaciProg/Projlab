@@ -1,7 +1,5 @@
 package Players;
 
-import Controll.Controller;
-import Controll.Szkeleton;
 import Fields.ActiveFields.Pump;
 import Fields.Field;
 import Fields.Pipe;
@@ -54,11 +52,14 @@ public abstract class Player {
 				if (result2) standingField = result;
 				return result2;
 			}
-			return true;
+			return standingField.removePlayer(this);
 		}
 		if(result == f){
 			boolean result2 = standingField.removePlayer(this);
 			if(result2){ standingField = result;}
+			else{
+				f.removePlayer(this);
+			}
 			return result2;
 		}
 		else{ return false;}
@@ -130,12 +131,18 @@ public abstract class Player {
 	public boolean pickUpPipe() {
 		return false;
 	}
-
+	/**
+	 * Method for making the field where the player is standing sticky.
+	 * @return boolean - result of making the field sticky. True if successful.
+	 * */
 	public boolean makeSticky(){
 		boolean result = standingField.makeSticky();
 		return result;
 	}
-
+	/**
+	 * Method for making the field where the player is standing slippery.
+	 * @return boolean - always false.
+	 * */
 	public boolean makeSlippery(){
 		return false;
 	}
