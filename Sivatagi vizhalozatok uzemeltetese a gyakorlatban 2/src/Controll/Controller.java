@@ -9,7 +9,6 @@ import Players.Mechanic;
 import Players.Player;
 import Players.Saboteur;
 
-import javax.management.ObjectName;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -469,7 +468,7 @@ public class Controller {
     }
 
     //TODO lehetőség az összes teszt meghivására, nem követelmény szóval csak ha lesz rá idő xd
-    /*private void testAll(String[] cmd) {
+    private void testAll(String[] cmd) {
         commandList.add("load " + cmd[1] + "\\1SaboteurBreakPipe.in");
         commandList.add("save " + cmd[1] + "\\1SaboteurBreakPipe.out");
         commandList.add("load " + cmd[1] + "\\2BreakCistern.in");
@@ -483,7 +482,7 @@ public class Controller {
         tmp[1] = "\\3RepairPipe.in";
         load(tmp);
         //System.out.println(commandList);
-    }*/
+    }
 
     private void list(String[] cmd){
         ArrayList<String> values = (ArrayList<String>)objectReverseNames.values();
