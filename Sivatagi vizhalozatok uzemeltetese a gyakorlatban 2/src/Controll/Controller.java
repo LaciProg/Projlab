@@ -48,7 +48,7 @@ public class Controller {
             commandList.remove(0);
             String[] cmd = command.split(" ");
             switch(cmd[0]) {
-                case("load"): load(cmd[1]); /*if(test) {save(cmd);}*/ break;
+                case("load"): load(cmd[1]); break;
                 case("pipe"): pipe(cmd); break;
                 case("pump"): pump(cmd); break;
                 case("cistern"): cistern(cmd); break;
@@ -82,15 +82,13 @@ public class Controller {
                 case("setend"): setend(cmd); break;
                 case("setpump"): setpump(cmd); break;
                 case("restart"): restart(cmd); break;
-                case("exit"): return; //System.exit(0); break;
+                case("exit"): return;
             }
         }
     }
 
     private void load(String cmd){
         try {
-            //System.out.println("ITT");
-            //System.out.println(cmd[1] + "\n");
             outResults.clear();
             Scanner scanner = new Scanner(new File(cmd));
             filePath = cmd;
@@ -102,7 +100,6 @@ public class Controller {
             }
             if (test) {
                 commandList.add("save " + filePath.replace(".in", ".out"));
-                //save(cmd);
             }
         } catch (FileNotFoundException e) {
             System.out.println("Bánat");
@@ -268,12 +265,11 @@ public class Controller {
         String[] commands = cmd[2].split(":");
         switch (commands[1]){
             case "player":
-                if (test) outResults.add(p.toString()); //TODO jó-e így?
+                if (test) outResults.add(p.toString());
                 else System.out.println(p);
-                //System.out.println(p);
                 break;
             case "field":
-                if (test) outResults.add(objectReverseNames.get(p.getStandingField()).toString()); //TODO jó-e így?
+                if (test) outResults.add(objectReverseNames.get(p.getStandingField()).toString());
                 else System.out.println(objectReverseNames.get(p.getStandingField()));
                 break;
         }
@@ -283,7 +279,7 @@ public class Controller {
         Object object = objectNames.get(cmd[1]);
         //System.out.println(cmd[1]);
         if (test) outResults.add(object.toString());
-        else System.out.println(object.toString()); //TODO tesztre
+        else System.out.println(object.toString());
     }
 
     private void move(String[] cmd){
@@ -429,9 +425,7 @@ public class Controller {
             System.out.println("Nagyobb bánat");
         }
         try {
-            //Scanner scannerResult = new Scanner(new File(filePath.replace(".in", ".out")));
             Scanner scannerResult = new Scanner(new File(cmd[1]));
-            //Scanner scannerExpected = new Scanner(new File(filePath.replace(".in", ".test")));
             Scanner scannerExpected = new Scanner((new File(cmd[1].replace(".out", ".test"))));
             ArrayList<String> result = new ArrayList<>();
             ArrayList<String> expected = new ArrayList<>();
@@ -475,7 +469,6 @@ public class Controller {
         outResults.clear();
     }
 
-    //TODO lehetőség az összes teszt meghivására, nem követelmény szóval csak ha lesz rá idő xd
     private void testAll(String[] cmd) {
         try {
             Scanner scanner = new Scanner(new File(cmd[1] + "\\Alltests.txt"));
@@ -489,9 +482,12 @@ public class Controller {
     }
 
     private void list(String[] cmd){
-        ArrayList<String> values = (ArrayList<String>)objectReverseNames.values();
-        for(String s : values){
-            System.out.print(s+" "); //TODO tesztre
+        //ArrayList<String> values = (ArrayList<String>)objectReverseNames.values();
+        //for(String s : values){
+        //    System.out.print(s+" "); //TODO tesztre
+        //}
+        for (Object obj : objectNames.values()) {
+            System.out.print(objectReverseNames.get(obj) + " ");
         }
     }
 
@@ -537,11 +533,10 @@ public class Controller {
 
     private void restart(String[] cmd){
         //TODO
-        //program újraindítása
         random = true;
         objectNames.clear();
         objectReverseNames.clear();
-        //water counter még kérdőjeles
+        waterCounter.reset();
         test = false;
         pumps=pipes=0;
         System.out.println("Sikeres művelet");
