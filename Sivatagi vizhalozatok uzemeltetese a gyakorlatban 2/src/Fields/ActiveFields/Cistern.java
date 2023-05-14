@@ -42,10 +42,6 @@ public class Cistern extends ActiveFields{
                 createdPipe = new Pipe(65);
             }
             else createdPipe = new Pipe(30+r.nextInt(41));
-            Controller.waterCounter.addPipe(createdPipe);
-            Controller.pipes++;
-            Controller.objectNames.put("newPipe"+Controller.pipes, createdPipe);
-            Controller.objectReverseNames.put(createdPipe, "newPipe"+Controller.pipes);
         }
     }
 
@@ -82,6 +78,10 @@ public class Cistern extends ActiveFields{
      */
     @Override
     public Pipe pickUpPipe() {
+        Controller.waterCounter.addPipe(createdPipe);
+        Controller.pipes++;
+        Controller.objectNames.put("newPipe"+Controller.pipes, createdPipe);
+        Controller.objectReverseNames.put(createdPipe, "newPipe"+Controller.pipes);
         this.addPipe(createdPipe);
         createdPipe.connect(this);
         Pipe tmp = createdPipe;
