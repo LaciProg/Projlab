@@ -133,12 +133,18 @@ public abstract class Player {
 	public boolean pickUpPipe() {
 		return false;
 	}
-
+	/**
+	 * Method for making the field where the player is standing sticky.
+	 * @return boolean - result of making the field sticky. True if successful.
+	 * */
 	public boolean makeSticky(){
 		boolean result = standingField.makeSticky();
 		return result;
 	}
-
+	/**
+	 * Method for making the field where the player is standing slippery.
+	 * @return boolean - always false.
+	 * */
 	public boolean makeSlippery(){
 		return false;
 	}

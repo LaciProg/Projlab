@@ -57,7 +57,9 @@ public abstract class Field {
 		}*/
 		return players;
 	}
-
+	/**
+	 * Setter for players list.
+	 */
 	public void setPlayers(Player p) {
 		players.add(p);
 	}
@@ -237,11 +239,17 @@ public abstract class Field {
 	public boolean disconnect(ActiveFields a) {
 		return false;
 	}
-
+	/**
+	 * Method for making the field slippery.
+	 * @return True if the field became slippery. - always false.
+	 * */
 	public boolean makeSlippery(){
 		return false;
 	}
-
+	/**
+	 * Method for making the field sticky.
+	 * @return True if the field became sticky. - always false.
+	 * */
 	public boolean makeSticky(){
 		return false;
 	}

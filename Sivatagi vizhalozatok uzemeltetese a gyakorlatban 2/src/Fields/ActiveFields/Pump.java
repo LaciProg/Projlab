@@ -37,7 +37,10 @@ public class Pump extends ActiveFields {
         this.waterFrom = -1;
         this.waterTo = -1;
     }
-
+    /**
+     * Getter for the tank.
+     * @return tank - returns tank.
+     */
     public int getTank() { return tank; }
 
     /**
@@ -47,7 +50,10 @@ public class Pump extends ActiveFields {
     public void setWaterFrom(int waterFrom) {
         this.waterFrom = waterFrom;
     }
-
+    /**
+     * Getter for the waterFrom.
+     * @return waterFrom - returns waterFrom.
+     */
     public int getWaterFrom() { return waterFrom; }
     /**
      * Setter for the waterTo.
@@ -56,7 +62,10 @@ public class Pump extends ActiveFields {
     public void setWaterTo(int waterTo) {
         this.waterTo = waterTo;
     }
-
+    /**
+     * Getter for the waterTo.
+     * @return waterTo - returns waterTo.
+     */
     public int getWaterTo() { return waterTo; }
     /**
      * Method for the game controlled events.
@@ -103,13 +112,19 @@ public class Pump extends ActiveFields {
         this.setWaterTo(newWaterTo);
         return true;
     }
-
+    /**
+     * Method for repairing the pump.
+     * @return true - Always true.
+     * */
     @Override
     public boolean repair() {
         super.setBroken(false);
         return true;
     }
-
+    /**
+     * Method for getting a string containing all the important information about the pump.
+     * @return String - returns the important information.
+     */
     @Override
     public String toString() {
         ArrayList<Player> players = this.getPlayers();
