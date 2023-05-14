@@ -14,7 +14,7 @@ import java.util.Random;
 public class Cistern extends ActiveFields{
 
     /**
-     *
+     * Last created Pipe. Null if the last pump was just taken.
      */
     private Pipe createdPipe;
     /**
@@ -89,7 +89,10 @@ public class Cistern extends ActiveFields{
         createdPipe = null;
         return tmp;
     }
-
+    /**
+     * Method for getting a string containing all the important information about the cistern.
+     * @return String - returns the important information.
+     */
     @Override
     public String toString() {
         ArrayList<Player> players = this.getPlayers();

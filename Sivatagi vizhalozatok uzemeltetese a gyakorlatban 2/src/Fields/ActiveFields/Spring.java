@@ -29,9 +29,15 @@ public class Spring extends ActiveFields{
         this.waterOut = maxOutWater;
         this.maxOutWater = maxOutWater;
     }
-
+    /**
+     * Getter for waterOut.
+     * @return waterOut - returns waterOut.
+     */
     public int getWaterOut() { return waterOut; }
-
+    /**
+     * Getter for maxOutWater.
+     * @return maxOutWater - returns maxOutWater.
+     */
     public int getMaxOutWater() { return maxOutWater; }
 
     /**
@@ -48,7 +54,10 @@ public class Spring extends ActiveFields{
             }
         }
     }
-
+    /**
+     * Method for getting a string containing all the important information about the spring.
+     * @return String - returns the important information.
+     */
     @Override
     public String toString() {
         ArrayList<Player> players = this.getPlayers();
