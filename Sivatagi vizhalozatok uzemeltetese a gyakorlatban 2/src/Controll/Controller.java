@@ -11,7 +11,6 @@ import Interfaces.Steppable;
 import Players.Mechanic;
 import Players.Player;
 import Players.Saboteur;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -20,6 +19,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import java.util.Collection;
+
 
 @SuppressWarnings("DuplicatedCode")
 public class Controller {
@@ -581,8 +582,9 @@ public class Controller {
         waterCounter.count();
         //léptetés
 
-        Iterator<Object> iter = objectNames.values().iterator();
+        //Iterator<Object> iter = objectNames.values().iterator();
         //Iterator iter = objectNames.entrySet().iterator();
+        /*
         int i = 1;
         while(iter.hasNext()) {
             Object obj = iter.next();
@@ -592,16 +594,20 @@ public class Controller {
 
                 System.out.println("asd" + i++ + " " + objectReverseNames.get(obj));
             }
-            iter.remove();
-        }
-       /* int i = 0;
-         for (Object obj : objectNames.values()) {
+            //iter.remove();
+        }*/
+
+        
+        Object[] names = objectNames.keySet().toArray();
+        for (int i = 0; i < names.length; i++) {
+            Object obj = objectNames.get(names[i]);
             if(obj instanceof Steppable) {
                 Steppable value = (Steppable)obj;
                 value.step();
-                System.out.println(i++);
+                System.out.println(objectReverseNames.get(obj) + " léptetése");
             }
-        }*/
+        }
+        
         System.out.println("Sikeres művelet");
     }
 
@@ -612,7 +618,7 @@ public class Controller {
     }
 
     private static void restart(String[] cmd){
-        //TODO
+        //program újraindítása
         random = true;
         objectNames.clear();
         objectReverseNames.clear();
