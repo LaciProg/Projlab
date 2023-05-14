@@ -1,9 +1,12 @@
 package Controll;
 
 import Enums.Fluid;
+import Fields.ActiveFields.ActiveFields;
+import Fields.ActiveFields.Cistern;
+import Fields.ActiveFields.Pump;
+import Fields.ActiveFields.Spring;
 import Fields.Field;
 import Fields.Pipe;
-import Fields.ActiveFields.*;
 import Interfaces.Steppable;
 import Players.Mechanic;
 import Players.Player;
@@ -51,14 +54,22 @@ public class Controller {
      * Path of the used file
      * */
     private static String filePath="";
+
     /**
      * List of the test result
      * */
-    private static ArrayList<String> outResults = new ArrayList<>();
+    private static final ArrayList<String> outResults = new ArrayList<>();
 
-    private static ArrayList<Player> activePlayers = new ArrayList<>();
-
+    /**
+    * List of the activePlayers
+    * */
+    private static final ArrayList<Player> activePlayers = new ArrayList<>();
+  
+    /**
+    * Current Player
+    * */
     private static Player currentPlayer;
+  
     /**
      * List of the commands
      * */
@@ -194,7 +205,7 @@ public class Controller {
                 commandList.add("save " + filePath.replace(".in", ".out"));
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Bánat");
+          
         }
     }
     /**
@@ -395,7 +406,6 @@ public class Controller {
      * */
     private static void showobject(String[] cmd){
         Object object = objectNames.get(cmd[1]);
-        //System.out.println(cmd[1]);
         if (test) outResults.add(object.toString());
         else System.out.println(object.toString());
     }
@@ -566,7 +576,7 @@ public class Controller {
             }
         }
         catch(FileNotFoundException e) {
-            System.out.println("Nagyobb bánat");
+           
         }
         try {
             Scanner scannerResult = new Scanner(new File(cmd[1]));
@@ -608,7 +618,7 @@ public class Controller {
             objectReverseNames.clear();
         }
         catch(FileNotFoundException e) {
-            System.out.println("Még nagyobb bánat");
+            
         }
         outResults.clear();
     }
@@ -623,17 +633,14 @@ public class Controller {
                 load(cmd[1] + "\\" + line);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("A legnagyobb bánat");
+           
+          
         }
     }
     /**
      * Function for listing all objects in the game.
      * */
     private static void list(String[] cmd){
-        //ArrayList<String> values = (ArrayList<String>)objectReverseNames.values();
-        //for(String s : values){
-        //    System.out.print(s+" "); //TODO tesztre
-        //}
         for (Object obj : objectNames.values()) {
             System.out.print(objectReverseNames.get(obj) + " ");
         }
@@ -670,22 +677,25 @@ public class Controller {
         waterCounter.count();
         //léptetés
 
-        //Iterator<Object> iter = objectNames.values().iterator();
-        /*Iterator iter = objectNames.values().iterator();
+        Iterator<Object> iter = objectNames.values().iterator();
+        //Iterator iter = objectNames.entrySet().iterator();
         int i = 1;
         while(iter.hasNext()) {
             Object obj = iter.next();
             if (obj instanceof Steppable) {
-                Steppable value = (Steppable)obj;
+                Steppable value = (Steppable) obj;
                 value.step();
+
+                System.out.println("asd" + i++ + " " + objectReverseNames.get(obj));
             }
-            System.out.println("asd" + i++ + " " + objectReverseNames.get(obj));
             iter.remove();
-        }*/
-        /* (Object obj : objectNames.values()) {
+        }
+       /* int i = 0;
+         for (Object obj : objectNames.values()) {
             if(obj instanceof Steppable) {
                 Steppable value = (Steppable)obj;
                 value.step();
+                System.out.println(i++);
             }
         }*/
         System.out.println("Sikeres művelet");
