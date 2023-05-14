@@ -48,7 +48,7 @@ public class Controller {
             commandList.remove(0);
             String[] cmd = command.split(" ");
             switch(cmd[0]) {
-                case("load"): load(cmd); /*if(test) {save(cmd);}*/ break;
+                case("load"): load(cmd[1]); /*if(test) {save(cmd);}*/ break;
                 case("pipe"): pipe(cmd); break;
                 case("pump"): pump(cmd); break;
                 case("cistern"): cistern(cmd); break;
@@ -72,7 +72,7 @@ public class Controller {
                 case("makesticky"): makesticky(cmd); break;
                 case("makeslippery"): makeslippery(cmd); break;
                 case("save"): save(cmd); break;
-                /*case("testall"): testAll(cmd); break;*/
+                case("testall"): testAll(cmd); break;
                 case("list"): list(cmd); break;
                 case("addplayer"): addplayer(cmd); break;
                 case("step"): step(cmd); break;
@@ -87,15 +87,15 @@ public class Controller {
         }
     }
 
-    private void load(String[] cmd){
+    private void load(String cmd){
         try {
             //System.out.println("ITT");
             //System.out.println(cmd[1] + "\n");
             outResults.clear();
-            Scanner scanner = new Scanner(new File(cmd[1]));
-            filePath = cmd[1];
+            Scanner scanner = new Scanner(new File(cmd));
+            filePath = cmd;
             String separator = "\\";
-            String[] tmp=cmd[1].replaceAll(Pattern.quote(separator), "\\\\").split("\\\\");
+            String[] tmp=cmd.replaceAll(Pattern.quote(separator), "\\\\").split("\\\\");
             fileName = tmp[tmp.length-1];
             while (scanner.hasNextLine()){
                 commandList.add(scanner.nextLine());
@@ -429,8 +429,10 @@ public class Controller {
             System.out.println("Nagyobb bánat");
         }
         try {
-            Scanner scannerResult = new Scanner(new File(filePath.replace(".in", ".out")));
-            Scanner scannerExpected = new Scanner(new File(filePath.replace(".in", ".test")));
+            //Scanner scannerResult = new Scanner(new File(filePath.replace(".in", ".out")));
+            Scanner scannerResult = new Scanner(new File(cmd[1]));
+            //Scanner scannerExpected = new Scanner(new File(filePath.replace(".in", ".test")));
+            Scanner scannerExpected = new Scanner((new File(cmd[1].replace(".out", ".test"))));
             ArrayList<String> result = new ArrayList<>();
             ArrayList<String> expected = new ArrayList<>();
             while (scannerResult.hasNextLine()){
@@ -439,7 +441,10 @@ public class Controller {
             while (scannerExpected.hasNextLine()){
                 expected.add(scannerExpected.nextLine().strip());
             }
-            System.out.println("Test name: " + fileName.replace(".in", ""));
+            String separator = "\\";
+            String[] tmp=cmd[1].replaceAll(Pattern.quote(separator), "\\\\").split("\\\\");
+            fileName = tmp[tmp.length-1];
+            System.out.println("Test name: " + fileName.replace(".out", ""));
             if (result.size() != expected.size()) {
                 System.out.println("Test failed. The 2 files do not have the same amount of lines.");
                 return;
@@ -461,27 +466,26 @@ public class Controller {
             }
             pipes=pumps=0;
             waterCounter.reset();
+            objectNames.clear();
+            objectReverseNames.clear();
         }
         catch(FileNotFoundException e) {
             System.out.println("Még nagyobb bánat");
         }
+        outResults.clear();
     }
 
     //TODO lehetőség az összes teszt meghivására, nem követelmény szóval csak ha lesz rá idő xd
     private void testAll(String[] cmd) {
-        commandList.add("load " + cmd[1] + "\\1SaboteurBreakPipe.in");
-        commandList.add("save " + cmd[1] + "\\1SaboteurBreakPipe.out");
-        commandList.add("load " + cmd[1] + "\\2BreakCistern.in");
-        commandList.add("save " + cmd[1] + "\\2BreakCistern.out");
-        commandList.add("load " + cmd[1] + "\\3RepairPipe.in");
-        commandList.add("save " + cmd[1] + "\\3RepairPipe.out");
-        String[] tmp = {"load", cmd[1] + "\\1SaboteurBreakPipe.in"};
-        load(tmp);
-        tmp[1] = cmd[1] + "\\2BreakCistern.in";
-        load(tmp);
-        tmp[1] = "\\3RepairPipe.in";
-        load(tmp);
-        //System.out.println(commandList);
+        try {
+            Scanner scanner = new Scanner(new File(cmd[1] + "\\Alltests.txt"));
+            while(scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                load(cmd[1] + "\\" + line);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("A legnagyobb bánat");
+        }
     }
 
     private void list(String[] cmd){

@@ -2,6 +2,9 @@ Sikeres művelet
 Sikeres művelet
 Sikeres művelet
 Sikeres művelet
+Sikeres művelet
+Sikeres művelet
+Sikeres művelet
 A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!
 Sikeres művelet
 name: Pto
@@ -9,7 +12,7 @@ occupied: false
 water: 0
 broken: false
 players: null
-fields: Pto
+fields: Potherend, Psameend
 capacity: 100
 breakable: 0
 rfluidtime: 0
@@ -17,11 +20,11 @@ leave: true
 fluid: slippery
 
 name: Psameend
-occupied: true
+occupied: false
 water: 0
 broken: false
 players: sab
-pipes: Psameend
+pipes: Pto
 tank: 100
 waterFrom: null
 waterTo: null
@@ -31,7 +34,7 @@ occupied: false
 water: 0
 broken: false
 players: null
-pipes: Potherend
+pipes: Pto
 tank: 100
 waterFrom: null
 waterTo: null
