@@ -54,11 +54,14 @@ public abstract class Player {
 				if (result2) standingField = result;
 				return result2;
 			}
-			return true;
+			return standingField.removePlayer(this);
 		}
 		if(result == f){
 			boolean result2 = standingField.removePlayer(this);
 			if(result2){ standingField = result;}
+			else{
+				f.removePlayer(this);
+			}
 			return result2;
 		}
 		else{ return false;}
