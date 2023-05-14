@@ -31,8 +31,15 @@ public class Controller {
      * Getter for random
      * */
     public static boolean isRandom() {return random; }
+
+    /**
+     * Contains the names of the objects, the keys are the objects.
+     */
     public static HashMap<String, Object> objectNames = new HashMap<>();
 
+    /**
+     * Contains the objects, the keys are the names of the objects.
+     */
     public static HashMap<Object, String> objectReverseNames = new HashMap<>();
     /**
      * WaterCounter of the game
@@ -75,10 +82,22 @@ public class Controller {
      * */
     static ArrayList<String> commandList = new ArrayList<>();
 
+    /**
+     * Number of new pumps with commands
+     */
     public static int pipes=0;
+    /**
+     * Number of new pipes with commands
+     */
     public static int pumps=0;
 
+    /**
+     * True after the command "create", you cannot create new objects after this
+     * Resets after the restart command
+     */
     public static boolean gameMode = false;
+
+    public static int moves = 0;
 
     public static void main(String[] args) throws FileNotFoundException {
         Run();
@@ -138,13 +157,15 @@ public class Controller {
         Game();
     }
 
+    /**
+     * Game mode after "create" you cannot create new objects in this mode.
+     * @throws FileNotFoundException
+     */
     public static void Game() throws FileNotFoundException {
-        int moves = 0;
         while(gameMode) {
             currentPlayer = activePlayers.get(0); // az első játékos a sor végére rakom, jelenleg ő az aktív
             activePlayers.remove(0);
             activePlayers.add(currentPlayer);
-            moves++;
             Scanner stdInScanner = new Scanner(System.in);
             if (commandList.size() == 0){
                 commandList.add(stdInScanner.nextLine());
@@ -155,17 +176,17 @@ public class Controller {
             switch(cmd[0]) {
                 case("show"): show(cmd); break;
                 case("showobject"): showobject(cmd); break;
-                case("move"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else move(cmd); break;
-                case("breakfield"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else breakfield(cmd); break;
-                case("repair"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else repair(cmd); break;
-                case("placepump"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else placepump(cmd); break;
-                case("set"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else set(cmd); break;
-                case("disconnect"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else disconnect(cmd); break;
-                case("connect"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else connect(cmd); break;
-                case("getpump"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else getpump(cmd); break;
-                case("pickuppipe"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!");else pickuppipe(cmd); break;
-                case("makesticky"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else makesticky(cmd); break;
-                case("makeslippery"): if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else makeslippery(cmd); break;
+                case("move"): moves++; if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else move(cmd); break;
+                case("breakfield"): moves++; if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else breakfield(cmd); break;
+                case("repair"): moves++; if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else repair(cmd); break;
+                case("placepump"): moves++; if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else placepump(cmd); break;
+                case("set"): moves++; if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else set(cmd); break;
+                case("disconnect"): moves++; if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else disconnect(cmd); break;
+                case("connect"): moves++; if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else connect(cmd); break;
+                case("getpump"): moves++; if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else getpump(cmd); break;
+                case("pickuppipe"): moves++; if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!");else pickuppipe(cmd); break;
+                case("makesticky"): moves++; if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else makesticky(cmd); break;
+                case("makeslippery"): moves++; if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else makeslippery(cmd); break;
                 case("save"): save(cmd); break;
                 case("testall"): testAll(cmd); break;
                 case("list"): list(cmd); break;
@@ -420,7 +441,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -433,7 +457,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -446,7 +473,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -465,7 +495,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -478,7 +511,10 @@ public class Controller {
              else System.out.println("Sikeres művelet");
          }else  {
              if (test) outResults.add("Sikertelen művelet");
-             else System.out.println("Sikertelen művelet");
+             else {
+                 System.out.println("Sikertelen művelet");
+                 moves--;
+             }
          }
     }
     /**
@@ -491,7 +527,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -504,7 +543,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -522,7 +564,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -535,7 +580,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -548,7 +596,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -561,7 +612,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -644,6 +698,7 @@ public class Controller {
         for (Object obj : objectNames.values()) {
             System.out.print(objectReverseNames.get(obj) + " ");
         }
+        System.out.println();
     }
     /**
      * Function for putting a player on a field.
@@ -671,33 +726,18 @@ public class Controller {
      * Responsible for calling the step function for all steppable objects.
      * */
     private static void endturn(String[] cmd){
+
         //elvégzi a kör végével járó lépéseket (vízszámolás, objektumok step függvényének hívása stb…)
         //vízszámlálás
         //water counter lehet hogy üres
         waterCounter.count();
         //léptetés
-
-        Iterator<Object> iter = objectNames.values().iterator();
-        //Iterator iter = objectNames.entrySet().iterator();
-        int i = 1;
-        while(iter.hasNext()) {
-            Object obj = iter.next();
-            if (obj instanceof Steppable) {
-                Steppable value = (Steppable) obj;
-                value.step();
-
-                System.out.println("asd" + i++ + " " + objectReverseNames.get(obj));
-            }
-            iter.remove();
-        }
-       /* int i = 0;
          for (Object obj : objectNames.values()) {
             if(obj instanceof Steppable) {
                 Steppable value = (Steppable)obj;
                 value.step();
-                System.out.println(i++);
             }
-        }*/
+        }
         System.out.println("Sikeres művelet");
     }
     /**

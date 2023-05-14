@@ -1,4 +1,3 @@
-﻿
 pipe pipe1 50 water:30
 pipe disconnectedPipe 40 water:0
 pump pump1 100 water:30
