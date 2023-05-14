@@ -1,7 +1,5 @@
 package Players;
 
-import Controll.Controller;
-import Controll.Szkeleton;
 import Fields.ActiveFields.Pump;
 import Fields.Field;
 import Fields.Pipe;

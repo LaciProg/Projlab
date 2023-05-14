@@ -1,7 +1,6 @@
 package Fields.ActiveFields;
 
 import Controll.Controller;
-import Controll.Szkeleton;
 import Fields.Pipe;
 import Players.Player;
 
