@@ -41,9 +41,13 @@ connectpipe FC1 F
 connectpipe FC1 cistern1
 connectpipe AF A
 connectpipe AF F
+setpump A AB AC2
+setpump B BS2 AB
+setpump C CS2 CD
+setpump D DS1 DE
+setpump E DE EF
+setpump F EF FC1
 mechanic Mechanic1 F
 mechanic Mechanic2 A
 saboteur Saboteur1 C
 saboteur Saboteur2 B
-create
-
