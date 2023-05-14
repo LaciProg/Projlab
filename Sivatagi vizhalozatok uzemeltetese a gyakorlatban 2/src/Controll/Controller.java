@@ -9,6 +9,7 @@ import Players.Mechanic;
 import Players.Player;
 import Players.Saboteur;
 
+import javax.management.ObjectName;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -23,7 +24,7 @@ public class Controller {
     public static boolean isRandom() {return random; }
     public static HashMap<String, Object> objectNames = new HashMap<>();
     public static HashMap<Object, String> objectReverseNames = new HashMap<>();
-    private static WaterCounter waterCounter = new WaterCounter();
+    public static WaterCounter waterCounter = new WaterCounter();
     private static boolean test = false;
 
     public static boolean isTest() {return test;}
@@ -143,14 +144,16 @@ public class Controller {
                         case "slippery": tmp.setFluid(Fluid.SLIPPERY); break;
                     }
                     break;
-                case "rfluidtime": tmp.setFluidTime(Integer.parseInt(commands[i][2])); break;
+                case "rfluidtime": tmp.setFluidTime(Integer.parseInt(commands[i][1])); break;
                 case "breakable": tmp.setBreakable(Integer.parseInt(commands[i][1])); break;
                 case "broken": tmp.setBroken(Boolean.parseBoolean(commands[i][1])); break;
                 case "water": tmp.setWater(Integer.parseInt(commands[i][1])); break;
+                case "leave": tmp.setLeave(Boolean.parseBoolean(commands[i][1])); break;
             }
         }
         objectNames.put(cmd[1], tmp);
         objectReverseNames.put(tmp, cmd[1]);
+        waterCounter.addPipe(tmp);
         if (test) outResults.add("Sikeres művelet");
         else System.out.println("Sikeres művelet");
     }
@@ -169,6 +172,7 @@ public class Controller {
         }
         objectNames.put(cmd[1], tmp);
         objectReverseNames.put(tmp, cmd[1]);
+        waterCounter.addCistern(tmp);
         if (test) outResults.add("Sikeres művelet");
         else System.out.println("Sikeres művelet");
     }
@@ -254,6 +258,8 @@ public class Controller {
 
     }
     private void create(String[] cmd) {
+        objectNames.put("wc", waterCounter);
+        objectReverseNames.put(waterCounter, "wc");
         if (test) outResults.add("A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!");
         else System.out.println("A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!");
     }
@@ -323,6 +329,7 @@ public class Controller {
             String s = "newPipe"+pipes;
             objectNames.put(s, pipe);
             objectReverseNames.put(pipe, s);
+            waterCounter.addPipe(pipe);
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
@@ -454,6 +461,7 @@ public class Controller {
                 System.out.println("Test failed.\n");
             }
             pipes=pumps=0;
+            waterCounter.reset();
         }
         catch(FileNotFoundException e) {
             System.out.println("Még nagyobb bánat");

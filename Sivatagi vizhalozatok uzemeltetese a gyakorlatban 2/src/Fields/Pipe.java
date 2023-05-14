@@ -113,9 +113,12 @@ public class Pipe extends Field {
         connect(newPump);
 
         oldPump.removePipe(this);
-
-        Pipe newPipe = new Pipe(50);
-
+        Pipe newPipe;
+        Random r = new Random();
+        if(Controller.isTest()) {
+            newPipe = new Pipe(50);
+        }
+        else newPipe = new Pipe(r.nextInt(30,70));
         newPipe.connect(newPump);
 
         newPipe.connect(oldPump);
@@ -194,30 +197,48 @@ public class Pipe extends Field {
     public Field accept(Player p) {
         if(this.isOccupied())
             return null;
+        if(fluid == Fluid.SLIPPERY){    //EZ MÉGIS HONNAN JÖTT?
+            Random r = new Random();
+            int index;
+            if (Controller.isTest()) {
+                index = 1;
+            }
+            else {
+                index = new Random().nextInt(0,1);
+            }
+            fields.get(index).accept(p);    //SENKI NEM MONDTA HOGY 1 AZ A MÁSIK VÉGE
+            return fields.get(index);       //MEG NEM AZT BESZÉLTÜK? HOGY RANDOM HELYRE KERÜL?
+        }
         else {
             this.setOccupied(true);
             this.setPlayers(p);
         }
-        if(fluid == Fluid.SLIPPERY){    //EZ MÉGIS HONNAN JÖTT?
-            fields.get(1).accept(p);    //SENKI NEM MONDTA HOGY 1 AZ A MÁSIK VÉGE
-            return fields.get(1);       //MEG NEM AZT BESZÉLTÜK? HOGY RANDOM HELYRE KERÜL?
-        }
         return this;
     }
 
-    public boolean removePlayer(){
+    public boolean removePlayer(Player p){
         if(fluid == Fluid.STICKY){
             if(leave == true){
                 leave = false;
+                setOccupied(false);
+                this.removePlayer(p);
                 return true;
             }
             return false;
         }
+        setOccupied(false);
+        this.removePlayer(p);
         return true;
     }
     public boolean makeSlippery(){
+        if(fluid == Fluid.STICKY) return false;
         if(remainingFluidTime == 0){
-            remainingFluidTime = 5;//Todo MEnnyi legyen? //MEGBESZÉLTÜK HOGY 3..10 RANDOM ÉRTÉK LESZ
+            if (Controller.isTest()) {
+                remainingFluidTime = 5;
+            }
+            else {
+                remainingFluidTime = new Random().nextInt(3,10);
+            }
             fluid = Fluid.SLIPPERY;
             return true;
         }
@@ -225,8 +246,14 @@ public class Pipe extends Field {
     }
 
     public  boolean makeSticky(){
+        if(fluid == Fluid.SLIPPERY) return false;
         if(remainingFluidTime == 0){
-            remainingFluidTime = 5;//Todo MEnnyi legyen?
+            if (Controller.isTest()) {
+                remainingFluidTime = 5;
+            }
+            else {
+                remainingFluidTime = new Random().nextInt(3,10);
+            }
             fluid = Fluid.STICKY;
             return true;
         }
