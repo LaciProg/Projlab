@@ -9,7 +9,6 @@ import Players.Mechanic;
 import Players.Player;
 import Players.Saboteur;
 
-import javax.management.ObjectName;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -467,6 +466,8 @@ public class Controller {
             }
             pipes=pumps=0;
             waterCounter.reset();
+            objectNames.clear();
+            objectReverseNames.clear();
         }
         catch(FileNotFoundException e) {
             System.out.println("Még nagyobb bánat");
@@ -514,7 +515,17 @@ public class Controller {
     }
 
     private void endturn(String[] cmd){
-        //TODO
+        //elvégzi a kör végével járó lépéseket (vízszámolás, objektumok step függvényének hívása stb…)
+        //vízszámlálás
+        //water counter lehet hogy üres
+        waterCounter.count();
+        //léptetés
+        for (Object obj : objectNames.values()) {
+            if(obj instanceof Steppable) {
+                Steppable value = (Steppable)obj;
+                value.step();
+            }
+        }
         System.out.println("Sikeres művelet");
     }
 
@@ -525,11 +536,14 @@ public class Controller {
     }
 
     private void restart(String[] cmd){
-        pumps=pipes=0;
+        //TODO
+        //program újraindítása
+        random = true;
         objectNames.clear();
         objectReverseNames.clear();
-        random = true;
-        //TODO
+        //water counter még kérdőjeles
+        test = false;
+        pumps=pipes=0;
         System.out.println("Sikeres művelet");
     }
 

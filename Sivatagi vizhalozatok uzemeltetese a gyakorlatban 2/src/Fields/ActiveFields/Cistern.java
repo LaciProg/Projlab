@@ -74,7 +74,7 @@ public class Cistern extends ActiveFields{
      */
     @Override
     public int getWater() {
-        return super.getWaterNoChange();
+        return super.getWater();
     }
 
     /**
