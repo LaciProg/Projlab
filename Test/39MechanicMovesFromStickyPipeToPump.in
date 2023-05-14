@@ -1,4 +1,4 @@
-pipe Pfrom 100 fluid:sticky rfluidtime:3
+pipe Pfrom 100 fluid:sticky rfluidtime:3 leave:false
 pump Pto 100
 connectpipe Pfrom Pto
 mechanic mech Pfrom

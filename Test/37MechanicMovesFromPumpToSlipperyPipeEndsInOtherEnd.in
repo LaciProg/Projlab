@@ -3,8 +3,8 @@ pump Potherend 100
 pipe Pto 100 fluid:slippery
 connectpipe Pto Psameend
 connectpipe Pto Potherend
-mechanic mech Pfrom
-addplayer Pfrom mech
+mechanic mech Psameend
+addplayer Psameend mech
 create
 move mech Pto
 showobject Pto

@@ -75,4 +75,5 @@ public abstract class ActiveFields extends Field implements Steppable {
            this.setPlayers(p);
        	return this;
    	}
+
 }

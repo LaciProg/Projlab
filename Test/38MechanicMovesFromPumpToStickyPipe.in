@@ -1,5 +1,5 @@
 pump Pfrom 100
-pipe Pto 100 fluid:sticky
+pipe Pto 100 fluid:sticky leave:false
 connectpipe Pto Pfrom
 mechanic mech Pfrom
 addplayer Pfrom mech

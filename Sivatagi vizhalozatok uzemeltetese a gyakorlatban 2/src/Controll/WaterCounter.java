@@ -6,6 +6,8 @@ import Fields.Pipe;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.abs;
+
 /**
  *WaterCounter class.
  * Responsible for counting the water.
@@ -44,6 +46,10 @@ public class WaterCounter {
         this.mechanic = 0;
     }
 
+    public void reset(){
+        saboteur=mechanic=0;
+    }
+
     public int getSaboteur() { return saboteur; }
 
     public int getMechanic() { return mechanic; }
@@ -67,8 +73,6 @@ public class WaterCounter {
      * Method that changes end to true.
      */
     public void setEnd(){
-        Szkeleton.printTabs();
-        System.out.println(Szkeleton.objectNames.get(this) + ".setEnd");
         end = true;
     }
     /**
@@ -81,7 +85,7 @@ public class WaterCounter {
             if (w > 0) {
                 pipe.fillInWater(w);
             } else
-                saboteur += w;
+                saboteur += abs(w);
         }
         if(end) {
             for (Cistern cistern : cisterns) {
@@ -93,7 +97,8 @@ public class WaterCounter {
 
     @Override
     public String toString() {
-        return "saboteur: : "+ this.getSaboteur()
-                + "\nmechanic: " + this.getMechanic();
+        return "saboteur: "+ this.getSaboteur()
+                + "\nmechanic: " + this.getMechanic()
+                +"\n";
     }
 }
