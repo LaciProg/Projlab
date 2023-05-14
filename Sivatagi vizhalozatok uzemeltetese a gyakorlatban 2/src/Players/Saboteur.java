@@ -15,6 +15,10 @@ public class Saboteur extends Player {
 	public Saboteur() {
 	}
 
+	/**
+	 * Method for making standingField slippery
+	 * @return boolean - returns true if action was successful.
+	 */
 	public boolean makeSlippery(){
 		boolean result = this.getStandingField().makeSlippery();
 		return result;

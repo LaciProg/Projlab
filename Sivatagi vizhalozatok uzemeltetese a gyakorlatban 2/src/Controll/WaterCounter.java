@@ -47,7 +47,8 @@ public class WaterCounter {
     }
 
     public void reset(){
-        saboteur=mechanic=0;
+        saboteur=0; mechanic=0; end = false;
+        cisterns.clear(); pipes.clear();
     }
 
     public int getSaboteur() { return saboteur; }
