@@ -323,7 +323,7 @@ public class Controller {
         objectReverseNames.put(waterCounter, "wc");
         if (test) outResults.add("A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!");
         else System.out.println("A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!");
-        gameMode = true;
+        if(!test) gameMode = true;
     }
 
     private static void show(String[] cmd){
@@ -584,7 +584,7 @@ public class Controller {
         //léptetés
 
         //Iterator<Object> iter = objectNames.values().iterator();
-        Iterator iter = objectNames.entrySet().iterator();
+        /*Iterator iter = objectNames.values().iterator();
         int i = 1;
         while(iter.hasNext()) {
             Object obj = iter.next();
@@ -594,7 +594,7 @@ public class Controller {
             }
             System.out.println("asd" + i++ + " " + objectReverseNames.get(obj));
             iter.remove();
-        }
+        }*/
         /* (Object obj : objectNames.values()) {
             if(obj instanceof Steppable) {
                 Steppable value = (Steppable)obj;
@@ -619,7 +619,7 @@ public class Controller {
         test = false;
         pumps=pipes=0;
         System.out.println("Sikeres művelet");
-        gameMode = false;
+        if(!test) gameMode = false;
     }
 
     private static void test(String[] cmd){
