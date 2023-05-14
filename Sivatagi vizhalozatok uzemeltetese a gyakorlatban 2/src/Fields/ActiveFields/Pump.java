@@ -1,7 +1,6 @@
 package Fields.ActiveFields;
 
 import Controll.Controller;
-import Controll.Szkeleton;
 import Fields.Pipe;
 import Players.Player;
 
@@ -88,7 +87,7 @@ public class Pump extends ActiveFields {
         }
         int r;
         if (!Controller.isTest()) {
-            r = new Random().nextInt(0,10);
+            r = new Random().nextInt(11);
 
             if(r < 3) {
                 super.setBroken(true);

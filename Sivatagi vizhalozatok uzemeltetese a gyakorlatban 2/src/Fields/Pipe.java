@@ -129,7 +129,7 @@ public class Pipe extends Field {
             breakable = 5;
         }
         else {
-            breakable = new Random().nextInt(3,10);
+            breakable = 3+ new Random().nextInt(8);
         }
         return true;
     }
@@ -153,7 +153,7 @@ public class Pipe extends Field {
         if(Controller.isTest()) {
             newPipe = new Pipe(50);
         }
-        else newPipe = new Pipe(r.nextInt(30,70));
+        else newPipe = new Pipe(30+r.nextInt(41));
         newPipe.connect(newPump);
 
         newPipe.connect(oldPump);
@@ -239,7 +239,7 @@ public class Pipe extends Field {
                 index = 1;
             }
             else {
-                index = new Random().nextInt(0,1);
+                index = new Random().nextInt(2);
             }
             fields.get(index).accept(p);
             return fields.get(index);
@@ -281,7 +281,7 @@ public class Pipe extends Field {
                 remainingFluidTime = 5;
             }
             else {
-                remainingFluidTime = new Random().nextInt(3,10);
+                remainingFluidTime = 3+new Random().nextInt(8);
             }
             fluid = Fluid.SLIPPERY;
             return true;
@@ -299,7 +299,7 @@ public class Pipe extends Field {
                 remainingFluidTime = 5;
             }
             else {
-                remainingFluidTime = new Random().nextInt(3,10);
+                remainingFluidTime = 3+new Random().nextInt(8);
             }
             fluid = Fluid.STICKY;
             return true;
