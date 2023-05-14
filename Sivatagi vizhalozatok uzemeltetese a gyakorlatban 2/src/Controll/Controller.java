@@ -97,6 +97,8 @@ public class Controller {
      */
     public static boolean gameMode = false;
 
+    public static int moves = 0;
+
     public static void main(String[] args) throws FileNotFoundException {
         Run();
     }
@@ -160,7 +162,6 @@ public class Controller {
      * @throws FileNotFoundException
      */
     public static void Game() throws FileNotFoundException {
-        int moves = 0;
         while(gameMode) {
             currentPlayer = activePlayers.get(0); // az első játékos a sor végére rakom, jelenleg ő az aktív
             activePlayers.remove(0);
@@ -440,7 +441,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -453,7 +457,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -466,7 +473,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -485,7 +495,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -498,7 +511,10 @@ public class Controller {
              else System.out.println("Sikeres művelet");
          }else  {
              if (test) outResults.add("Sikertelen művelet");
-             else System.out.println("Sikertelen művelet");
+             else {
+                 System.out.println("Sikertelen művelet");
+                 moves--;
+             }
          }
     }
     /**
@@ -511,7 +527,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -524,7 +543,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -542,7 +564,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -555,7 +580,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -568,7 +596,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -581,7 +612,10 @@ public class Controller {
             else System.out.println("Sikeres művelet");
         }else  {
             if (test) outResults.add("Sikertelen művelet");
-            else System.out.println("Sikertelen művelet");
+            else {
+                System.out.println("Sikertelen művelet");
+                moves--;
+            }
         }
     }
     /**
@@ -692,33 +726,18 @@ public class Controller {
      * Responsible for calling the step function for all steppable objects.
      * */
     private static void endturn(String[] cmd){
+
         //elvégzi a kör végével járó lépéseket (vízszámolás, objektumok step függvényének hívása stb…)
         //vízszámlálás
         //water counter lehet hogy üres
         waterCounter.count();
         //léptetés
-
-        Iterator<Object> iter = objectNames.values().iterator();
-        //Iterator iter = objectNames.entrySet().iterator();
-        int i = 1;
-        while(iter.hasNext()) {
-            Object obj = iter.next();
-            if (obj instanceof Steppable) {
-                Steppable value = (Steppable) obj;
-                value.step();
-
-                System.out.println("asd" + i++ + " " + objectReverseNames.get(obj));
-            }
-            iter.remove();
-        }
-       /* int i = 0;
          for (Object obj : objectNames.values()) {
             if(obj instanceof Steppable) {
                 Steppable value = (Steppable)obj;
                 value.step();
-                System.out.println(i++);
             }
-        }*/
+        }
         System.out.println("Sikeres művelet");
     }
     /**

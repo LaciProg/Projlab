@@ -14,7 +14,7 @@ pipe BS2 100
 pipe CS2 100
 pipe CB 100
 pipe CD 100
-pipe DS1 100
+pipe DS1 100 broken:true
 pipe DE 100
 pipe EF 100
 pipe FC1 100
