@@ -2,5 +2,5 @@ pipe p 100
 saboteur sab p
 addplayer p sab
 create
-makeslippery sab
+makesticky sab
 showobject p
