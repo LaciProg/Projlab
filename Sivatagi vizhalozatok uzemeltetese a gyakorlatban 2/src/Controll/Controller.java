@@ -9,7 +9,6 @@ import Players.Mechanic;
 import Players.Player;
 import Players.Saboteur;
 
-import javax.management.ObjectName;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -467,6 +466,8 @@ public class Controller {
             }
             pipes=pumps=0;
             waterCounter.reset();
+            objectNames.clear();
+            objectReverseNames.clear();
         }
         catch(FileNotFoundException e) {
             System.out.println("Még nagyobb bánat");
