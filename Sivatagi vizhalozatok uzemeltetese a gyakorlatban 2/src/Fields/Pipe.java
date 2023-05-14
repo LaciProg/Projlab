@@ -221,13 +221,13 @@ public class Pipe extends Field {
             if(leave == true){
                 leave = false;
                 setOccupied(false);
-                this.removePlayer(p);
+                getPlayers().remove(p);
                 return true;
             }
             return false;
         }
         setOccupied(false);
-        this.removePlayer(p);
+        getPlayers().remove(p);
         return true;
     }
     public boolean makeSlippery(){
