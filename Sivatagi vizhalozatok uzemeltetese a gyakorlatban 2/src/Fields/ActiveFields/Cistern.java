@@ -1,6 +1,5 @@
 package Fields.ActiveFields;
 
-import Controll.Szkeleton;
 import Controll.Controller;
 import Fields.Pipe;
 import Players.Player;
@@ -14,7 +13,7 @@ import java.util.Random;
 public class Cistern extends ActiveFields{
 
     /**
-     *
+     * Last created Pipe. Null if the last pump was just taken.
      */
     private Pipe createdPipe;
     /**
@@ -42,11 +41,7 @@ public class Cistern extends ActiveFields{
             if(Controller.isTest()){
                 createdPipe = new Pipe(65);
             }
-            else createdPipe = new Pipe(r.nextInt(30,70));
-            Controller.waterCounter.addPipe(createdPipe);
-            Controller.pipes++;
-            Controller.objectNames.put("newPipe"+Controller.pipes, createdPipe);
-            Controller.objectReverseNames.put(createdPipe, "newPipe"+Controller.pipes);
+            else createdPipe = new Pipe(30+r.nextInt(41));
         }
     }
 
@@ -62,7 +57,7 @@ public class Cistern extends ActiveFields{
             if(Controller.isTest()){
                 return new Pump(100);
             }
-            else return new Pump(r.nextInt(80,120));
+            else return new Pump(80+r.nextInt(41));
         }
         else return null;
     }
@@ -74,7 +69,7 @@ public class Cistern extends ActiveFields{
      */
     @Override
     public int getWater() {
-        return super.getWaterNoChange();
+        return super.getWater();
     }
 
     /**
@@ -83,13 +78,20 @@ public class Cistern extends ActiveFields{
      */
     @Override
     public Pipe pickUpPipe() {
+        Controller.waterCounter.addPipe(createdPipe);
+        Controller.pipes++;
+        Controller.objectNames.put("newPipe"+Controller.pipes, createdPipe);
+        Controller.objectReverseNames.put(createdPipe, "newPipe"+Controller.pipes);
         this.addPipe(createdPipe);
         createdPipe.connect(this);
         Pipe tmp = createdPipe;
         createdPipe = null;
         return tmp;
     }
-
+    /**
+     * Method for getting a string containing all the important information about the cistern.
+     * @return String - returns the important information.
+     */
     @Override
     public String toString() {
         ArrayList<Player> players = this.getPlayers();

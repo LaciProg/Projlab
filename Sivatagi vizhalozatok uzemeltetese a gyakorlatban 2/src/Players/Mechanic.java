@@ -1,7 +1,6 @@
 package Players;
 
 import Controll.Controller;
-import Controll.Szkeleton;
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
 import Fields.Pipe;
@@ -31,10 +30,17 @@ public class Mechanic extends Player {
         this.holdingPump = null;
     }
 
+    /**
+     * Setter for the holdingPump.
+     * @param holdingPump The pump that the mechanic is holding.
+     */
     public void setHoldingPump(Pump holdingPump) {
         this.holdingPump = holdingPump;
     }
-
+    /**
+     * Getter for the holdingPump.
+     * @return holdingPump
+     */
     public Pump getHoldingPump() { return holdingPump; }
 
     /**
@@ -44,7 +50,10 @@ public class Mechanic extends Player {
     public void setHoldingPipe(Pipe holdingPipe) { //Basic setter for the holdingPipe.
         this.holdingPipe = holdingPipe;
     }
-
+    /**
+     * Getter for the holdingPipe.
+     * @return holdingPipe
+     */
     public Pipe getHoldingPipe() { return holdingPipe; }
     /**
      *Method for repairing the field where the player is standing.
@@ -118,7 +127,10 @@ public class Mechanic extends Player {
         holdingPipe = super.getStandingField().pickUpPipe();
         return holdingPipe != null;
     }
-
+    /**
+     * Method for getting a string containing all the important information about the mechanic.
+     * @return String - returns the important information.
+     */
     @Override
     public String toString() {
         return "name: "+ Controller.objectReverseNames.get(this)

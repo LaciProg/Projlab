@@ -45,13 +45,22 @@ public class WaterCounter {
         this.saboteur = 0;
         this.mechanic = 0;
     }
-
+    /**
+     *Method for resetting the watercounter.
+     */
     public void reset(){
-        saboteur=mechanic=0;
+        saboteur=0; mechanic=0; end = false;
+        cisterns.clear(); pipes.clear();
     }
-
+    /**
+     *Getter for saboteur.
+     * @return saboteur - Points of the saboteurs.
+     */
     public int getSaboteur() { return saboteur; }
-
+    /**
+     *Getter for mechanic.
+     * @return mechanic - Points of the mechanics.
+     */
     public int getMechanic() { return mechanic; }
     /**
      *Adds new Cistern to cisterns.
@@ -94,7 +103,10 @@ public class WaterCounter {
             }
         }
     }
-
+    /**
+     * Method for getting a string containing all the important information about the watercounter.
+     * @return String - returns the important information.
+     */
     @Override
     public String toString() {
         return "saboteur: "+ this.getSaboteur()
