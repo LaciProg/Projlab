@@ -245,6 +245,8 @@ public class Controller {
             switch (commands[i][0]){
                 case "water": tmp.setWater(Integer.parseInt(commands[i][1])); break;
                 case "broken": tmp.setBroken(Boolean.parseBoolean(commands[i][1])); break;
+                case "draw" : PumpDraw pd = new PumpDraw(Integer.parseInt(commands[i][1]), Integer.parseInt(commands[i][2]));
+                    ViewGame.setDrawsNames(pd, tmp); ViewGame.setDrawsReverseNames(tmp, pd); break;
             }
         }
         objectNames.put(cmd[1], tmp);
@@ -275,6 +277,9 @@ public class Controller {
                 case "broken": tmp.setBroken(Boolean.parseBoolean(commands[i][1])); break;
                 case "water": tmp.setWater(Integer.parseInt(commands[i][1])); break;
                 case "leave": tmp.setLeave(Boolean.parseBoolean(commands[i][1])); break;
+                case "draw" : PipeDraw pd = new PipeDraw(Integer.parseInt(commands[i][1]), Integer.parseInt(commands[i][2]), Integer.parseInt(commands[i][3]), Integer.parseInt(commands[i][4]));
+                ViewGame.setDrawsNames(pd, tmp); ViewGame.setDrawsReverseNames(tmp, pd); break;
+
             }
         }
         objectNames.put(cmd[1], tmp);
@@ -294,8 +299,9 @@ public class Controller {
         }
         for(int i=0; i<commands.length; i++) {
             switch (commands[i][0]) {
-                case "water":
-                    tmp.setWater(Integer.parseInt(commands[0][1])); break;
+                case "water": tmp.setWater(Integer.parseInt(commands[0][1])); break;
+                case "draw" : CisternDraw cd = new CisternDraw(Integer.parseInt(commands[i][1]), Integer.parseInt(commands[i][2]));
+                    ViewGame.setDrawsNames(cd, tmp); ViewGame.setDrawsReverseNames(tmp, cd); break;
             }
         }
         objectNames.put(cmd[1], tmp);
@@ -309,6 +315,16 @@ public class Controller {
      * */
     public static void spring(String[] cmd){
         Spring tmp = new Spring(Integer.parseInt(cmd[2]));
+        String[][] commands = new String[cmd.length-2][2];
+        for(int i=2; i<cmd.length; i++){
+            commands[i-2] = cmd[i].split(":");
+        }
+        for(int i=0; i<commands.length; i++) {
+            switch (commands[i][0]) {
+                case "draw" : SpringDraw sd = new SpringDraw(Integer.parseInt(commands[i][1]), Integer.parseInt(commands[i][2]));
+                    ViewGame.setDrawsNames(sd, tmp); ViewGame.setDrawsReverseNames(tmp, sd); break;
+            }
+        }
         objectNames.put(cmd[1], tmp);
         objectReverseNames.put(tmp, cmd[1]);
         if (test) outResults.add("Sikeres művelet");
@@ -699,8 +715,7 @@ public class Controller {
     public static void list(){
         for (Object obj : objectNames.values()) {
             System.out.print(objectReverseNames.get(obj) + " ");
-        }
-        System.out.println();
+        }        System.out.println();
     }
     /**
      * Function for putting a player on a field.
