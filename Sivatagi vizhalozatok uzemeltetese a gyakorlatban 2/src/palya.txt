@@ -1,7 +1,7 @@
-cistern cistern1 water:0
-cistern cistern2 water:0
-spring spring1 2500
-spring spring2 2000
+cistern cistern1 water:0 draw:100:100
+cistern cistern2 water:0 draw:300:300
+spring spring1 2500 draw:100:100
+spring spring2 2000 draw:200:200
 pump A 200 water:20
 pump B 200 water:10
 pump C 200 water:50
