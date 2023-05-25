@@ -21,13 +21,13 @@ public class PipeDraw extends Drawable {
         //pipe.setVisible(true);
     }
 
-    public void Draw(ViewGame vg, Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.GRAY);
+    @Override
+    public void Draw(JPanel panel, Graphics2D g2d) {
+        g2d.setColor(Color.black);
 
-        float[] dash1 = { 2f, 0f, 2f };
+        //float[] dash1 = { 2f, 0f, 2f };
 
-        g2d.drawLine(20, 40, 250, 40);
+        g2d.drawLine(xFrom, yFrom, xTo, yTo); // TODO JPanel paint metódusában kéne elvileg kirajzolni
         //BasicStroke bs1 = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 1.0f, dash1, 2f);
         //g2d.setStroke(bs1);
         //g2d.drawLine(20, 80, 250, 80);

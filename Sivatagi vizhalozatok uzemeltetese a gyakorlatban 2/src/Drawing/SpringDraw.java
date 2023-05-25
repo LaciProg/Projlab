@@ -6,19 +6,20 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SpringDraw extends Drawable {
-    static JButton spring = new JButton();
+    JButton spring = new JButton();
 
     public SpringDraw(int tmpX, int tmpY) {
         x = tmpX;
         y = tmpY;
-        spring.setBounds(200, 200, 200, 200);
         spring.setVisible(true);
+        spring.setBackground(new Color(150, 75, 0));
     }
 
     @Override
-    public void Draw(ViewGame vg, Graphics2D g) {
-        //spring.setBounds(140, 140, 200, 200);
-        System.out.println("FAAAAASZ");
-        vg.add(spring);
+    public void Draw(JPanel panel, Graphics2D g) {
+        spring.setBounds(x, y, 50, 50);
+        spring.setBorder(BorderFactory.createLineBorder(Color.white, 5));
+        panel.add(spring);
+        panel.repaint();
     }
 }

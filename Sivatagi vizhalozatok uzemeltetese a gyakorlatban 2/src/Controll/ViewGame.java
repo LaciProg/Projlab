@@ -38,6 +38,7 @@ public class ViewGame extends JFrame {
         setLayout(null);
         gameBackground = new JPanel();
         gameBackground.setBounds(0,0, 800, 500);
+        gameBackground.setLayout(null);
         //add(gameBackground, BorderLayout.CENTER);
         add(gameBackground);
 
@@ -54,7 +55,7 @@ public class ViewGame extends JFrame {
         SouthPanel.setBounds(0,0, 1000, 200);
         add(EastPanel, BorderLayout.EAST);
         add(SouthPanel, BorderLayout.SOUTH);*/
-        gameBackground.setBackground(Color.yellow);
+        gameBackground.setBackground(new Color(150, 75, 0));
         setVisible(true);
         repaint();
     }
@@ -85,12 +86,12 @@ public class ViewGame extends JFrame {
     }
 
     public void DrawAll(Graphics2D g) {
-        System.out.println("KURVAAAAA");
         System.out.println(objectDrawReverseNames.size());
         for (Drawable draw : objectDrawReverseNames.values()) {
-            System.out.println("GECIIIII");
-            draw.Draw(this, g);
+            draw.Draw(gameBackground, g);
+            //gameBackground.repaint();
         }
+
     }
 
     public void DisplayChosen() {

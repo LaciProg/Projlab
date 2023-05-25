@@ -7,17 +7,18 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PumpDraw extends Drawable {
-    static JButton pump = new JButton();
+    JButton pump = new JButton();
     public PumpDraw(int tmpX, int tmpY) {
-            x = tmpX;
-            y = tmpY;
-        pump.setBounds(x, y, 200, 200);
+        x = tmpX;
+        y = tmpY;
         pump.setVisible(true);
+        pump.setBackground(new Color(150, 75, 0));
     }
 
-    public void Draw(ViewGame vg, Graphics2D g) {
-        pump.setBounds(20, 20, 200, 200);
-        vg.add(pump);
-        System.out.println("FAAAAASZ");
+    public void Draw(JPanel panel, Graphics2D g) {
+        pump.setBounds(x, y, 50, 50);
+        pump.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+        panel.add(pump);
+        panel.repaint();
     }
 }
