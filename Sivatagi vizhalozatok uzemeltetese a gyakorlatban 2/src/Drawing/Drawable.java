@@ -17,7 +17,6 @@ public abstract class Drawable {
         return y;
     }
 
-    public void Draw(ViewGame vg, Graphics2D g) {
-        System.out.println("Goldi kurva anyád");
+    public void Draw(JPanel panel, Graphics2D g) {
     }
 }

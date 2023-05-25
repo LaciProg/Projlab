@@ -14,7 +14,9 @@ public class MechanicDraw extends Drawable {
         mech.setBounds(x, y, 200, 200);
         mech.setVisible(true);
     }
-    public void Draw(ViewGame vg, Graphics2D g) {
+
+    @Override
+    public void Draw(JPanel panel, Graphics2D g) {
         return;
     }
 }
