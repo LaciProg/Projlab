@@ -1,5 +1,9 @@
 package Controll;
 
+import Drawing.CisternDraw;
+import Drawing.PipeDraw;
+import Drawing.PumpDraw;
+import Drawing.SpringDraw;
 import Enums.Fluid;
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Cistern;
@@ -12,6 +16,7 @@ import Players.Mechanic;
 import Players.Player;
 import Players.Saboteur;
 
+import javax.swing.text.View;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -99,21 +104,16 @@ public class Controller {
 
     public static int moves = 0;
 
-    public static void main(String[] args) throws FileNotFoundException {
-        //Run();
-        Menu menu = new Menu("Menu", "White");
-        menu.showMenu();
-    }
     /**
      *Function for controlling the game.
      *Reads a command than calls a function to execute it.
      * */
     public static void Run() throws FileNotFoundException {
-        while(!gameMode) {
-            Scanner stdInScanner = new Scanner(System.in);
-            if (commandList.size() == 0){
-                commandList.add(stdInScanner.nextLine());
-            }
+        while(commandList.size() != 0) {
+            //Scanner stdInScanner = new Scanner(System.in);
+            //if (commandList.size() == 0){
+            //    commandList.add(stdInScanner.nextLine());
+            //}
             String command = commandList.get(0);
             commandList.remove(0);
             String[] cmd = command.split(" ");
@@ -127,7 +127,7 @@ public class Controller {
                 case("saboteur"): saboteur(cmd); break;
                 case("connectpipe"): connectpipe(cmd); break;
                 case("random"): random(cmd); break;
-                case("create"): create(cmd); break;
+                case("create"): create(); break;
                 case("show"): show(cmd); break;
                 case("showobject"): showobject(cmd); break;
                 case("move"): move(cmd); break;
@@ -143,7 +143,7 @@ public class Controller {
                 case("makeslippery"): makeslippery(cmd); break;
                 case("save"): save(cmd); break;
                 case("testall"): testAll(cmd); break;
-                case("list"): list(cmd); break;
+                case("list"): list(); break;
                 case("addplayer"): addplayer(cmd); break;
                 case("step"): step(cmd); break;
                 case("endturn"): endturn(cmd); break;
@@ -156,7 +156,7 @@ public class Controller {
                 default: System.out.println("Hibás parancs.");
             }
         }
-        Game();
+        //Game();
     }
 
     /**
@@ -191,7 +191,7 @@ public class Controller {
                 case("makeslippery"): moves++; if (!((Player)objectNames.get(cmd[1])).equals(currentPlayer)) System.out.println("Nem te vagy a soron következő játékos!"); else makeslippery(cmd); break;
                 case("save"): save(cmd); break;
                 case("testall"): testAll(cmd); break;
-                case("list"): list(cmd); break;
+                case("list"): list(); break;
                 case("addplayer"): addplayer(cmd); break;
                 case("step"): step(cmd); break;
                 case("endturn"): endturn(cmd); break;
@@ -245,6 +245,8 @@ public class Controller {
             switch (commands[i][0]){
                 case "water": tmp.setWater(Integer.parseInt(commands[i][1])); break;
                 case "broken": tmp.setBroken(Boolean.parseBoolean(commands[i][1])); break;
+                case "draw" : PumpDraw pd = new PumpDraw(Integer.parseInt(commands[i][1]), Integer.parseInt(commands[i][2]));
+                    ViewGame.setDrawsNames(pd, tmp); ViewGame.setDrawsReverseNames(tmp, pd); break;
             }
         }
         objectNames.put(cmd[1], tmp);
@@ -275,6 +277,9 @@ public class Controller {
                 case "broken": tmp.setBroken(Boolean.parseBoolean(commands[i][1])); break;
                 case "water": tmp.setWater(Integer.parseInt(commands[i][1])); break;
                 case "leave": tmp.setLeave(Boolean.parseBoolean(commands[i][1])); break;
+                case "draw" : PipeDraw pd = new PipeDraw(Integer.parseInt(commands[i][1]), Integer.parseInt(commands[i][2]), Integer.parseInt(commands[i][3]), Integer.parseInt(commands[i][4]));
+                ViewGame.setDrawsNames(pd, tmp); ViewGame.setDrawsReverseNames(tmp, pd); break;
+
             }
         }
         objectNames.put(cmd[1], tmp);
@@ -294,8 +299,9 @@ public class Controller {
         }
         for(int i=0; i<commands.length; i++) {
             switch (commands[i][0]) {
-                case "water":
-                    tmp.setWater(Integer.parseInt(commands[0][1])); break;
+                case "water": tmp.setWater(Integer.parseInt(commands[0][1])); break;
+                case "draw" : CisternDraw cd = new CisternDraw(Integer.parseInt(commands[i][1]), Integer.parseInt(commands[i][2]));
+                    ViewGame.setDrawsNames(cd, tmp); ViewGame.setDrawsReverseNames(tmp, cd); break;
             }
         }
         objectNames.put(cmd[1], tmp);
@@ -309,6 +315,16 @@ public class Controller {
      * */
     public static void spring(String[] cmd){
         Spring tmp = new Spring(Integer.parseInt(cmd[2]));
+        String[][] commands = new String[cmd.length-2][2];
+        for(int i=2; i<cmd.length; i++){
+            commands[i-2] = cmd[i].split(":");
+        }
+        for(int i=0; i<commands.length; i++) {
+            switch (commands[i][0]) {
+                case "draw" : SpringDraw sd = new SpringDraw(Integer.parseInt(commands[i][1]), Integer.parseInt(commands[i][2]));
+                    ViewGame.setDrawsNames(sd, tmp); ViewGame.setDrawsReverseNames(tmp, sd); break;
+            }
+        }
         objectNames.put(cmd[1], tmp);
         objectReverseNames.put(tmp, cmd[1]);
         if (test) outResults.add("Sikeres művelet");
@@ -400,7 +416,7 @@ public class Controller {
     /**
      * Function for starting the game.
      * */
-    public static void create(String[] cmd) {
+    public static void create() {
         objectNames.put("wc", waterCounter);
         objectReverseNames.put(waterCounter, "wc");
         if (test) outResults.add("A pálya létrehozása sikeresen lezajlott. Kezdődhet a játék!");
@@ -696,11 +712,10 @@ public class Controller {
     /**
      * Function for listing all objects in the game.
      * */
-    public static void list(String[] cmd){
+    public static void list(){
         for (Object obj : objectNames.values()) {
             System.out.print(objectReverseNames.get(obj) + " ");
-        }
-        System.out.println();
+        }        System.out.println();
     }
     /**
      * Function for putting a player on a field.
