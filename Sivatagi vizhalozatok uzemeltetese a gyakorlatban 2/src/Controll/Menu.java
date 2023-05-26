@@ -163,6 +163,7 @@ public class Menu extends JFrame implements ActionListener {
             } catch (FileNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
+            Controller.create();
             this.dispose();
             ViewGame vg = new ViewGame();
             vg.setBackgroundColor(currentTheme);

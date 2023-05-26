@@ -6,18 +6,19 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CisternDraw extends Drawable {
-    static JButton cistern = new JButton();
+    JButton cistern = new JButton();
 
     public CisternDraw(int tmpX, int tmpY) {
         x = tmpX;
         y = tmpY;
-        cistern.setBounds(0, 0, 200, 200);
         cistern.setVisible(true);
+        cistern.setBackground(new Color(150, 75, 0));
     }
 
-    public void Draw(ViewGame vg, Graphics2D g) {
-        //cistern.setBounds(40, 40, 200, 200);
-        System.out.println("FAAAAASZ");
-        vg.add(cistern);
+    public void Draw(JPanel panel, Graphics2D g) {
+        cistern.setBounds(x, y, 50, 50);
+        cistern.setBorder(BorderFactory.createLineBorder(Color.blue, 5));
+        panel.add(cistern);
+        panel.repaint();
     }
 }
