@@ -1,9 +1,6 @@
 package Controll;
 
-import Drawing.CisternDraw;
-import Drawing.PipeDraw;
-import Drawing.PumpDraw;
-import Drawing.SpringDraw;
+import Drawing.*;
 import Enums.Fluid;
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Cistern;
@@ -337,6 +334,7 @@ public class Controller {
         Saboteur tmp = new Saboteur();
         Field f = (Field)objectNames.get(cmd[2]);
         tmp.setStandingField(f);
+        SaboteurDraw sd = new SaboteurDraw(0,0); ViewGame.setDrawsNames(sd, tmp); ViewGame.setDrawsReverseNames(tmp, sd);
         objectNames.put(cmd[1], tmp);
         objectReverseNames.put(tmp, cmd[1]);
         if (test) outResults.add("Sikeres művelet");
@@ -350,6 +348,7 @@ public class Controller {
         Mechanic tmp = new Mechanic();
         Field f = (Field)objectNames.get(cmd[2]);
         tmp.setStandingField(f);
+        MechanicDraw sd = new MechanicDraw(0,0); ViewGame.setDrawsNames(sd, tmp); ViewGame.setDrawsReverseNames(tmp, sd);
         String[][] commands = new String[cmd.length-3][2];
         for(int i=3; i<cmd.length; i++){
             commands[i-3] = cmd[i].split(":");

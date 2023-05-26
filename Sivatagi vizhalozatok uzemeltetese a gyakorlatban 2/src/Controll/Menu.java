@@ -150,12 +150,14 @@ public class Menu extends JFrame implements ActionListener {
 
             if ((int)mechanics.getSelectedItem() > 2) {
                 for (int i = 3; i <= (int)mechanics.getSelectedItem(); i++) {
-                    Controller.commandList.add("mechanic Mechanic" + i + " E");
+                    Controller.commandList.add("mechanic Mec" + i + " E");
+                    Controller.commandList.add("addplayer E Mec" + i);
                 }
             }
             if ((int)saboteurs.getSelectedItem() > 2) {
                 for (int i = 3; i <= (int)saboteurs.getSelectedItem(); i++) {
-                    Controller.commandList.add("saboteur Saboteur" + i + " B");
+                    Controller.commandList.add("saboteur Sab" + i + " D");
+                    Controller.commandList.add("addplayer D Sab" + i);
                 }
             }
             try {

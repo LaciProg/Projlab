@@ -1,6 +1,7 @@
 package Controll;
 
 import Drawing.*;
+import Enums.Fluid;
 import Fields.*;
 import Fields.ActiveFields.*;
 import Fields.ActiveFields.Spring;
@@ -36,7 +37,26 @@ public class ViewGame extends JFrame {
         setBounds(400, 150, 1000, 700);
         //setLayout(new BorderLayout());
         setLayout(null);
-        gameBackground = new JPanel();
+        gameBackground = new JPanel() {
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2d = (Graphics2D)g;
+                g2d.setColor(Color.black);
+                super.paintComponent(g2d);
+                int i = 0;
+                for (Drawable draw : objectDrawReverseNames.values()){
+                    if (draw instanceof PipeDraw) {
+                        Pipe p = (Pipe)ViewGame.objectDrawNames.get(draw);
+                        float[] dash1 = { 2f, 0f, 2f };
+                        if (p.isBroken()) g2d.setStroke(new BasicStroke(5, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 3.0f, dash1, 2f));
+                        else g2d.setStroke(new BasicStroke(5));
+                        if (p.getFluid().equals(Fluid.DRY)) g2d.setColor(Color.black);
+                        else if (p.getFluid().equals(Fluid.SLIPPERY)) g2d.setColor(Color.blue);
+                        else if (p.getFluid().equals(Fluid.STICKY)) g2d.setColor(Color.yellow);
+                        g2d.drawLine(((PipeDraw) draw).getxFrom(), ((PipeDraw) draw).getYFrom(), ((PipeDraw) draw).getxTo(), ((PipeDraw) draw).getYTo());
+                    }
+                }
+            }
+        };
         gameBackground.setBounds(0,0, 800, 500);
         gameBackground.setLayout(null);
         //add(gameBackground, BorderLayout.CENTER);
