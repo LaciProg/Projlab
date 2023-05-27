@@ -101,6 +101,21 @@ public class Controller {
 
     public static int moves = 0;
 
+    private static int turncount = 0;
+    public static String getPlayer(){
+        return objectReverseNames.get(currentPlayer);
+    }
+
+    public static boolean changeActivePlayer(){
+        currentPlayer = activePlayers.get(0); // az első játékos a sor végére rakom, jelenleg ő az aktív
+        activePlayers.remove(0);
+        activePlayers.add(currentPlayer);
+        turncount++;
+        if(turncount == activePlayers.size()){
+            return true;
+        }
+        else return false;
+    }
     /**
      *Function for controlling the game.
      *Reads a command than calls a function to execute it.
