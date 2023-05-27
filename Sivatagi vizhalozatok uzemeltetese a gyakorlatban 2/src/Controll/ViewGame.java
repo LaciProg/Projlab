@@ -131,6 +131,7 @@ public class ViewGame extends JFrame implements ActionListener {
         SouthPanel.setBounds(0,0, 1000, 200);
         add(EastPanel, BorderLayout.EAST);
         add(SouthPanel, BorderLayout.SOUTH);*/
+        activePlayer.setText("Active Player: "+ Controller.getPlayer());
         gameBackground.setBackground(new Color(150, 75, 0));
         setVisible(true);
         repaint();
@@ -166,12 +167,10 @@ public class ViewGame extends JFrame implements ActionListener {
     }
 
     public void DrawAll(Graphics2D g) {
-        System.out.println(objectDrawReverseNames.size());
         for (Drawable draw : objectDrawReverseNames.values()) {
             draw.Draw(gameBackground, g);
             //gameBackground.repaint();
         }
-
     }
 
     public void DisplayChosen() {
@@ -211,5 +210,6 @@ public class ViewGame extends JFrame implements ActionListener {
         if(b){
             Controller.endturn(cmd);
         }
+        gameBackground.repaint();
     }
 }
