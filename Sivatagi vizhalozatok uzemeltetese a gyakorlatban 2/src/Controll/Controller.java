@@ -112,6 +112,7 @@ public class Controller {
         activePlayers.add(currentPlayer);
         turncount++;
         if(turncount == activePlayers.size()){
+            turncount = 0;
             return true;
         }
         else return false;
