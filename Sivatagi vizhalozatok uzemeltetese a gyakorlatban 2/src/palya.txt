@@ -53,5 +53,5 @@ mechanic Mec2 A
 addplayer A Mec2
 saboteur Sab1 C
 addplayer C Sab1
-saboteur Sab2 D
-addplayer D Sab2
+saboteur Sab2 AB
+addplayer AB Sab2

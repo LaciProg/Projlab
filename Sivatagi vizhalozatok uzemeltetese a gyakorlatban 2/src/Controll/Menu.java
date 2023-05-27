@@ -166,6 +166,7 @@ public class Menu extends JFrame implements ActionListener {
                 throw new RuntimeException(ex);
             }
             Controller.create();
+            Controller.SetActivePlayer(Controller.getAllPlayers().get(0));
             this.dispose();
             ViewGame vg = new ViewGame();
             vg.setBackgroundColor(currentTheme);

@@ -35,8 +35,8 @@ public class SaboteurDraw extends Drawable {
             PipeDraw pd = (PipeDraw)ViewGame.objectDrawReverseNames.get(f);
             ArrayList<Player> players = f.getPlayers();
             int i = players.indexOf(s);
-            x = pd.getX();
-            y = pd.getY() - (i+1)*25;
+            x = (pd.getxFrom()+pd.getxTo())/2-25;
+            y = (pd.getYFrom()+pd.getYTo())/2 - (i+1)*25;
         }
         else if (f instanceof Pump) {
             PumpDraw pd = (PumpDraw)ViewGame.objectDrawReverseNames.get(f);
