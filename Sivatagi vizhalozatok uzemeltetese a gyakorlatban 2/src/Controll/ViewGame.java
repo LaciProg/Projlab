@@ -9,10 +9,14 @@ import Players.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ViewGame extends JFrame {
+
+    private Controller controller;
     private boolean isChosen = false;
     private JPanel gameBackground;
 
@@ -20,6 +24,17 @@ public class ViewGame extends JFrame {
 
     public static HashMap<Object, Drawable> objectDrawReverseNames = new HashMap<>();
 
+    JLabel activePlayer;
+    JLabel labelPoints;
+    JLabel mecPoints;
+    JLabel sabPoints;
+    JButton moveButton;
+    JButton repairButton;
+    JButton breakButton;
+    JButton makeSlipperyButton;
+    JButton makeStickyButton;
+    JButton pickUpButton;
+    JButton putDownButton;
     public static void main(String[] args){
         Menu menu = new Menu("Menu", "White");
         menu.showMenu();
@@ -35,8 +50,8 @@ public class ViewGame extends JFrame {
         setResizable(true);
         setLayout(null);
         setBounds(400, 150, 1000, 700);
-        //setLayout(new BorderLayout());
-        setLayout(null);
+        setLayout(new BorderLayout());
+        //setLayout(null);
         gameBackground = new JPanel() {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2d = (Graphics2D)g;
@@ -59,8 +74,41 @@ public class ViewGame extends JFrame {
         };
         gameBackground.setBounds(0,0, 800, 500);
         gameBackground.setLayout(null);
-        //add(gameBackground, BorderLayout.CENTER);
-        add(gameBackground);
+        add(gameBackground, BorderLayout.CENTER);
+
+
+        JPanel controllButtons = new JPanel();
+        controllButtons.setLayout(new GridLayout(1,7));
+        moveButton = new JButton("Move");
+        repairButton = new JButton("Repair");
+        breakButton  = new JButton("Break");
+        makeSlipperyButton = new JButton("Make Slippery");
+        makeStickyButton = new JButton("Make Sticky");
+        pickUpButton = new JButton("Pick up");
+        putDownButton = new JButton("Put down");
+        controllButtons.add(moveButton);
+        controllButtons.add(repairButton);
+        controllButtons.add(breakButton);
+        controllButtons.add(makeSlipperyButton);
+        controllButtons.add(makeStickyButton);
+        controllButtons.add(pickUpButton);
+        controllButtons.add(putDownButton);
+        add(controllButtons,BorderLayout.SOUTH);
+
+        JPanel text = new JPanel();
+        text.setLayout(new GridLayout(3,1));
+        activePlayer = new JLabel("Active Player:   ");
+        labelPoints = new JLabel("Points:     ");
+        mecPoints = new JLabel("Mechanic:    ");
+        sabPoints = new JLabel("Saboteur:    ");
+        text.add(activePlayer);
+        JPanel points = new JPanel();
+        points.setLayout(new GridLayout(3,1));
+        points.add(labelPoints);
+        points.add(mecPoints);
+        points.add(sabPoints);
+        text.add(points);
+        add(text,BorderLayout.EAST);
 
         /*JPanel EastPanel = new JPanel();
         EastPanel.setBounds(0,0, 200, 700);
@@ -78,6 +126,10 @@ public class ViewGame extends JFrame {
         gameBackground.setBackground(new Color(150, 75, 0));
         setVisible(true);
         repaint();
+    }
+
+    public void setController(Controller c){
+        controller = c;
     }
 
     public void paint(Graphics g) {
@@ -116,5 +168,39 @@ public class ViewGame extends JFrame {
 
     public void DisplayChosen() {
         //TODO gombok megjelenítése amikor valamit változtatni kell
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        String[] cmd = new String[10];
+        if(e.getSource() == moveButton){
+            cmd[1] = Controller.getPlayer();
+            Controller.move(cmd);//TODO Ha működik a mező kiválasztása akkor befejezem (Gergő)
+        }
+        if(e.getSource() == repairButton){
+            cmd[1] = Controller.getPlayer();
+            Controller.repair(cmd);
+        }
+        if(e.getSource() == breakButton){
+            cmd[1] = Controller.getPlayer();
+            Controller.breakfield(cmd);
+        }
+        if(e.getSource() == makeSlipperyButton){
+            cmd[1] = Controller.getPlayer();
+            Controller.makeslippery(cmd);
+        }
+        if(e.getSource() == makeStickyButton){
+            cmd[1] = Controller.getPlayer();
+            Controller.makesticky(cmd);
+        }
+        if(e.getSource() == pickUpButton){
+
+        }
+        if(e.getSource()== putDownButton){
+
+        }
+        boolean b = Controller.changeActivePlayer();
+        if(b){
+            Controller.endturn(cmd);
+        }
     }
 }
