@@ -10,11 +10,12 @@ import Players.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ViewGame extends JFrame {
+public class ViewGame extends JFrame implements ActionListener {
 
     private Controller controller;
     private boolean isChosen = false;
@@ -86,6 +87,13 @@ public class ViewGame extends JFrame {
         makeStickyButton = new JButton("Make Sticky");
         pickUpButton = new JButton("Pick up");
         putDownButton = new JButton("Put down");
+        moveButton.addActionListener(this);
+        repairButton.addActionListener(this);
+        breakButton.addActionListener(this);
+        makeSlipperyButton.addActionListener(this);
+        makeStickyButton.addActionListener(this);
+        pickUpButton.addActionListener(this);
+        putDownButton.addActionListener(this);
         controllButtons.add(moveButton);
         controllButtons.add(repairButton);
         controllButtons.add(breakButton);
@@ -199,6 +207,7 @@ public class ViewGame extends JFrame {
 
         }
         boolean b = Controller.changeActivePlayer();
+        activePlayer.setText("Active Player: "+ Controller.getPlayer());
         if(b){
             Controller.endturn(cmd);
         }
