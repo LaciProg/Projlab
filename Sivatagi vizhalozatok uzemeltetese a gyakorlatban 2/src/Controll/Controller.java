@@ -14,9 +14,9 @@ import Players.Player;
 import Players.Saboteur;
 
 import javax.swing.text.View;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -100,11 +100,15 @@ public class Controller {
     public static boolean gameMode = false;
 
     public static int moves = 0;
-
+    
     private static int turncount = 0;
     public static String getPlayer(){
         return objectReverseNames.get(currentPlayer);
     }
+
+    public static ArrayList<Player> getAllPlayers() { return activePlayers; }
+
+    public static void SetActivePlayer(Player p) { currentPlayer = p; activePlayers.remove(0); activePlayers.add(currentPlayer); }
 
     public static boolean changeActivePlayer(){
         currentPlayer = activePlayers.get(0); // az első játékos a sor végére rakom, jelenleg ő az aktív
@@ -243,10 +247,44 @@ public class Controller {
         } catch (FileNotFoundException e) {
           
         }
+        /*Path rootDir = Paths.get(".").normalize().toAbsolutePath();
+
+        File file = new File(rootDir.toString() + "/" + cmd);
+        try {
+            Reader input = new FileReader(file);
+            BufferedReader br = new BufferedReader(input);
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                commandList.add(line);
+            }
+            input.close();
+        } catch (IOException e) {
+        }*/
     }
-    /**
-     * Function for creating a pump.
-     * */
+
+    public static void loadFileFromSrcToReader(String fileNameToOpen) {
+        // a text file is located in src folder in the project
+        Path rootDir = Paths.get(".").normalize().toAbsolutePath();
+        File file = new File(rootDir.toString() + "/" + fileNameToOpen);
+            try {
+                Reader input = new FileReader(file);
+                // Checks if reader is ready
+                BufferedReader br = new BufferedReader(input);
+                String line = "";
+
+                while ((line = br.readLine()) != null) {
+                    System.out.println(line);
+                }
+                // Closes the reader
+                input.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+            /**
+             * Function for creating a pump.
+             * */
     public static void pump(String[] cmd){
         Pump tmp = new Pump(Integer.parseInt(cmd[2]));
         String[][] commands = new String[cmd.length-3][2];
@@ -640,6 +678,7 @@ public class Controller {
      * */
     public static void makeslippery(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
+        System.out.println(cmd[1]);
         if(player.makeSlippery()){
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");

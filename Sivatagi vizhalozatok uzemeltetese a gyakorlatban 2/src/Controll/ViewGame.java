@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class ViewGame extends JFrame implements ActionListener {
 
     private Controller controller;
-    private boolean isChosen = false;
+    private static boolean isChosen = false;
     private JPanel gameBackground;
 
     public static HashMap<Drawable, Object> objectDrawNames = new HashMap<>();
@@ -45,6 +45,10 @@ public class ViewGame extends JFrame implements ActionListener {
 
     public static void setDrawsReverseNames(Object o, Drawable d) { objectDrawReverseNames.put(o, d); }
 
+    public static boolean getChosen(){
+        return isChosen;
+    }
+    
     public ViewGame() {
         setTitle("Sivatagi vízhálózatok üzemeltetése a gyakorlatban 2");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -131,6 +135,7 @@ public class ViewGame extends JFrame implements ActionListener {
         SouthPanel.setBounds(0,0, 1000, 200);
         add(EastPanel, BorderLayout.EAST);
         add(SouthPanel, BorderLayout.SOUTH);*/
+        activePlayer.setText("Active Player: "+ Controller.getPlayer());
         gameBackground.setBackground(new Color(150, 75, 0));
         setVisible(true);
         repaint();
@@ -166,12 +171,9 @@ public class ViewGame extends JFrame implements ActionListener {
     }
 
     public void DrawAll(Graphics2D g) {
-        System.out.println(objectDrawReverseNames.size());
         for (Drawable draw : objectDrawReverseNames.values()) {
             draw.Draw(gameBackground, g);
-            //gameBackground.repaint();
         }
-
     }
 
     public void DisplayChosen() {
@@ -181,7 +183,9 @@ public class ViewGame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String[] cmd = new String[10];
         if(e.getSource() == moveButton){
+            isChosen = true;
             cmd[1] = Controller.getPlayer();
+            // TODO cmd[2]-ként át kell adni majd a Fieldet amin a Player áll (Boti)
             Controller.move(cmd);//TODO Ha működik a mező kiválasztása akkor befejezem (Gergő)
         }
         if(e.getSource() == repairButton){
@@ -201,7 +205,7 @@ public class ViewGame extends JFrame implements ActionListener {
             Controller.makesticky(cmd);
         }
         if(e.getSource() == pickUpButton){
-
+            isChosen = true;
         }
         if(e.getSource()== putDownButton){
 
@@ -211,5 +215,6 @@ public class ViewGame extends JFrame implements ActionListener {
         if(b){
             Controller.endturn(cmd);
         }
+        this.repaint();
     }
 }

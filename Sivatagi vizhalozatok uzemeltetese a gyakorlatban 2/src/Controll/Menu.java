@@ -146,8 +146,8 @@ public class Menu extends JFrame implements ActionListener {
         if (e.getSource() == newGame) {
             //Controller controller = new Controller();
 
-            Controller.load("palya.txt");
-
+        	Controller.load("palya.txt");
+        	
             if ((int)mechanics.getSelectedItem() > 2) {
                 for (int i = 3; i <= (int)mechanics.getSelectedItem(); i++) {
                     Controller.commandList.add("mechanic Mec" + i + " E");
@@ -166,6 +166,7 @@ public class Menu extends JFrame implements ActionListener {
                 throw new RuntimeException(ex);
             }
             Controller.create();
+            Controller.SetActivePlayer(Controller.getAllPlayers().get(0));
             this.dispose();
             ViewGame vg = new ViewGame();
             vg.setBackgroundColor(currentTheme);
