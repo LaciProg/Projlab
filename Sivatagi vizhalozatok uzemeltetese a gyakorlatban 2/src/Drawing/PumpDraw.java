@@ -31,6 +31,9 @@ public class PumpDraw extends Drawable {
         	if (p.isBroken()) pumpB.setBorder(BorderFactory.createDashedBorder(Color.black, 5, 2, 2, false));
             else pumpB.setBorder(BorderFactory.createLineBorder(Color.black, 5));
         	panel.add(pumpB);
+        } else {
+        	pumpB.setVisible(false);
+        	panel.remove(pumpB);
         }
         
         panel.add(pump);

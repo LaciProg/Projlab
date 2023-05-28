@@ -26,6 +26,9 @@ public class CisternDraw extends Drawable {
         	cisternB.setBounds(x, y, 50, 50);
         	cisternB.setBorder(BorderFactory.createLineBorder(Color.blue, 5));
         	panel.add(cisternB);
+        } else {
+        	cisternB.setVisible(false);
+        	panel.remove(cisternB);
         }
       
         panel.add(cistern);

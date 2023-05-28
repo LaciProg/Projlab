@@ -239,7 +239,9 @@ public class Controller {
             String[] tmp=cmd.replaceAll(Pattern.quote(separator), "\\\\").split("\\\\");
             fileName = tmp[tmp.length-1];
             while (scanner.hasNextLine()){
-                commandList.add(scanner.nextLine());
+            	String line = scanner.nextLine();
+            	System.out.println(line);
+                commandList.add(line);
             }
             if (test) {
                 commandList.add("save " + filePath.replace(".in", ".out"));
