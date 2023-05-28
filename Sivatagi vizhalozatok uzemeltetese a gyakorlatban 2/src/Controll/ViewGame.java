@@ -46,7 +46,7 @@ public class ViewGame extends JFrame implements ActionListener {
     public static void setDrawsReverseNames(Object o, Drawable d) { objectDrawReverseNames.put(o, d); }
 
     public static boolean getChosen(){
-    	return isChosen;
+        return isChosen;
     }
     
     public ViewGame() {
@@ -173,7 +173,6 @@ public class ViewGame extends JFrame implements ActionListener {
     public void DrawAll(Graphics2D g) {
         for (Drawable draw : objectDrawReverseNames.values()) {
             draw.Draw(gameBackground, g);
-            //gameBackground.repaint();
         }
     }
 
@@ -184,8 +183,9 @@ public class ViewGame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String[] cmd = new String[10];
         if(e.getSource() == moveButton){
-        	isChosen = true;
+            isChosen = true;
             cmd[1] = Controller.getPlayer();
+            // TODO cmd[2]-ként át kell adni majd a Fieldet amin a Player áll (Boti)
             Controller.move(cmd);//TODO Ha működik a mező kiválasztása akkor befejezem (Gergő)
         }
         if(e.getSource() == repairButton){
@@ -205,7 +205,7 @@ public class ViewGame extends JFrame implements ActionListener {
             Controller.makesticky(cmd);
         }
         if(e.getSource() == pickUpButton){
-        	isChosen = true;
+            isChosen = true;
         }
         if(e.getSource()== putDownButton){
 
@@ -215,6 +215,6 @@ public class ViewGame extends JFrame implements ActionListener {
         if(b){
             Controller.endturn(cmd);
         }
-        gameBackground.repaint();
+        this.repaint();
     }
 }
