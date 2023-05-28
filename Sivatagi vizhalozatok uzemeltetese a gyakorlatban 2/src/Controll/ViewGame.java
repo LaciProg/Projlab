@@ -213,6 +213,8 @@ public class ViewGame extends JFrame implements ActionListener {
         boolean b = Controller.changeActivePlayer();
         activePlayer.setText("Active Player: "+ Controller.getPlayer());
         if(b){
+        	mecPoints.setText("Mechanic: " + Controller.waterCounter.getMechanic());
+        	sabPoints.setText("Saboteur: " + Controller.waterCounter.getSaboteur());
             Controller.endturn(cmd);
         }
         this.repaint();
