@@ -205,12 +205,13 @@ public class ViewGame extends JFrame implements ActionListener {
             Controller.makesticky(cmd);
         }
         if(e.getSource() == pickUpButton){
+        	//Aktuális Játékos felveszi amit fel tud venni
             isChosen = true;
             cmd[1] = Controller.getPlayer();
             Controller.pickuppipe(cmd);
-            
         }
         if(e.getSource()== putDownButton){
+        	//Aktuális játékos leteszi amit le tud tenni
         	cmd[1] = Controller.getPlayer();
             //Controller.pu(cmd);
         }
@@ -218,6 +219,9 @@ public class ViewGame extends JFrame implements ActionListener {
         activePlayer.setText("Active Player: "+ Controller.getPlayer());
         if(b){
             Controller.endturn(cmd);
+            mecPoints.setText("Mechanic: " + Controller.waterCounter.getMechanic());
+        	sabPoints.setText("Saboteur: " + Controller.waterCounter.getSaboteur());
+            
         }
         this.repaint();
     }

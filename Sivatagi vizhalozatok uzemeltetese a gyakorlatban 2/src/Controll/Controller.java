@@ -231,7 +231,8 @@ public class Controller {
      * Function for loading a file.
      * */
     public static void load(String cmd){
-        try {
+    	
+    	try {
             outResults.clear();
             Scanner scanner = new Scanner(new File(cmd));
             filePath = cmd;
@@ -245,9 +246,9 @@ public class Controller {
                 commandList.add("save " + filePath.replace(".in", ".out"));
             }
         } catch (FileNotFoundException e) {
-          
-        }
-        /*Path rootDir = Paths.get(".").normalize().toAbsolutePath();
+
+        }/*
+        Path rootDir = Paths.get(".").normalize().toAbsolutePath();
 
         File file = new File(rootDir.toString() + "/" + cmd);
         try {
