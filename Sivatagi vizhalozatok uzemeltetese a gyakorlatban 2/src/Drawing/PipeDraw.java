@@ -24,7 +24,7 @@ public class PipeDraw extends Drawable {
         xTo = x2;
         yTo = y2;
         //pipe.setBounds(x, y, 200, 200);
-        //pipe.setVisible(true);
+
     }
 
     @Override
@@ -44,6 +44,9 @@ public class PipeDraw extends Drawable {
     		pipeB.setBounds(xFrom + (xTo - xFrom) / 2 - 25, yFrom + (yTo - yFrom) / 2 - 12, 50, 25);
     		pipeB.setBorder(BorderFactory.createLineBorder(Color.black, 5));
         	panel.add(pipeB);
+        } else {
+        	pipeB.setVisible(false);
+        	panel.remove(pipeB);
         }
     	
     	panel.repaint();

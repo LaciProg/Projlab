@@ -36,6 +36,7 @@ public class ViewGame extends JFrame implements ActionListener {
     JButton makeStickyButton;
     JButton pickUpButton;
     JButton putDownButton;
+    JButton setPumpButton;
     public static void main(String[] args){
         Menu menu = new Menu("Menu", "White");
         menu.showMenu();
@@ -86,6 +87,7 @@ public class ViewGame extends JFrame implements ActionListener {
         controllButtons.setLayout(new GridLayout(1,7));
         moveButton = new JButton("Move");
         repairButton = new JButton("Repair");
+        setPumpButton = new JButton("Set pump");
         breakButton  = new JButton("Break");
         makeSlipperyButton = new JButton("Make Slippery");
         makeStickyButton = new JButton("Make Sticky");
@@ -93,6 +95,7 @@ public class ViewGame extends JFrame implements ActionListener {
         putDownButton = new JButton("Put down");
         moveButton.addActionListener(this);
         repairButton.addActionListener(this);
+        setPumpButton.addActionListener(this);
         breakButton.addActionListener(this);
         makeSlipperyButton.addActionListener(this);
         makeStickyButton.addActionListener(this);
@@ -100,6 +103,7 @@ public class ViewGame extends JFrame implements ActionListener {
         putDownButton.addActionListener(this);
         controllButtons.add(moveButton);
         controllButtons.add(repairButton);
+        controllButtons.add(setPumpButton);
         controllButtons.add(breakButton);
         controllButtons.add(makeSlipperyButton);
         controllButtons.add(makeStickyButton);
@@ -192,6 +196,11 @@ public class ViewGame extends JFrame implements ActionListener {
             cmd[1] = Controller.getPlayer();
             Controller.repair(cmd);
         }
+        if(e.getSource() == setPumpButton){
+            //e gombra kattintva kéne a pumpát átállítani
+        	//Úgy lenne a legkényelmesebb, ha először kiválasztjuk honnan, aztán hová
+        	isChosen = true;
+        }
         if(e.getSource() == breakButton){
             cmd[1] = Controller.getPlayer();
             Controller.breakfield(cmd);
@@ -208,11 +217,17 @@ public class ViewGame extends JFrame implements ActionListener {
             isChosen = true;
         }
         if(e.getSource()== putDownButton){
-
+        	//isChosen = false; //ez csak tesztnek volt itt
+        	cmd[1] = Controller.getPlayer();
+        	//TDA
+        	Controller.placepump(cmd);
+        	Controller.connect(cmd);
         }
         boolean b = Controller.changeActivePlayer();
         activePlayer.setText("Active Player: "+ Controller.getPlayer());
         if(b){
+        	mecPoints.setText("Mechanic: " + Controller.waterCounter.getMechanic());
+        	sabPoints.setText("Saboteur: " + Controller.waterCounter.getSaboteur());
             Controller.endturn(cmd);
         }
         this.repaint();
