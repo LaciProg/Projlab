@@ -146,8 +146,8 @@ public class Menu extends JFrame implements ActionListener {
         if (e.getSource() == newGame) {
             //Controller controller = new Controller();
 
-            Controller.load("palya.txt");
-
+        	Controller.load("C:\\Users\\PC\\Documents\\Egyetem-info\\IV.félév\\Projlab\\Projlab\\Sivatagi vizhalozatok uzemeltetese a gyakorlatban 2\\src\\palya.txt");
+        	
             if ((int)mechanics.getSelectedItem() > 2) {
                 for (int i = 3; i <= (int)mechanics.getSelectedItem(); i++) {
                     Controller.commandList.add("mechanic Mec" + i + " E");

@@ -11,6 +11,7 @@ public class PipeDraw extends Drawable {
     private int yFrom;
     private int yTo;
     //JButton pipe = new JButton();
+    JButton pipeB = new JButton();
 
     public int getxFrom() { return xFrom; }
     public int getxTo() { return xTo; }
@@ -36,5 +37,15 @@ public class PipeDraw extends Drawable {
         //BasicStroke bs1 = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 1.0f, dash1, 2f);
         //g2d.setStroke(bs1);
         //g2d.drawLine(20, 80, 250, 80);
+    	
+    	if(ViewGame.getChosen()) {
+    		pipeB.setVisible(true);
+    		pipeB.setBackground(new Color(255, 0, 0));
+    		pipeB.setBounds(xFrom + (xTo - xFrom) / 2 - 25, yFrom + (yTo - yFrom) / 2 - 12, 50, 25);
+    		pipeB.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+        	panel.add(pipeB);
+        }
+    	
+    	panel.repaint();
     }
 }
