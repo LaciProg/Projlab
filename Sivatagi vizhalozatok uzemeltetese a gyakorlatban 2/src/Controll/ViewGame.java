@@ -208,7 +208,11 @@ public class ViewGame extends JFrame implements ActionListener {
             isChosen = true;
         }
         if(e.getSource()== putDownButton){
-
+        	isChosen = false;
+        	cmd[1] = Controller.getPlayer();
+        	//TDA
+        	Controller.placepump(cmd);
+        	Controller.connect(cmd);
         }
         boolean b = Controller.changeActivePlayer();
         activePlayer.setText("Active Player: "+ Controller.getPlayer());
