@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class ViewGame extends JFrame implements ActionListener {
 
     private Controller controller;
-    private boolean isChosen = false;
+    private static boolean isChosen = false;
     private JPanel gameBackground;
 
     public static HashMap<Drawable, Object> objectDrawNames = new HashMap<>();
@@ -45,6 +45,10 @@ public class ViewGame extends JFrame implements ActionListener {
 
     public static void setDrawsReverseNames(Object o, Drawable d) { objectDrawReverseNames.put(o, d); }
 
+    public static boolean getChosen(){
+    	return isChosen;
+    }
+    
     public ViewGame() {
         setTitle("Sivatagi vízhálózatok üzemeltetése a gyakorlatban 2");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -180,6 +184,7 @@ public class ViewGame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String[] cmd = new String[10];
         if(e.getSource() == moveButton){
+        	isChosen = true;
             cmd[1] = Controller.getPlayer();
             Controller.move(cmd);//TODO Ha működik a mező kiválasztása akkor befejezem (Gergő)
         }
@@ -200,7 +205,7 @@ public class ViewGame extends JFrame implements ActionListener {
             Controller.makesticky(cmd);
         }
         if(e.getSource() == pickUpButton){
-
+        	isChosen = true;
         }
         if(e.getSource()== putDownButton){
 

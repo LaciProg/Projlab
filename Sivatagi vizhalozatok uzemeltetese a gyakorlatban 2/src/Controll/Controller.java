@@ -100,7 +100,7 @@ public class Controller {
     public static boolean gameMode = false;
 
     public static int moves = 0;
-
+    
     private static int turncount = 0;
     public static String getPlayer(){
         return objectReverseNames.get(currentPlayer);
@@ -231,7 +231,7 @@ public class Controller {
      * Function for loading a file.
      * */
     public static void load(String cmd){
-        /*try {
+        try {
             outResults.clear();
             Scanner scanner = new Scanner(new File(cmd));
             filePath = cmd;
@@ -246,8 +246,8 @@ public class Controller {
             }
         } catch (FileNotFoundException e) {
           
-        }*/
-        Path rootDir = Paths.get(".").normalize().toAbsolutePath();
+        }
+        /*Path rootDir = Paths.get(".").normalize().toAbsolutePath();
 
         File file = new File(rootDir.toString() + "/" + cmd);
         try {
@@ -259,7 +259,7 @@ public class Controller {
             }
             input.close();
         } catch (IOException e) {
-        }
+        }*/
     }
 
     public static void loadFileFromSrcToReader(String fileNameToOpen) {

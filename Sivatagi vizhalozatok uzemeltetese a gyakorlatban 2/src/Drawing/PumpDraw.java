@@ -9,6 +9,8 @@ import java.awt.*;
 
 public class PumpDraw extends Drawable {
     JButton pump = new JButton();
+    JButton pumpB = new JButton();
+    
     public PumpDraw(int tmpX, int tmpY) {
         x = tmpX;
         y = tmpY;
@@ -21,6 +23,16 @@ public class PumpDraw extends Drawable {
         Pump p = (Pump)ViewGame.objectDrawNames.get(this);
         if (p.isBroken()) pump.setBorder(BorderFactory.createDashedBorder(Color.black, 5, 2, 2, false));
         else pump.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+        
+        if(ViewGame.getChosen()) {
+        	pumpB.setVisible(true);
+        	pumpB.setBackground(new Color(255, 0, 0));
+        	pumpB.setBounds(x, y, 50, 50);
+        	if (p.isBroken()) pumpB.setBorder(BorderFactory.createDashedBorder(Color.black, 5, 2, 2, false));
+            else pumpB.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+        	panel.add(pumpB);
+        }
+        
         panel.add(pump);
         panel.repaint();
     }
