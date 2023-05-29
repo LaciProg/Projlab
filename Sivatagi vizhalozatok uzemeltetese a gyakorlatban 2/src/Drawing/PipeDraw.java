@@ -25,6 +25,8 @@ public class PipeDraw extends Drawable {
         yTo = y2;
         //pipe.setBounds(x, y, 200, 200);
 
+        ViewGame.buttonToElement.put(pipeB, this);
+        pipeB.addActionListener(ViewGame.selectListener);
     }
 
     @Override
