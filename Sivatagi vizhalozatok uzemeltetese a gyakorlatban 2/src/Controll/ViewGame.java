@@ -27,10 +27,11 @@ public class ViewGame extends JFrame implements ActionListener {
     
     public static ViewGame vg;
 
-    JLabel activePlayer;
+    static JLabel activePlayer;
     JLabel labelPoints;
-    JLabel mecPoints;
-    JLabel sabPoints;
+    static JLabel mecPoints;
+    static JLabel sabPoints;
+    static JLabel successLabel;
     JButton moveButton;
     JButton repairButton;
     JButton breakButton;
@@ -63,6 +64,7 @@ public class ViewGame extends JFrame implements ActionListener {
 				//Ha elvégeztük a teendőt, ezzel kell befejezni
 				isChosen = false;
 				selectSequence.clear();
+                changeText(cmd);
 			}
 			if(lastAction.getText().equals("Set pump") && selectSequence.size() == 2) {
 				cmd[1] = Controller.getActivePlayerName();
@@ -71,8 +73,17 @@ public class ViewGame extends JFrame implements ActionListener {
 				Controller.set(cmd);
 				isChosen = false;
 				selectSequence.clear();
+                changeText(cmd);
 			}
-			
+			if(lastAction.getText().equals("Move")){
+                cmd[1] = Controller.getActivePlayerName();
+                cmd[2] = Controller.objectReverseNames.get(selectSequence.get(0));
+                Controller.move(cmd);
+                isChosen = false;
+                selectSequence.clear();
+                changeText(cmd);
+            }
+
 			vg.repaint();
 		}
     };
@@ -152,17 +163,19 @@ public class ViewGame extends JFrame implements ActionListener {
         add(controllButtons,BorderLayout.SOUTH);
 
         JPanel text = new JPanel();
-        text.setLayout(new GridLayout(3,1));
+        text.setLayout(new GridLayout(4,1));
         activePlayer = new JLabel("Active Player:   ");
         labelPoints = new JLabel("Points:     ");
         mecPoints = new JLabel("Mechanic:    ");
         sabPoints = new JLabel("Saboteur:    ");
+        successLabel= new JLabel("Last Action:      ");
         text.add(activePlayer);
         JPanel points = new JPanel();
         points.setLayout(new GridLayout(3,1));
         points.add(labelPoints);
         points.add(mecPoints);
         points.add(sabPoints);
+        text.add(successLabel);
         text.add(points);
         add(text,BorderLayout.EAST);
 
@@ -171,7 +184,7 @@ public class ViewGame extends JFrame implements ActionListener {
         JButton east = new JButton("FASZ");
         east.setPreferredSize(new Dimension(200, 700));
         EastPanel.add(east);
-        JButton south = new JButton("KUKI");
+        JButton south = new JButton("KUKI");//TODO Ilyenek ne maradjanak bent a végén
         south.setPreferredSize(new Dimension(1000,200));
 
         JPanel SouthPanel = new JPanel();
@@ -228,15 +241,14 @@ public class ViewGame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String[] cmd = new String[10];
         lastAction = (JButton)e.getSource(); //innen tudjuk, melyik gombot lett utoljára nyomva
+        boolean successful = false;
         if(e.getSource() == moveButton){
             isChosen = true;
-            cmd[1] = Controller.getActivePlayerName();
-            // TODO cmd[2]-ként át kell adni majd a Fieldet amin a Player áll (Boti)
-            Controller.move(cmd);//TODO Ha működik a mező kiválasztása akkor befejezem (Gergő)
         }
         if(e.getSource() == repairButton){
             cmd[1] = Controller.getActivePlayerName();
             Controller.repair(cmd);
+            successful = true;
         }
         if(e.getSource() == setPumpButton){
             //e gombra kattintva kéne a pumpát átállítani
@@ -246,14 +258,17 @@ public class ViewGame extends JFrame implements ActionListener {
         if(e.getSource() == breakButton){
             cmd[1] = Controller.getActivePlayerName();
             Controller.breakfield(cmd);
+            successful = true;
         }
         if(e.getSource() == makeSlipperyButton){
             cmd[1] = Controller.getActivePlayerName();
             Controller.makeslippery(cmd);
+            successful = true;
         }
         if(e.getSource() == makeStickyButton){
             cmd[1] = Controller.getActivePlayerName();
             Controller.makesticky(cmd);
+            successful = true;
         }
         if(e.getSource() == pickUpButton){
             isChosen = true;
@@ -265,13 +280,24 @@ public class ViewGame extends JFrame implements ActionListener {
         	Controller.placepump(cmd);
         	Controller.connect(cmd);
         }
-        boolean b = Controller.changeActivePlayer();
-        activePlayer.setText("Active Player: "+ Controller.getActivePlayerName());
-        if(b){
-            Controller.endturn(cmd);
-            mecPoints.setText("Mechanic: " + Controller.waterCounter.getMechanic());
-        	sabPoints.setText("Saboteur: " + Controller.waterCounter.getSaboteur());
+        if(successful) {
+            changeText(cmd);
         }
         this.repaint();
+    }
+
+    public static void changeText(String[] cmd){
+        boolean b = Controller.changeActivePlayer();
+        activePlayer.setText("Active Player: " + Controller.getActivePlayerName());
+        if (b) {
+            Controller.endturn(cmd);
+            mecPoints.setText("Mechanic: " + Controller.waterCounter.getMechanic());
+            sabPoints.setText("Saboteur: " + Controller.waterCounter.getSaboteur());
+        }
+        if(Controller.getLastResult()){
+            successLabel.setText("Last Action: Successful");
+        }else{
+            successLabel.setText("Last Action: Unsuccessful");
+        }
     }
 }
