@@ -24,6 +24,8 @@ public class ViewGame extends JFrame implements ActionListener {
     public static HashMap<Drawable, Object> objectDrawNames = new HashMap<>();
 
     public static HashMap<Object, Drawable> objectDrawReverseNames = new HashMap<>();
+    
+    public static ViewGame vg;
 
     JLabel activePlayer;
     JLabel labelPoints;
@@ -36,6 +38,45 @@ public class ViewGame extends JFrame implements ActionListener {
     JButton makeStickyButton;
     JButton pickUpButton;
     JButton putDownButton;
+    JButton setPumpButton;
+    
+    static JButton lastAction; //utoljára megnyomott gomb
+    static ArrayList<Object> selectSequence = new ArrayList<Object>(); //kiválasztott elemek, kiválasztásuk sorrendjében
+    public static HashMap<JButton, Drawable> buttonToElement = new HashMap<JButton, Drawable>(); //kiválasztó gomb -> kiválasztott rajz
+    
+    
+    // Ez hívodik, amikor kiválasztunk egy elemet
+    public static ActionListener selectListener = new ActionListener() {
+    	public void actionPerformed(ActionEvent e) {
+			Drawable selectedDrawing = buttonToElement.get(e.getSource());
+			Object selected = objectDrawNames.get(selectedDrawing); //a kiválasztott elem
+			selectSequence.add(selected);
+			String[] cmd = new String[10];
+			
+			
+			//Ez egy nagyon szar módja a feltételnek
+			//De így megússzuk, hogy az összes gombot static-á tegyük
+			if(lastAction.getText().equals("Pick up")) {
+				cmd[1] = Controller.getActivePlayerName();
+				//ezzel még lesz munka
+				
+				//Ha elvégeztük a teendőt, ezzel kell befejezni
+				isChosen = false;
+				selectSequence.clear();
+			}
+			if(lastAction.getText().equals("Set pump") && selectSequence.size() == 2) {
+				cmd[1] = Controller.getActivePlayerName();
+				cmd[2] = Controller.objectReverseNames.get(selectSequence.get(0));
+				cmd[3] = Controller.objectReverseNames.get(selectSequence.get(1));
+				Controller.set(cmd);
+				isChosen = false;
+				selectSequence.clear();
+			}
+			
+			vg.repaint();
+		}
+    };
+    
     public static void main(String[] args){
         Menu menu = new Menu("Menu", "White");
         menu.showMenu();
@@ -86,6 +127,7 @@ public class ViewGame extends JFrame implements ActionListener {
         controllButtons.setLayout(new GridLayout(1,7));
         moveButton = new JButton("Move");
         repairButton = new JButton("Repair");
+        setPumpButton = new JButton("Set pump");
         breakButton  = new JButton("Break");
         makeSlipperyButton = new JButton("Make Slippery");
         makeStickyButton = new JButton("Make Sticky");
@@ -93,6 +135,7 @@ public class ViewGame extends JFrame implements ActionListener {
         putDownButton = new JButton("Put down");
         moveButton.addActionListener(this);
         repairButton.addActionListener(this);
+        setPumpButton.addActionListener(this);
         breakButton.addActionListener(this);
         makeSlipperyButton.addActionListener(this);
         makeStickyButton.addActionListener(this);
@@ -100,6 +143,7 @@ public class ViewGame extends JFrame implements ActionListener {
         putDownButton.addActionListener(this);
         controllButtons.add(moveButton);
         controllButtons.add(repairButton);
+        controllButtons.add(setPumpButton);
         controllButtons.add(breakButton);
         controllButtons.add(makeSlipperyButton);
         controllButtons.add(makeStickyButton);
@@ -135,10 +179,11 @@ public class ViewGame extends JFrame implements ActionListener {
         SouthPanel.setBounds(0,0, 1000, 200);
         add(EastPanel, BorderLayout.EAST);
         add(SouthPanel, BorderLayout.SOUTH);*/
-        activePlayer.setText("Active Player: "+ Controller.getPlayer());
+        activePlayer.setText("Active Player: "+ Controller.getActivePlayerName());
         gameBackground.setBackground(new Color(150, 75, 0));
         setVisible(true);
         repaint();
+        vg = this;
     }
 
     public void setController(Controller c){
@@ -182,38 +227,50 @@ public class ViewGame extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         String[] cmd = new String[10];
+        lastAction = (JButton)e.getSource(); //innen tudjuk, melyik gombot lett utoljára nyomva
         if(e.getSource() == moveButton){
             isChosen = true;
-            cmd[1] = Controller.getPlayer();
+            cmd[1] = Controller.getActivePlayerName();
             // TODO cmd[2]-ként át kell adni majd a Fieldet amin a Player áll (Boti)
             Controller.move(cmd);//TODO Ha működik a mező kiválasztása akkor befejezem (Gergő)
         }
         if(e.getSource() == repairButton){
-            cmd[1] = Controller.getPlayer();
+            cmd[1] = Controller.getActivePlayerName();
             Controller.repair(cmd);
         }
+        if(e.getSource() == setPumpButton){
+            //e gombra kattintva kéne a pumpát átállítani
+        	//Úgy lenne a legkényelmesebb, ha először kiválasztjuk honnan, aztán hová
+        	isChosen = true;
+        }
         if(e.getSource() == breakButton){
-            cmd[1] = Controller.getPlayer();
+            cmd[1] = Controller.getActivePlayerName();
             Controller.breakfield(cmd);
         }
         if(e.getSource() == makeSlipperyButton){
-            cmd[1] = Controller.getPlayer();
+            cmd[1] = Controller.getActivePlayerName();
             Controller.makeslippery(cmd);
         }
         if(e.getSource() == makeStickyButton){
-            cmd[1] = Controller.getPlayer();
+            cmd[1] = Controller.getActivePlayerName();
             Controller.makesticky(cmd);
         }
         if(e.getSource() == pickUpButton){
             isChosen = true;
         }
         if(e.getSource()== putDownButton){
-
+        	System.out.println(isChosen);
+        	cmd[1] = Controller.getActivePlayerName();
+        	//TDA
+        	Controller.placepump(cmd);
+        	Controller.connect(cmd);
         }
         boolean b = Controller.changeActivePlayer();
-        activePlayer.setText("Active Player: "+ Controller.getPlayer());
+        activePlayer.setText("Active Player: "+ Controller.getActivePlayerName());
         if(b){
             Controller.endturn(cmd);
+            mecPoints.setText("Mechanic: " + Controller.waterCounter.getMechanic());
+        	sabPoints.setText("Saboteur: " + Controller.waterCounter.getSaboteur());
         }
         this.repaint();
     }

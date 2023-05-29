@@ -14,6 +14,10 @@ public class SpringDraw extends Drawable {
         y = tmpY;
         spring.setVisible(true);
         spring.setBackground(new Color(150, 75, 0));
+        
+        ViewGame.buttonToElement.put(springB, this);
+        springB.addActionListener(ViewGame.selectListener);
+        
     }
 
     @Override
@@ -27,6 +31,9 @@ public class SpringDraw extends Drawable {
         	springB.setBounds(x, y, 50, 50);
         	springB.setBorder(BorderFactory.createLineBorder(Color.white, 5));
         	panel.add(springB);
+        } else {
+        	springB.setVisible(false);
+        	panel.remove(springB);
         }
         
         panel.add(spring);
