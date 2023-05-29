@@ -139,7 +139,7 @@ public class ViewGame extends JFrame implements ActionListener {
         SouthPanel.setBounds(0,0, 1000, 200);
         add(EastPanel, BorderLayout.EAST);
         add(SouthPanel, BorderLayout.SOUTH);*/
-        activePlayer.setText("Active Player: "+ Controller.getPlayer());
+        activePlayer.setText("Active Player: "+ Controller.getActivePlayerName());
         gameBackground.setBackground(new Color(150, 75, 0));
         setVisible(true);
         repaint();
@@ -188,12 +188,12 @@ public class ViewGame extends JFrame implements ActionListener {
         String[] cmd = new String[10];
         if(e.getSource() == moveButton){
             isChosen = true;
-            cmd[1] = Controller.getPlayer();
+            cmd[1] = Controller.getActivePlayerName();
             // TODO cmd[2]-ként át kell adni majd a Fieldet amin a Player áll (Boti)
             Controller.move(cmd);//TODO Ha működik a mező kiválasztása akkor befejezem (Gergő)
         }
         if(e.getSource() == repairButton){
-            cmd[1] = Controller.getPlayer();
+            cmd[1] = Controller.getActivePlayerName();
             Controller.repair(cmd);
         }
         if(e.getSource() == setPumpButton){
@@ -202,15 +202,15 @@ public class ViewGame extends JFrame implements ActionListener {
         	isChosen = true;
         }
         if(e.getSource() == breakButton){
-            cmd[1] = Controller.getPlayer();
+            cmd[1] = Controller.getActivePlayerName();
             Controller.breakfield(cmd);
         }
         if(e.getSource() == makeSlipperyButton){
-            cmd[1] = Controller.getPlayer();
+            cmd[1] = Controller.getActivePlayerName();
             Controller.makeslippery(cmd);
         }
         if(e.getSource() == makeStickyButton){
-            cmd[1] = Controller.getPlayer();
+            cmd[1] = Controller.getActivePlayerName();
             Controller.makesticky(cmd);
         }
         if(e.getSource() == pickUpButton){
@@ -218,13 +218,13 @@ public class ViewGame extends JFrame implements ActionListener {
         }
         if(e.getSource()== putDownButton){
         	//isChosen = false; //ez csak tesztnek volt itt
-        	cmd[1] = Controller.getPlayer();
+        	cmd[1] = Controller.getActivePlayerName();
         	//TDA
         	Controller.placepump(cmd);
         	Controller.connect(cmd);
         }
         boolean b = Controller.changeActivePlayer();
-        activePlayer.setText("Active Player: "+ Controller.getPlayer());
+        activePlayer.setText("Active Player: "+ Controller.getActivePlayerName());
         if(b){
         	mecPoints.setText("Mechanic: " + Controller.waterCounter.getMechanic());
         	sabPoints.setText("Saboteur: " + Controller.waterCounter.getSaboteur());

@@ -102,13 +102,15 @@ public class Controller {
     public static int moves = 0;
     
     private static int turncount = 0;
-    public static String getPlayer(){
+    public static String getActivePlayerName(){
         return objectReverseNames.get(currentPlayer);
     }
 
     public static ArrayList<Player> getAllPlayers() { return activePlayers; }
 
     public static void SetActivePlayer(Player p) { currentPlayer = p; activePlayers.remove(0); activePlayers.add(currentPlayer); }
+
+    public static Player GetActivePlayer() { return currentPlayer; }
 
     public static boolean changeActivePlayer(){
         currentPlayer = activePlayers.get(0); // az első játékos a sor végére rakom, jelenleg ő az aktív

@@ -28,6 +28,7 @@ public class SaboteurDraw extends Drawable {
     @Override
     public void Draw(JPanel panel, Graphics2D g) {
         Saboteur s = (Saboteur)ViewGame.objectDrawNames.get(this);
+        Player current = Controller.GetActivePlayer();
         sabName = Controller.objectReverseNames.get(s);
         sab.setText(sabName);
         Field f = s.getStandingField();
@@ -60,7 +61,8 @@ public class SaboteurDraw extends Drawable {
             y = pd.getY() - (i+1)*25;
         }
         sab.setBounds(x, y, 50, 20);
-        sab.setBorder(BorderFactory.createLineBorder(Color.green, 5));
+        if (s.equals(current)) sab.setBorder(BorderFactory.createLineBorder(Color.green, 5));
+        else sab.setBorder(BorderFactory.createLineBorder(Color.red, 5));
         //sab.setBackground(new Color(150, 75, 0));
         panel.add(sab);
         panel.repaint();
