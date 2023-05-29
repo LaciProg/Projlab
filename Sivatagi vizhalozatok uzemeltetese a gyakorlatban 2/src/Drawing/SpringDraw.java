@@ -15,6 +15,9 @@ public class SpringDraw extends Drawable {
         spring.setVisible(true);
         spring.setBackground(new Color(150, 75, 0));
         
+        ViewGame.buttonToElement.put(springB, this);
+        springB.addActionListener(ViewGame.selectListener);
+        
     }
 
     @Override

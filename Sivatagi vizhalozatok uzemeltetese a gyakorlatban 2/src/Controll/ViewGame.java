@@ -24,6 +24,8 @@ public class ViewGame extends JFrame implements ActionListener {
     public static HashMap<Drawable, Object> objectDrawNames = new HashMap<>();
 
     public static HashMap<Object, Drawable> objectDrawReverseNames = new HashMap<>();
+    
+    public static ViewGame vg;
 
     JLabel activePlayer;
     JLabel labelPoints;
@@ -37,6 +39,44 @@ public class ViewGame extends JFrame implements ActionListener {
     JButton pickUpButton;
     JButton putDownButton;
     JButton setPumpButton;
+    
+    static JButton lastAction; //utoljára megnyomott gomb
+    static ArrayList<Object> selectSequence = new ArrayList<Object>(); //kiválasztott elemek, kiválasztásuk sorrendjében
+    public static HashMap<JButton, Drawable> buttonToElement = new HashMap<JButton, Drawable>(); //kiválasztó gomb -> kiválasztott rajz
+    
+    
+    // Ez hívodik, amikor kiválasztunk egy elemet
+    public static ActionListener selectListener = new ActionListener() {
+    	public void actionPerformed(ActionEvent e) {
+			Drawable selectedDrawing = buttonToElement.get(e.getSource());
+			Object selected = objectDrawNames.get(selectedDrawing); //a kiválasztott elem
+			selectSequence.add(selected);
+			String[] cmd = new String[10];
+			
+			
+			//Ez egy nagyon szar módja a feltételnek
+			//De így megússzuk, hogy az összes gombot static-á tegyük
+			if(lastAction.getText().equals("Pick up")) {
+				cmd[1] = Controller.getActivePlayerName();
+				//ezzel még lesz munka
+				
+				//Ha elvégeztük a teendőt, ezzel kell befejezni
+				isChosen = false;
+				selectSequence.clear();
+			}
+			if(lastAction.getText().equals("Set pump") && selectSequence.size() == 2) {
+				cmd[1] = Controller.getActivePlayerName();
+				cmd[2] = Controller.objectReverseNames.get(selectSequence.get(0));
+				cmd[3] = Controller.objectReverseNames.get(selectSequence.get(1));
+				Controller.set(cmd);
+				isChosen = false;
+				selectSequence.clear();
+			}
+			
+			vg.repaint();
+		}
+    };
+    
     public static void main(String[] args){
         Menu menu = new Menu("Menu", "White");
         menu.showMenu();
@@ -143,6 +183,7 @@ public class ViewGame extends JFrame implements ActionListener {
         gameBackground.setBackground(new Color(150, 75, 0));
         setVisible(true);
         repaint();
+        vg = this;
     }
 
     public void setController(Controller c){
@@ -186,6 +227,7 @@ public class ViewGame extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         String[] cmd = new String[10];
+        lastAction = (JButton)e.getSource(); //innen tudjuk, melyik gombot lett utoljára nyomva
         if(e.getSource() == moveButton){
             isChosen = true;
             cmd[1] = Controller.getActivePlayerName();
@@ -217,7 +259,7 @@ public class ViewGame extends JFrame implements ActionListener {
             isChosen = true;
         }
         if(e.getSource()== putDownButton){
-        	//isChosen = false; //ez csak tesztnek volt itt
+        	System.out.println(isChosen);
         	cmd[1] = Controller.getActivePlayerName();
         	//TDA
         	Controller.placepump(cmd);
@@ -226,9 +268,9 @@ public class ViewGame extends JFrame implements ActionListener {
         boolean b = Controller.changeActivePlayer();
         activePlayer.setText("Active Player: "+ Controller.getActivePlayerName());
         if(b){
-        	mecPoints.setText("Mechanic: " + Controller.waterCounter.getMechanic());
-        	sabPoints.setText("Saboteur: " + Controller.waterCounter.getSaboteur());
             Controller.endturn(cmd);
+            mecPoints.setText("Mechanic: " + Controller.waterCounter.getMechanic());
+        	sabPoints.setText("Saboteur: " + Controller.waterCounter.getSaboteur());
         }
         this.repaint();
     }
