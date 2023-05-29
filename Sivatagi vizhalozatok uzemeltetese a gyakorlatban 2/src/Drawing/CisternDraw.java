@@ -14,6 +14,9 @@ public class CisternDraw extends Drawable {
         y = tmpY;
         cistern.setVisible(true);
         cistern.setBackground(new Color(150, 75, 0));
+        
+        ViewGame.buttonToElement.put(cisternB, this);
+        cisternB.addActionListener(ViewGame.selectListener);
     }
 
     public void Draw(JPanel panel, Graphics2D g) {

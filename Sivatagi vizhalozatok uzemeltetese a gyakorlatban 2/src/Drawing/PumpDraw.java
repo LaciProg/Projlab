@@ -16,6 +16,9 @@ public class PumpDraw extends Drawable {
         y = tmpY;
         pump.setVisible(true);
         pump.setBackground(new Color(150, 75, 0));
+        
+        ViewGame.buttonToElement.put(pumpB, this);
+        pumpB.addActionListener(ViewGame.selectListener);
     }
 
     public void Draw(JPanel panel, Graphics2D g) {
