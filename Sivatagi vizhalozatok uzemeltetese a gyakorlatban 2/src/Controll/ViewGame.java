@@ -31,6 +31,7 @@ public class ViewGame extends JFrame implements ActionListener {
     JLabel labelPoints;
     static JLabel mecPoints;
     static JLabel sabPoints;
+    static JLabel successLabel;
     JButton moveButton;
     JButton repairButton;
     JButton breakButton;
@@ -162,17 +163,19 @@ public class ViewGame extends JFrame implements ActionListener {
         add(controllButtons,BorderLayout.SOUTH);
 
         JPanel text = new JPanel();
-        text.setLayout(new GridLayout(3,1));
+        text.setLayout(new GridLayout(4,1));
         activePlayer = new JLabel("Active Player:   ");
         labelPoints = new JLabel("Points:     ");
         mecPoints = new JLabel("Mechanic:    ");
         sabPoints = new JLabel("Saboteur:    ");
+        successLabel= new JLabel("Last Action:      ");
         text.add(activePlayer);
         JPanel points = new JPanel();
         points.setLayout(new GridLayout(3,1));
         points.add(labelPoints);
         points.add(mecPoints);
         points.add(sabPoints);
+        text.add(successLabel);
         text.add(points);
         add(text,BorderLayout.EAST);
 
@@ -290,6 +293,11 @@ public class ViewGame extends JFrame implements ActionListener {
             Controller.endturn(cmd);
             mecPoints.setText("Mechanic: " + Controller.waterCounter.getMechanic());
             sabPoints.setText("Saboteur: " + Controller.waterCounter.getSaboteur());
+        }
+        if(Controller.getLastResult()){
+            successLabel.setText("Last Action: Successful");
+        }else{
+            successLabel.setText("Last Action: Unsuccessful");
         }
     }
 }
