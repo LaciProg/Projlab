@@ -15,6 +15,7 @@ import Players.Saboteur;
 
 import javax.swing.text.View;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -509,10 +510,20 @@ public class Controller {
     public static void move(String[] cmd){
         Player p = (Player)objectNames.get(cmd[1]);
         Field f = (Field)objectNames.get(cmd[2]);
-        if(p.move(f)){
-            if (test) outResults.add("Sikeres művelet");
-            else System.out.println("Sikeres művelet");
-        }else  {
+        ArrayList<Field> neighbors = p.getStandingField().getNeighborFields();
+        if(neighbors.contains(f)) {
+            if (p.move(f)) {
+                if (test) outResults.add("Sikeres művelet");
+                else System.out.println("Sikeres művelet");
+            } else {
+                if (test) outResults.add("Sikertelen művelet");
+                else {
+                    System.out.println("Sikertelen művelet");
+                    moves--;
+                }
+            }
+        }
+        else{
             if (test) outResults.add("Sikertelen művelet");
             else {
                 System.out.println("Sikertelen művelet");
