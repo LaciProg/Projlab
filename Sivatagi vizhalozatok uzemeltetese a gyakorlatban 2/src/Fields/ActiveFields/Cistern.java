@@ -43,7 +43,6 @@ public class Cistern extends ActiveFields{
             }
             else createdPipe = new Pipe(30+r.nextInt(41));
         }
-        System.out.println("Cistern: "+super.getWaterNoChange());
     }
 
     /**
