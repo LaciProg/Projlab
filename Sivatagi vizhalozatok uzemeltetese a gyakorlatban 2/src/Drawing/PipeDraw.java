@@ -40,6 +40,48 @@ public class PipeDraw extends Drawable {
         ViewGame.buttonToElement.put(pipeB, this);
         pipeB.addActionListener(ViewGame.selectListener);
     }
+    public void setCoords(Drawable pumpFrom, Drawable pumpTo) {
+    	int fromX, toX, fromY, toY;
+    	
+    	fromX = pumpFrom.getX();
+        fromY = pumpFrom.getY();
+        toX = pumpTo.getX();
+        toY = pumpTo.getY();
+    	
+    	//A cél pumpa
+        if(toY < fromY) {
+        	//felettünk van
+        	toY += 50;
+        } else if(toY > fromY) {
+        	//alattunk
+        	fromY += 50;
+        } else {
+        	//velünk egy magasságban
+        	toY += 25;
+        	fromY += 25;
+        	
+        }
+        if(toX < fromX) {
+        	//balra
+        	toX += 50;
+        } else if(fromX > toX) {
+        	//jobbra
+        	fromX += 50;
+        } else {
+        	//egy oszlopban
+        	toX += 25;
+        	fromX += 25;
+        }
+        setCoords(fromX, fromY, toX, toY);
+    	
+    	
+    }
+    public void setCoords(int x1, int y1, int x2, int y2) {
+    	xFrom = x1;
+        yFrom = y1;
+        xTo = x2;
+        yTo = y2;
+    }
 
     /**
      * Draw method
