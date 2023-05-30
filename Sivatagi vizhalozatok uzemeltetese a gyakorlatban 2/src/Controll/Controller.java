@@ -732,7 +732,7 @@ public class Controller {
     public static void pickuppipe(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.pickUpPipe()){
-            lastResult = true;
+            lastResult = lastResult && true;
             
             //legyen már az új csőnek drawable-je is
             Pipe newPipe = ((Mechanic)player).getHoldingPipe();
