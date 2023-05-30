@@ -113,4 +113,13 @@ public class WaterCounter {
                 + "\nmechanic: " + this.getMechanic()
                 +"\n";
     }
+
+    public String winner(){
+        if(saboteur > mechanic)
+            return "Saboteur";
+        else if(saboteur < mechanic)
+            return "Mechanic";
+        else
+            return "Döntetlen";
+    }
 }

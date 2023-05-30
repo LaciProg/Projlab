@@ -2,6 +2,7 @@ package Fields;
 
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
+import Interfaces.Steppable;
 import Players.Player;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Abstract class for the fields.
  * */
-public abstract class Field {
+public abstract class Field implements Steppable {
 
 	/**
 	 * True if the field is cannot accept more player.
@@ -57,6 +58,8 @@ public abstract class Field {
 		}*/
 		return players;
 	}
+
+	public ArrayList<Field> getNeighborFields(){ return new ArrayList<>();}
 	/**
 	 * Setter for players list.
 	 */
