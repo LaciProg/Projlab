@@ -3,15 +3,11 @@ package Controll;
 import Drawing.*;
 import Enums.Fluid;
 import Fields.*;
-import Fields.ActiveFields.*;
-import Fields.ActiveFields.Spring;
-import Players.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -317,7 +313,6 @@ public class ViewGame extends JFrame implements ActionListener {
         if(e.getSource()== putDownButton){
             isChosen = false;
         	cmd[1] = Controller.getActivePlayerName();
-        	//TDA
         	Controller.placepump(cmd);
         	Controller.connect(cmd);
         }
@@ -341,6 +336,9 @@ public class ViewGame extends JFrame implements ActionListener {
             ++round;
             if(round == maxRounds){
                 Controller.setend(cmd);
+                Controller.endturn(cmd);
+                mecPoints.setText("Mechanic: " + Controller.waterCounter.getMechanic());
+                sabPoints.setText("Saboteur: " + Controller.waterCounter.getSaboteur());
                 vg.THE_END();
             }
 
