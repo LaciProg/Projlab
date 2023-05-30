@@ -87,7 +87,7 @@ public class Pump extends ActiveFields {
         }
         int r;
         if (!Controller.isTest()) {
-            r = new Random().nextInt(11);
+            r = new Random().nextInt(31);
 
             if(r < 3) {
                 super.setBroken(true);
