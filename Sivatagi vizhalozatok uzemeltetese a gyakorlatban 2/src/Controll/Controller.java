@@ -573,8 +573,19 @@ public class Controller {
      * Function for placing a pump by a player.
      * */
     public static void placepump(String[] cmd){
-        Player p = (Player)objectNames.get(cmd[1]);
-        Pipe pipe = p.placePump();
+    	//   |Pump A|===new=Pipe===|new Pump|===old=Pipe===|Pump B|
+        Player p = (Player)objectNames.get(cmd[1]); //player
+        ActiveFields pumpA, pumpB;
+        pumpA = pumpB = null;
+        try {
+        	pumpA = ((Pipe)p.getStandingField()).getFields().get(0);
+        	pumpB = ((Pipe)p.getStandingField()).getFields().get(1);
+        } catch(Exception e) {
+        	
+        }
+    	
+        Pump hp = ((Mechanic)p).getHoldingPump(); //new pump
+        Pipe pipe = p.placePump(); //new pipe
         if(pipe != null ){
             pipes++;
             String s = "newPipe"+pipes;
@@ -582,6 +593,36 @@ public class Controller {
             objectReverseNames.put(pipe, s);
             waterCounter.addPipe(pipe);
             lastResult = true;
+            
+            //elements according to drawing
+            Pipe oldPipe = hp.getPipes().get(0);
+            
+            //___notes:___
+            //the new pump is at: mecD.getX()+25, mecD.getY()+25
+            //Drawables fo thoose who have
+            PipeDraw oldPipeD = (PipeDraw)ViewGame.objectDrawReverseNames.get(oldPipe);
+            Drawable pumpAD = ViewGame.objectDrawReverseNames.get(pumpA);
+            Drawable pumpBD = ViewGame.objectDrawReverseNames.get(pumpB);
+            
+            //drawing the new pump
+            MechanicDraw mecD = (MechanicDraw)ViewGame.objectDrawReverseNames.get(p);
+            PumpDraw newPumpD = new PumpDraw(mecD.getX(), mecD.getY());
+            ViewGame.setDrawsNames(newPumpD, hp); 
+            ViewGame.setDrawsReverseNames(hp, newPumpD);
+            //drawing the new pipe
+            PipeDraw newPipeD = new PipeDraw(0,0,0,0);
+            newPipeD.setCoords(newPumpD, pumpAD);
+            ViewGame.setDrawsNames(newPipeD, pipe); 
+            ViewGame.setDrawsReverseNames(pipe, newPipeD);
+            
+            //redrawing the old pipe
+            oldPipeD.setCoords(newPumpD, pumpBD);
+            
+            
+            
+            
+            
+            
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
@@ -634,8 +675,21 @@ public class Controller {
      * */
     public static void connect(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
+        
+        Pipe holdedPipe = null;
+        Pump standing = null;
+        try {
+        	holdedPipe = ((Mechanic)player).getHoldingPipe();
+        	standing = (Pump)player.getStandingField();
+        } catch(Exception e) {}
         if(player.connect()){
             lastResult = true;
+            
+            PipeDraw pd = (PipeDraw)ViewGame.objectDrawReverseNames.get(holdedPipe);
+            Drawable toPumpD = ViewGame.objectDrawReverseNames.get(holdedPipe.getFields().get(0));
+            Drawable fromPumpD = ViewGame.objectDrawReverseNames.get(standing);
+            pd.setCoords(fromPumpD, toPumpD);
+            
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
@@ -659,6 +713,8 @@ public class Controller {
             objectNames.put(s, pump);
             objectReverseNames.put(pump, s);
             lastResult = true;
+        
+            
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
@@ -677,6 +733,13 @@ public class Controller {
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.pickUpPipe()){
             lastResult = true;
+            
+            //legyen már az új csőnek drawable-je is
+            Pipe newPipe = ((Mechanic)player).getHoldingPipe();
+            PipeDraw newPipeD = new PipeDraw(-100,0,0,0);
+            ViewGame.setDrawsNames(newPipeD, newPipe); 
+            ViewGame.setDrawsReverseNames(newPipe, newPipeD);
+            
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
