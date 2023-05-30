@@ -74,20 +74,22 @@ public class Pump extends ActiveFields {
     public void step() {
         super.step();
         if(!(super.isBroken())) {
-            super.setWater((this.getPipes().get(waterTo)).fillInWater(super.getWater()));
-            int newWater = (this.getPipes().get(waterFrom)).getWater();
-            if(newWater < 0) this.getPipes().get(waterFrom).fillInWater(-newWater);
-            else{
-                if(super.getWaterNoChange() + newWater > tank){
-                    super.setWater(tank);
-                    this.getPipes().get(waterFrom).fillInWater(newWater-tank);
-                }
-                else super.setWater(super.getWaterNoChange() + newWater);
-            }
+        	if(waterTo != -1 && waterFrom != -1) {
+	            super.setWater((this.getPipes().get(waterTo)).fillInWater(super.getWater()));
+	            int newWater = (this.getPipes().get(waterFrom)).getWater();
+	            if(newWater < 0) this.getPipes().get(waterFrom).fillInWater(-newWater);
+	            else{
+	                if(super.getWaterNoChange() + newWater > tank){
+	                    super.setWater(tank);
+	                    this.getPipes().get(waterFrom).fillInWater(newWater-tank);
+	                }
+	                else super.setWater(super.getWaterNoChange() + newWater);
+	            }
+        	}
         }
         int r;
         if (!Controller.isTest()) {
-            r = new Random().nextInt(11);
+            r = new Random().nextInt(31);
 
             if(r < 3) {
                 super.setBroken(true);

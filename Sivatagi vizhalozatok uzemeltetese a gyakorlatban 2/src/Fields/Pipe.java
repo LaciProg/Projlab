@@ -146,7 +146,8 @@ public class Pipe extends Field {
      */
     @Override
     public Pipe placePump(Pump newPump) {
-        Pump oldPump = (Pump) fields.remove(0);
+    	if(newPump == null) return null;
+        ActiveFields oldPump = (ActiveFields) fields.remove(0);
 
         disconnect(oldPump);
 
@@ -167,6 +168,8 @@ public class Pipe extends Field {
         newPump.addPipe(newPipe);
 
         oldPump.addPipe(newPipe);
+        
+        newPump.set(newPipe, this);
 
         return newPipe;
     }
@@ -286,7 +289,7 @@ public class Pipe extends Field {
                 remainingFluidTime = 5;
             }
             else {
-                remainingFluidTime = 3+new Random().nextInt(8);
+                remainingFluidTime = 3+new Random().nextInt(3);
             }
             fluid = Fluid.SLIPPERY;
             return true;
@@ -304,7 +307,7 @@ public class Pipe extends Field {
                 remainingFluidTime = 5;
             }
             else {
-                remainingFluidTime = 3+new Random().nextInt(8);
+                remainingFluidTime = 3+new Random().nextInt(3);
             }
             fluid = Fluid.STICKY;
             return true;
