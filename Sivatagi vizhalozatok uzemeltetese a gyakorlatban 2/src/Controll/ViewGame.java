@@ -59,8 +59,8 @@ public class ViewGame extends JFrame implements ActionListener {
 			//De így megússzuk, hogy az összes gombot static-á tegyük
 			if(lastAction.getText().equals("Pick up")) {
 				cmd[1] = Controller.getActivePlayerName();
-				//ezzel még lesz munka
-				
+				cmd[2] = Controller.objectReverseNames.get(selected);				
+				Controller.disconnect(cmd);
 				//Ha elvégeztük a teendőt, ezzel kell befejezni
 				isChosen = false;
 				selectSequence.clear();
@@ -241,6 +241,7 @@ public class ViewGame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String[] cmd = new String[10];
         lastAction = (JButton)e.getSource(); //innen tudjuk, melyik gombot lett utoljára nyomva
+        isChosen = false; //ha esetleg meggondolnánk magunk
         boolean successful = false;
         if(e.getSource() == moveButton){
             isChosen = true;
@@ -271,14 +272,18 @@ public class ViewGame extends JFrame implements ActionListener {
             successful = true;
         }
         if(e.getSource() == pickUpButton){
-            isChosen = true;
+        	if(Controller.GetActivePlayer().getStandingField() instanceof Cistern) {
+        		cmd[1] = Controller.getActivePlayerName();
+				Controller.getpump(cmd);
+				Controller.pickuppipe(cmd);
+				successful = true;
+        	} else isChosen = true;
         }
         if(e.getSource()== putDownButton){
-        	System.out.println(isChosen);
         	cmd[1] = Controller.getActivePlayerName();
-        	//TDA
-        	Controller.placepump(cmd);
+        	Controller.placepump(cmd); 
         	Controller.connect(cmd);
+        	successful = true;
         }
         if(successful) {
             changeText(cmd);
