@@ -1,0 +1,5 @@
+sab@echo off
+title test
+mkdir .\out
+javac -d out -sourcepath Sivatagi-vizhalozatok-uzemeltetese-a-gyakorlatban-2\src .\src\Controll\Controller.java .\src\Controll\Menu.java .\src\Controll\ViewGame.java .\src\Controll\WaterCounter.java .\src\Drawing\CisternDraw.java .\src\Drawing\Drawable.java .\src\Drawing\MechanicDraw.java .\src\Drawing\PipeDraw.java .\src\Drawing\PumpDraw.java .\src\Drawing\SaboteurDraw.java .\src\Drawing\SpringDraw.java .\src\Enums\Fluid.java .\src\Fields\Field.java .\src\Fields\Pipe.java .\src\Fields\ActiveFields\ActiveFields.java .\src\Fields\ActiveFields\Cistern.java .\src\Fields\ActiveFields\Pump.java .\src\Fields\ActiveFields\Spring.java .\src\Interfaces\Steppable.java .\src\Players\Mechanic.java .\src\Players\Player.java .\src\Players\Saboteur.java
+java -cp .\out Controll.ViewGame
