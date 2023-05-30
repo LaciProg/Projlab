@@ -57,6 +57,8 @@ public abstract class Field {
 		}*/
 		return players;
 	}
+
+	public ArrayList<Field> getNeighborFields(){ return new ArrayList<>();}
 	/**
 	 * Setter for players list.
 	 */

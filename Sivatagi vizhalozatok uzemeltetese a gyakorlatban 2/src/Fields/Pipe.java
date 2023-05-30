@@ -83,9 +83,14 @@ public class Pipe extends Field {
         this.fluid = fluid;
     }
     /**
-     * Getter for fields.
+     * Getter for fields as ActiveFields.
      */
     public ArrayList<ActiveFields> getFields() { return fields; }
+    /**
+     * Getter for fields as Field.
+     */
+    @Override
+    public ArrayList<Field> getNeighborFields(){ return new ArrayList<Field>(fields);}
     /**
      * Getter for capacity.
      */

@@ -1,9 +1,6 @@
 package Controll;
 
-import Drawing.CisternDraw;
-import Drawing.PipeDraw;
-import Drawing.PumpDraw;
-import Drawing.SpringDraw;
+import Drawing.*;
 import Enums.Fluid;
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Cistern;
@@ -17,9 +14,10 @@ import Players.Player;
 import Players.Saboteur;
 
 import javax.swing.text.View;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.lang.reflect.Array;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -103,7 +101,30 @@ public class Controller {
     public static boolean gameMode = false;
 
     public static int moves = 0;
+    public static boolean lastResult = true;
+    private static int turncount = 0;
+    public static String getActivePlayerName(){
+        return objectReverseNames.get(currentPlayer);
+    }
 
+    public static ArrayList<Player> getAllPlayers() { return activePlayers; }
+
+    public static void SetActivePlayer(Player p) { currentPlayer = p; activePlayers.remove(0); activePlayers.add(currentPlayer); }
+
+    public static Player GetActivePlayer() { return currentPlayer; }
+
+    public static boolean getLastResult() { return lastResult;}
+    public static boolean changeActivePlayer(){
+        currentPlayer = activePlayers.get(0); // az első játékos a sor végére rakom, jelenleg ő az aktív
+        activePlayers.remove(0);
+        activePlayers.add(currentPlayer);
+        turncount++;
+        if(turncount == activePlayers.size()){
+            turncount = 0;
+            return true;
+        }
+        else return false;
+    }
     /**
      *Function for controlling the game.
      *Reads a command than calls a function to execute it.
@@ -230,10 +251,44 @@ public class Controller {
         } catch (FileNotFoundException e) {
           
         }
+        /*Path rootDir = Paths.get(".").normalize().toAbsolutePath();
+
+        File file = new File(rootDir.toString() + "/" + cmd);
+        try {
+            Reader input = new FileReader(file);
+            BufferedReader br = new BufferedReader(input);
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                commandList.add(line);
+            }
+            input.close();
+        } catch (IOException e) {
+        }*/
     }
-    /**
-     * Function for creating a pump.
-     * */
+
+    public static void loadFileFromSrcToReader(String fileNameToOpen) {
+        // a text file is located in src folder in the project
+        Path rootDir = Paths.get(".").normalize().toAbsolutePath();
+        File file = new File(rootDir.toString() + "/" + fileNameToOpen);
+            try {
+                Reader input = new FileReader(file);
+                // Checks if reader is ready
+                BufferedReader br = new BufferedReader(input);
+                String line = "";
+
+                while ((line = br.readLine()) != null) {
+                    System.out.println(line);
+                }
+                // Closes the reader
+                input.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+            /**
+             * Function for creating a pump.
+             * */
     public static void pump(String[] cmd){
         Pump tmp = new Pump(Integer.parseInt(cmd[2]));
         String[][] commands = new String[cmd.length-3][2];
@@ -337,6 +392,7 @@ public class Controller {
         Saboteur tmp = new Saboteur();
         Field f = (Field)objectNames.get(cmd[2]);
         tmp.setStandingField(f);
+        SaboteurDraw sd = new SaboteurDraw(0,0); ViewGame.setDrawsNames(sd, tmp); ViewGame.setDrawsReverseNames(tmp, sd);
         objectNames.put(cmd[1], tmp);
         objectReverseNames.put(tmp, cmd[1]);
         if (test) outResults.add("Sikeres művelet");
@@ -350,6 +406,7 @@ public class Controller {
         Mechanic tmp = new Mechanic();
         Field f = (Field)objectNames.get(cmd[2]);
         tmp.setStandingField(f);
+        MechanicDraw sd = new MechanicDraw(0,0); ViewGame.setDrawsNames(sd, tmp); ViewGame.setDrawsReverseNames(tmp, sd);
         String[][] commands = new String[cmd.length-3][2];
         for(int i=3; i<cmd.length; i++){
             commands[i-3] = cmd[i].split(":");
@@ -454,13 +511,25 @@ public class Controller {
     public static void move(String[] cmd){
         Player p = (Player)objectNames.get(cmd[1]);
         Field f = (Field)objectNames.get(cmd[2]);
-        if(p.move(f)){
-            if (test) outResults.add("Sikeres művelet");
-            else System.out.println("Sikeres művelet");
-        }else  {
-            if (test) outResults.add("Sikertelen művelet");
+        ArrayList<Field> neighbors = p.getStandingField().getNeighborFields();
+        if(neighbors.contains(f)) {
+            if (p.move(f)) {
+                if (test) {outResults.add("Sikeres művelet");lastResult = true;}
+                else {System.out.println("Sikeres művelet");lastResult = true;}
+            } else {
+                if (test) {outResults.add("Sikertelen művelet");lastResult = false;}
+                else {
+                    System.out.println("Sikertelen művelet");
+                    lastResult = false;
+                    moves--;
+                }
+            }
+        }
+        else{
+            if (test) {outResults.add("Sikertelen művelet");lastResult = false;}
             else {
                 System.out.println("Sikertelen művelet");
+                lastResult = false;
                 moves--;
             }
         }
@@ -471,12 +540,13 @@ public class Controller {
     public static void breakfield(String[] cmd){
         Player p = (Player)objectNames.get(cmd[1]);
         if(p.breakField()){
-            if (test) outResults.add("Sikeres művelet");
-            else System.out.println("Sikeres művelet");
+            if (test) {outResults.add("Sikeres művelet"); lastResult = true;}
+            else {System.out.println("Sikeres művelet");lastResult = true;}
         }else  {
-            if (test) outResults.add("Sikertelen művelet");
+            if (test) {outResults.add("Sikertelen művelet"); lastResult = false;}
             else {
                 System.out.println("Sikertelen művelet");
+                lastResult = false;
                 moves--;
             }
         }
@@ -487,9 +557,11 @@ public class Controller {
     public static void repair(String[] cmd){
         Player p = (Player)objectNames.get(cmd[1]);
         if(p.repair()){
+            lastResult = true;
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
+            lastResult = false;
             if (test) outResults.add("Sikertelen művelet");
             else {
                 System.out.println("Sikertelen művelet");
@@ -509,9 +581,11 @@ public class Controller {
             objectNames.put(s, pipe);
             objectReverseNames.put(pipe, s);
             waterCounter.addPipe(pipe);
+            lastResult = true;
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
+            lastResult = false;
             if (test) outResults.add("Sikertelen művelet");
             else {
                 System.out.println("Sikertelen művelet");
@@ -525,9 +599,11 @@ public class Controller {
     public static void set(String[] cmd){
          Player player = (Player)objectNames.get(cmd[1]);
          if(player.getStandingField().set((Pipe)objectNames.get(cmd[2]), (Pipe)objectNames.get(cmd[3]))){
+             lastResult = true;
              if (test) outResults.add("Sikeres művelet");
              else System.out.println("Sikeres művelet");
          }else  {
+             lastResult = false;
              if (test) outResults.add("Sikertelen művelet");
              else {
                  System.out.println("Sikertelen művelet");
@@ -541,9 +617,11 @@ public class Controller {
     public static void disconnect(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.disconnect((Pipe)objectNames.get(cmd[2]))){
+            lastResult = true;
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
+            lastResult = false;
             if (test) outResults.add("Sikertelen művelet");
             else {
                 System.out.println("Sikertelen művelet");
@@ -557,9 +635,11 @@ public class Controller {
     public static void connect(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.connect()){
+            lastResult = true;
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
+            lastResult = false;
             if (test) outResults.add("Sikertelen művelet");
             else {
                 System.out.println("Sikertelen művelet");
@@ -578,9 +658,11 @@ public class Controller {
             String s = "newPump"+pumps;
             objectNames.put(s, pump);
             objectReverseNames.put(pump, s);
+            lastResult = true;
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
+            lastResult = false;
             if (test) outResults.add("Sikertelen művelet");
             else {
                 System.out.println("Sikertelen művelet");
@@ -594,9 +676,11 @@ public class Controller {
     public static void pickuppipe(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.pickUpPipe()){
+            lastResult = true;
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
+            lastResult = false;
             if (test) outResults.add("Sikertelen művelet");
             else {
                 System.out.println("Sikertelen művelet");
@@ -610,9 +694,11 @@ public class Controller {
     public static void makesticky(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.makeSticky()){
+            lastResult = true;
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
+            lastResult = false;
             if (test) outResults.add("Sikertelen művelet");
             else {
                 System.out.println("Sikertelen művelet");
@@ -625,10 +711,13 @@ public class Controller {
      * */
     public static void makeslippery(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
+        System.out.println(cmd[1]);
         if(player.makeSlippery()){
+            lastResult = true;
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
+            lastResult = false;
             if (test) outResults.add("Sikertelen művelet");
             else {
                 System.out.println("Sikertelen művelet");
