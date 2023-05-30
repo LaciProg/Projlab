@@ -15,16 +15,29 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Class for drawing the mechanic.
+ * */
 public class MechanicDraw extends Drawable {
     String mecName = "";
     JButton mec = new JButton();
 
+    /**
+     * Constructor for the mechanic.
+     * @param tmpX X coordinate of the mechanic.
+     * @param tmpY Y coordinate of the mechanic.
+     * */
     public MechanicDraw(int tmpX, int tmpY) {
         x = tmpX;
         y = tmpY;
         mec.setVisible(true);
     }
 
+    /**
+     * Draw method for the mechanic.
+     * @param panel
+     * @param g
+     */
     @Override
     public void Draw(JPanel panel, Graphics2D g) {
         Mechanic m = (Mechanic)ViewGame.objectDrawNames.get(this);
@@ -63,7 +76,6 @@ public class MechanicDraw extends Drawable {
         mec.setBounds(x, y, 50, 20);
         if (m.equals(current)) mec.setBorder(BorderFactory.createLineBorder(Color.green, 5));
         else mec.setBorder(BorderFactory.createLineBorder(Color.red, 5));
-        //mec.setBackground(new Color(150, 75, 0));
         panel.add(mec);
         panel.repaint();
     }

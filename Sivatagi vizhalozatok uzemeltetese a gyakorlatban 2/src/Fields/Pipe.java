@@ -289,7 +289,7 @@ public class Pipe extends Field {
                 remainingFluidTime = 5;
             }
             else {
-                remainingFluidTime = 3+new Random().nextInt(8);
+                remainingFluidTime = 3+new Random().nextInt(3);
             }
             fluid = Fluid.SLIPPERY;
             return true;
@@ -307,7 +307,7 @@ public class Pipe extends Field {
                 remainingFluidTime = 5;
             }
             else {
-                remainingFluidTime = 3+new Random().nextInt(8);
+                remainingFluidTime = 3+new Random().nextInt(3);
             }
             fluid = Fluid.STICKY;
             return true;
