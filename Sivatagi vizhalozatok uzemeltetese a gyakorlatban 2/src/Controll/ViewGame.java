@@ -302,6 +302,7 @@ public class ViewGame extends JFrame implements ActionListener {
         if(Controller.getLastResult()){
             successLabel.setText("Last Action: Successful");
         }else{
+            JOptionPane.showMessageDialog(null,"Unsuccessful action");
             successLabel.setText("Last Action: Unsuccessful");
         }
     }
