@@ -1,9 +1,7 @@
 package Fields.ActiveFields;
 
-import Controll.Controller;
 import Fields.Field;
 import Fields.Pipe;
-import Interfaces.Steppable;
 import Players.Player;
 
 import java.util.ArrayList;
@@ -11,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Abstract class for active fields.
  * */
-public abstract class ActiveFields extends Field implements Steppable {
+public abstract class ActiveFields extends Field {
 
     /**
      * Pipes connected to the active field. Default is empty.
