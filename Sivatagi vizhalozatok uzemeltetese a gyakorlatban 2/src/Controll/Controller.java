@@ -131,10 +131,6 @@ public class Controller {
      * */
     public static void Run() throws FileNotFoundException {
         while(commandList.size() != 0) {
-            //Scanner stdInScanner = new Scanner(System.in);
-            //if (commandList.size() == 0){
-            //    commandList.add(stdInScanner.nextLine());
-            //}
             String command = commandList.get(0);
             commandList.remove(0);
             String[] cmd = command.split(" ");
@@ -177,7 +173,6 @@ public class Controller {
                 default: System.out.println("Hibás parancs.");
             }
         }
-        //Game();
     }
 
     /**
@@ -237,6 +232,7 @@ public class Controller {
     public static void load(String cmd){
         try {
             outResults.clear();
+            System.out.println(cmd);
             Scanner scanner = new Scanner(new File(cmd));
             filePath = cmd;
             String separator = "\\";
@@ -244,26 +240,14 @@ public class Controller {
             fileName = tmp[tmp.length-1];
             while (scanner.hasNextLine()){
                 commandList.add(scanner.nextLine());
+                System.out.println(commandList.get(commandList.size()-1));
             }
             if (test) {
                 commandList.add("save " + filePath.replace(".in", ".out"));
             }
         } catch (FileNotFoundException e) {
-          
+            System.out.println("Nem található a fájl!");
         }
-        /*Path rootDir = Paths.get(".").normalize().toAbsolutePath();
-
-        File file = new File(rootDir.toString() + "/" + cmd);
-        try {
-            Reader input = new FileReader(file);
-            BufferedReader br = new BufferedReader(input);
-            String line = "";
-            while ((line = br.readLine()) != null) {
-                commandList.add(line);
-            }
-            input.close();
-        } catch (IOException e) {
-        }*/
     }
 
     public static void loadFileFromSrcToReader(String fileNameToOpen) {
@@ -727,7 +711,7 @@ public class Controller {
     public static void pickuppipe(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.pickUpPipe()){
-            lastResult = true;
+            lastResult = lastResult && true;
             
             //legyen már az új csőnek drawable-je is
             Pipe newPipe = ((Mechanic)player).getHoldingPipe();

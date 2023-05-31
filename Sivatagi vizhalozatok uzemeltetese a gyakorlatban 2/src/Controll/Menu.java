@@ -117,10 +117,10 @@ public class Menu extends JFrame implements ActionListener {
 
         // új játék elkezdése a kiválasztott adatokkal
         if (e.getSource() == newGame) {
-            //Controller controller = new Controller();
 
-        	Controller.load("palya.txt");
-        	
+            Controller.load("src/palya.txt");
+
+
             if ((int)mechanics.getSelectedItem() > 2) {
                 for (int i = 3; i <= (int)mechanics.getSelectedItem(); i++) {
                     Controller.commandList.add("mechanic Mec" + i + " E");

@@ -2,13 +2,14 @@ package Fields;
 
 import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
+import Interfaces.Steppable;
 import Players.Player;
 import java.util.ArrayList;
 
 /**
  * Abstract class for the fields.
  * */
-public abstract class Field {
+public abstract class Field implements Steppable {
 
 	/**
 	 * True if the field is cannot accept more player.

@@ -4,10 +4,18 @@ import Controll.ViewGame;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * CisternDraw class
+ */
 public class CisternDraw extends Drawable {
     JButton cistern = new JButton();
     JButton cisternB = new JButton();
 
+    /**
+     * CisternDraw constructor
+     * @param tmpX
+     * @param tmpY
+     */
     public CisternDraw(int tmpX, int tmpY) {
         x = tmpX;
         y = tmpY;
@@ -18,6 +26,11 @@ public class CisternDraw extends Drawable {
         cisternB.addActionListener(ViewGame.selectListener);
     }
 
+    /**
+     * Draw method
+     * @param panel
+     * @param g
+     */
     public void Draw(JPanel panel, Graphics2D g) {
         cistern.setBounds(x, y, 50, 50);
         cistern.setBorder(BorderFactory.createLineBorder(Color.blue, 5));

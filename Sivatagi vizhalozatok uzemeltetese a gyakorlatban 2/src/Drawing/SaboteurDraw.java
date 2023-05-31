@@ -13,17 +13,31 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Class for drawing the mechanic.
+ * */
 public class SaboteurDraw extends Drawable {
     String sabName = "";
     JButton sab = new JButton();
 
+    /**
+     * Constructor for the mechanic.
+     * @param tmpX X coordinate of the mechanic.
+     * @param tmpY Y coordinate of the mechanic.
+     * @param tmpX
+     * @param tmpY
+     */
     public SaboteurDraw(int tmpX, int tmpY) {
         x = tmpX;
         y = tmpY;
-        //sab.setBounds(x, y, 200, 200);
         sab.setVisible(true);
     }
 
+    /**
+     * Draw method for the mechanic.
+     * @param panel
+     * @param g
+     */
     @Override
     public void Draw(JPanel panel, Graphics2D g) {
         Saboteur s = (Saboteur)ViewGame.objectDrawNames.get(this);
@@ -62,7 +76,6 @@ public class SaboteurDraw extends Drawable {
         sab.setBounds(x, y, 50, 20);
         if (s.equals(current)) sab.setBorder(BorderFactory.createLineBorder(Color.green, 5));
         else sab.setBorder(BorderFactory.createLineBorder(Color.red, 5));
-        //sab.setBackground(new Color(150, 75, 0));
         panel.add(sab);
         panel.repaint();
     }
