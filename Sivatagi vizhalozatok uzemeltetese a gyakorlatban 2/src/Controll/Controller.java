@@ -602,11 +602,6 @@ public class Controller {
             //redrawing the old pipe
             oldPipeD.setCoords(newPumpD, pumpBD);
             
-            
-            
-            
-            
-            
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {

@@ -4,6 +4,8 @@ import Drawing.*;
 import Enums.Fluid;
 import Fields.*;
 
+import Fields.ActiveFields.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

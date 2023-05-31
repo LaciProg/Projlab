@@ -4,7 +4,6 @@ import Fields.ActiveFields.ActiveFields;
 import Fields.ActiveFields.Pump;
 import Interfaces.Steppable;
 import Players.Player;
-
 import java.util.ArrayList;
 
 /**

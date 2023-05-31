@@ -3,7 +3,6 @@ package Fields.ActiveFields;
 import Controll.Controller;
 import Fields.Pipe;
 import Players.Player;
-
 import java.util.ArrayList;
 import java.util.Random;
 
