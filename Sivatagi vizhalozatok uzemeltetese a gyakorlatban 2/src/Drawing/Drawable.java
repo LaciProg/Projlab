@@ -1,7 +1,5 @@
 package Drawing;
 
-import Controll.ViewGame;
-
 import javax.swing.*;
 import java.awt.*;
 

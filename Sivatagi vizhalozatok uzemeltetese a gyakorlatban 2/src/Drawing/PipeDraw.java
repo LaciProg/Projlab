@@ -10,7 +10,6 @@ public class PipeDraw extends Drawable {
     private int xTo;
     private int yFrom;
     private int yTo;
-    //JButton pipe = new JButton();
     JButton pipeB = new JButton();
 
     public int getxFrom() { return xFrom; }

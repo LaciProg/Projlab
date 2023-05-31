@@ -95,8 +95,6 @@ public class Pump extends ActiveFields {
                 super.setBroken(true);
             }
         }
-
-
     }
     /**
      * Method for setting the water flow in the pump.

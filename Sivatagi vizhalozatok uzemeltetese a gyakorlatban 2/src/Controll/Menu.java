@@ -6,19 +6,11 @@ import java.awt.Color;
 
 import java.io.FileNotFoundException;
 
-import javax.naming.ldap.Control;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
-
-import java.awt.BasicStroke;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-
-
-import Controll.Controller;
 
 public class Menu extends JFrame implements ActionListener {
     private String currentTheme;
@@ -91,25 +83,6 @@ public class Menu extends JFrame implements ActionListener {
     public void showMenu() {
         setVisible(true);
     }
-
-    /*public void paint(Graphics gr) {
-        Graphics2D g2d = (Graphics2D) gr;
-        g2d.setColor(Color.GRAY);
-        //g2d.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{1}, 0));
-
-        float[] dash1 = { 2f, 0f, 2f };
-
-        g2d.drawLine(20, 40, 250, 40);
-
-        BasicStroke bs1 = new BasicStroke(1,
-                BasicStroke.CAP_BUTT,
-                BasicStroke.JOIN_ROUND,
-                1.0f,
-                dash1,
-                2f);
-        //g2d.setStroke(bs1);
-        g2d.drawLine(20, 80, 250, 80);
-    }*/
 
     /**
      * sötét téma be/ki kapcsolása
