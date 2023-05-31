@@ -602,11 +602,6 @@ public class Controller {
             //redrawing the old pipe
             oldPipeD.setCoords(newPumpD, pumpBD);
             
-            
-            
-            
-            
-            
             if (test) outResults.add("Sikeres művelet");
             else System.out.println("Sikeres művelet");
         }else  {
@@ -716,7 +711,7 @@ public class Controller {
     public static void pickuppipe(String[] cmd){
         Player player = (Player)objectNames.get(cmd[1]);
         if(player.pickUpPipe()){
-            lastResult = true;
+            lastResult = lastResult && true;
             
             //legyen már az új csőnek drawable-je is
             Pipe newPipe = ((Mechanic)player).getHoldingPipe();

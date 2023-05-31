@@ -2,7 +2,6 @@ package Drawing;
 
 import Controll.ViewGame;
 import Fields.ActiveFields.Pump;
-import Fields.Pipe;
 
 import javax.swing.*;
 import java.awt.*;

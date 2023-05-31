@@ -4,6 +4,8 @@ import Drawing.*;
 import Enums.Fluid;
 import Fields.*;
 
+import Fields.ActiveFields.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -310,11 +312,11 @@ public class ViewGame extends JFrame implements ActionListener {
         if(e.getSource() == pickUpButton){
             isChosen = true;
         }
-        if(e.getSource()== putDownButton){
-            isChosen = false;
+        if(e.getSource() == putDownButton){
         	cmd[1] = Controller.getActivePlayerName();
-        	Controller.placepump(cmd);
-        	Controller.connect(cmd);
+        	if(Controller.GetActivePlayer().getStandingField() instanceof Pipe) Controller.placepump(cmd);
+        	else Controller.connect(cmd);
+        	successful = true;
         }
         if(successful) {
             changeText(cmd);

@@ -71,8 +71,6 @@ public class Spring extends ActiveFields{
             }
         }
 
-
-
         ArrayList<Pipe> pipes = this.getPipes();
         String pipesNames ="null";
         for (int i = 0; i < pipes.size(); i++) {

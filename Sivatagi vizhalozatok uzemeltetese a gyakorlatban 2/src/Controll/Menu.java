@@ -6,19 +6,11 @@ import java.awt.Color;
 
 import java.io.FileNotFoundException;
 
-import javax.naming.ldap.Control;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
-
-import java.awt.BasicStroke;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-
-
-import Controll.Controller;
 
 public class Menu extends JFrame implements ActionListener {
     private String currentTheme;
